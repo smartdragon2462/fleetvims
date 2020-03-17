@@ -1,0 +1,788 @@
+ <div class="pcoded-content" [@routerTransition]>
+                        <!-- [ breadcrumb ] start -->
+                        <div class="page-header">
+                            <div class="page-block">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8">
+                                        <div class="page-header-title">
+                                            <h4 class="m-b-10">Vehicles</h4>
+                                        </div>
+                                        <ul class="breadcrumb">
+                                            <li class="breadcrumb-item">
+                                                <a [routerLink]="['/dashboard']">
+                                                    <i class="feather icon-home"></i>
+                                                </a>
+                                            </li>
+                                            <li class="breadcrumb-item" *ngIf="clientid>0">
+                                                <a [routerLink]="['/vehicles','client',clientid]">Vehicles</a>
+                                                
+                                            </li>
+                                              <li class="breadcrumb-item" *ngIf="clientid==0">
+                                                <a [routerLink]="['/vehicles']">Vehicles</a>
+                                                
+                                            </li>
+                                            <li class="breadcrumb-item">
+                                                <a href="#!">Edit Vehicle</a>
+                                                
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="pcoded-inner-content">
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <div class="page-body">
+                                        <div class="row">
+                                            <div class="alertbox">     
+                                                <div *ngFor="let alert of alerts">
+                                                        <alert [type]="alert.type" [dismissOnTimeout]="5000"><span [innerHtml]="alert.msg"></span></alert>
+                                                </div>
+                                            </div>     
+                                            <div class="col-lg-6 col-md-6">
+                                                    <div class="card">
+                                                        <form class="" [formGroup]='register'  (ngSubmit) = 'onVehiclesSave()' novalidate>
+
+                                                        <div class="card-header with-border">
+                                                            <h5 class="card-header-text">Vehicle Details</h5>  
+                                                        </div>
+                                                        <div class="card-block">
+
+                                                            <div class="form-group form-default" *ngIf="UserInfo.Module=='1'">
+                                                                    <label class="float-label">Client <span class="text-danger">*</span></label>
+                                                                    <select  class="form-control" formControlName='ClientId' (change)="getPolicies($event.target.value)">
+                                                                             <option value="0">Select</option>
+                                                                             <option *ngFor="let client of ClientList" [value]="client[0]">{{client[1]}}</option>
+                                                                    </select>
+                                                                    
+                                                                    
+                                                                    <div *ngIf="ClientId.invalid && (ClientId.dirty || isSubmitted)" id="ClientId" class="text-danger">
+                                                                            Client is required.
+                                                                     </div> 
+                                                    
+                                                            </div>
+
+                                                            <div class="form-group form-default">
+                                                                <label class="float-label">Unit Type</label>
+                                                                 <select  class="form-control" formControlName='UnitType' (change)="chageUnitTypePolicy($event.target.value)">
+                                                                        <option>Select</option>
+                                                                    <optgroup label="Power Units">
+                                                                        <option *ngFor="let unittype of PowerUnitTypeList" value="{{unittype.Id}}">{{unittype.Type}}</option>
+                                                                    </optgroup>
+                                                                    <optgroup label="Non-Power Units">
+                                                                        <option *ngFor="let unittype of NonPowerUnitTypeList" value="{{unittype.Id}}">{{unittype.Type}}</option>
+                                                                    </optgroup>
+                                                                </select>
+                                                                
+                                                                
+                                                            </div>
+                                                            
+                                                             <div class="form-group form-default" *ngIf=" UnitTypeValue==1">
+                                                                 <label class="float-label">Driver Type</label>
+                                                                <select  class="form-control" formControlName='DriverType' (change)="chageDriverTypePolicy($event.target.value)">
+                                                                        <option>Select</option>
+                                                                        <option *ngFor="let drivertype of DriverTypeList" value="{{drivertype.Id}}">{{drivertype.Type}}</option>
+                                                                </select>
+                                                                
+                                                               
+                                                            </div>
+
+                                                             
+         
+                                                            
+                                                <fieldset class="scheduler-border" *ngIf="this.coveragePolicy.length >0">
+                                    <legend class="scheduler-border">Coverage Selection</legend>
+                                                       <div class="row" *ngIf="this.coveragePolicy.length >0">    
+                                    <div class="col-md-6">
+
+                                           <div class="form-group form-default"  *ngIf="!this.coveragePolicy[1]">
+                                                
+                                                <h4 class="sub-title">PD Policy</h4>
+                                                <div>    
+                                                        <label style="font-size:10px">
+                                                           No PD Policy
+                                                        </label>
+                                                </div>
+                                            </div>  
+                                             
+                                           <div class="form-group form-default" *ngIf="this.coveragePolicy[1] && this.coveragePolicy[1].length >1">
+                                                      
+                                                    <label class="float-label">PD Policy</label>
+                                                    <select  class="form-control" formControlName='PDPolicies' (change)="updatePolicyOptions('PD', $event)" >
+                                                            <option value="0">Select</option>
+                                                            
+                                                         
+                                            <option  *ngFor="let Policy of this.coveragePolicy[1]" [value]="Policy.Id">{{Policy.Name}}</option>
+                                                       
+                                                    </select>
+                                                    
+                                                    
+                                                     
+                                                    
+                                            </div> 
+                                        <div class="form-group form-default"  *ngIf="this.coveragePolicy[1] && this.coveragePolicy[1].length ==1">
+                                                
+                                        <h4 class="sub-title">PD Policy</h4>
+                                        <div class="checkbox-color checkbox-primary">
+                                                <input id="checkbox1850PD" type="checkbox" value="{{this.coveragePolicy[1][0].Id}}" formControlName='PDPolicies' (click)="updatePolicyOptions('PD', $event)">
+                                                <label for="checkbox1850PD">
+                                                    {{this.coveragePolicy[1][0].Name}}
+                                                </label>
+                                        </div>
+                                        </div> 
+                                    </div>
+
+
+                                    <div class="col-md-6" *ngIf="DriverTypeValue!=1 && UnitTypeValue!=2">
+
+                                           <div class="form-group form-default"  *ngIf="!this.coveragePolicy[2]">
+                                                
+                                                <h4 class="sub-title">NT Policy</h4>
+                                                <div>    
+                                                        <label style="font-size:10px">
+                                                           No NT Policy
+                                                        </label>
+                                                </div>
+                                            </div>  
+                                             
+                                           <div class="form-group form-default" *ngIf="this.coveragePolicy[2] && this.coveragePolicy[2].length >1">
+                                                      
+                                                     <label class="float-label">NT Policy</label>
+                                                    <select  class="form-control" formControlName='NTPolicies' (change)="updatePolicyOptions('NT', $event)" >
+                                                            <option value="0">Select</option>
+                                                            
+                                                         
+                                             <option  *ngFor="let Policy of this.coveragePolicy[2]" [value]="Policy.Id">{{Policy.Name}}</option>
+                                                       
+                                                    </select>
+                                                    
+                                                   
+                                                     
+                                                    
+                                            </div> 
+                                        <div class="form-group form-default"  *ngIf="this.coveragePolicy[2] && this.coveragePolicy[2].length ==1">
+                                                
+                                        <h4 class="sub-title">NT Policy</h4>
+                                        <div class="checkbox-color checkbox-primary">
+                                                <input id="checkbox1860NT" type="checkbox" value="{{this.coveragePolicy[2][0].Id}}" formControlName='NTPolicies' (click)="updatePolicyOptions('NT', $event)">
+                                                <label for="checkbox1860NT">
+                                                    {{this.coveragePolicy[2][0].Name}}
+                                                </label>
+                                        </div>
+                                        </div> 
+                                    </div>
+
+                                    
+
+                            </div>
+
+                            <div class="row" *ngIf="this.coveragePolicy.length >0">  
+
+
+                                    <div class="col-md-6" *ngIf="DriverTypeValue!=1 && UnitTypeValue!=2">
+
+                                           <div class="form-group form-default"  *ngIf="!this.coveragePolicy[3]">
+                                                
+                                                <h4 class="sub-title">OA Policy</h4>
+                                                <div>    
+                                                        <label style="font-size:10px">
+                                                           No OA Policy
+                                                        </label>
+                                                </div>
+                                            </div>  
+                                             
+                                           <div class="form-group form-default" *ngIf="this.coveragePolicy[3] && this.coveragePolicy[3].length >1">
+                                                      
+                                                     <label class="float-label">OA Policy</label>
+                                                    <select  class="form-control" formControlName='OAPolicies' (change)="updatePolicyOptions('OA', $event)" >
+                                                            <option value="0">Select</option>
+                                                            
+                                                         
+                                             <option  *ngFor="let Policy of this.coveragePolicy[3]" [value]="Policy.Id">{{Policy.Name}}</option>
+                                                       
+                                                    </select>
+                                                    
+                                                   
+                                                     
+                                                    
+                                            </div> 
+                                        <div class="form-group form-default"  *ngIf="this.coveragePolicy[3] && this.coveragePolicy[3].length ==1">
+                                                
+                                        <h4 class="sub-title">OA Policy</h4>
+                                        <div class="checkbox-color checkbox-primary">
+                                                <input id="checkbox1870OA" type="checkbox" value="{{this.coveragePolicy[3][0].Id}}" formControlName='OAPolicies' (click)="updatePolicyOptions('OA', $event)">
+                                                <label for="checkbox1870OA">
+                                                    {{this.coveragePolicy[3][0].Name}}
+                                                </label>
+                                        </div>
+                                        </div> 
+                                    </div>
+
+
+                                    <div class="col-md-6" *ngIf="UnitTypeValue!=2">
+
+                                           <div class="form-group form-default"  *ngIf="!this.coveragePolicy[4]">
+                                                
+                                                <h4 class="sub-title">PA Policy</h4>
+                                                <div>    
+                                                        <label style="font-size:10px">
+                                                           No PA Policy
+                                                        </label>
+                                                </div>
+                                            </div>  
+                                             
+                                           <div class="form-group form-default" *ngIf="this.coveragePolicy[4] && this.coveragePolicy[4].length >1">
+                                                      
+                                                    <label class="float-label">PA Policy</label>
+                                                    <select  class="form-control" formControlName='PAPolicies' (change)="updatePolicyOptions('PA', $event)" >
+                                                            <option value="0">Select</option>
+                                                            
+                                                         
+                                             <option  *ngFor="let Policy of this.coveragePolicy[4]" [value]="Policy.Id">{{Policy.Name}}</option>
+                                                       
+                                                    </select>
+                                                    
+                                                    
+                                                     
+                                                    
+                                            </div> 
+                                        <div class="form-group form-default"  *ngIf="this.coveragePolicy[4] && this.coveragePolicy[4].length ==1">
+                                                
+                                        <h4 class="sub-title">PA Policy</h4>
+                                        <div class="checkbox-color checkbox-primary">
+                                                <input id="checkbox1880PA" type="checkbox" value="{{this.coveragePolicy[4][0].Id}}" formControlName='PAPolicies' (click)="updatePolicyOptions('PA', $event)">
+                                                <label for="checkbox1880PA">
+                                                    {{this.coveragePolicy[4][0].Name}}
+                                                </label>
+                                        </div>
+                                        </div> 
+                                    </div>
+
+                                   
+
+                            </div>
+
+                            <div class="row" *ngIf="this.coveragePolicy.length >0">  
+
+
+                                    <div class="col-md-6" *ngIf="DriverTypeValue!=1 && UnitTypeValue!=2">
+
+                                           <div class="form-group form-default"  *ngIf="!this.coveragePolicy[3]">
+                                                
+                                                <h4 class="sub-title">AL Policy</h4>
+                                                <div>    
+                                                        <label style="font-size:10px">
+                                                           No AL Policy
+                                                        </label>
+                                                </div>
+                                            </div>  
+                                             
+                                           <div class="form-group form-default" *ngIf="this.coveragePolicy[6] && this.coveragePolicy[6].length >1">
+                                                      
+                                                     <label class="float-label">AL Policy</label>
+                                                    <select  class="form-control" formControlName='OAPolicies' (change)="updatePolicyOptions('AL', $event)" >
+                                                            <option value="0">Select</option>
+                                                            
+                                                         
+                                             <option  *ngFor="let Policy of this.coveragePolicy[6]" [value]="Policy.Id">{{Policy.Name}}</option>
+                                                       
+                                                    </select>
+                                                    
+                                                   
+                                                     
+                                                    
+                                            </div> 
+                                        <div class="form-group form-default"  *ngIf="this.coveragePolicy[6] && this.coveragePolicy[6].length ==1">
+                                                
+                                        <h4 class="sub-title">AL Policy</h4>
+                                        <div class="checkbox-color checkbox-primary">
+                                                <input id="checkbox1870AL" type="checkbox" value="{{this.coveragePolicy[6][0].Id}}" formControlName='ALPolicies' (click)="updatePolicyOptions('AL', $event)">
+                                                <label for="checkbox1870AL">
+                                                    {{this.coveragePolicy[6][0].Name}}
+                                                </label>
+                                        </div>
+                                        </div> 
+                                    </div>
+
+
+                                   
+
+                                   
+
+                            </div>
+
+                            </fieldset>
+                            <fieldset class="scheduler-border">
+                                    <legend class="scheduler-border">Vehicle Information</legend> 
+                                                           
+                                                            <div class="form-group form-default">
+                                                                <label class="float-label">Unit # <span class="text-danger">*</span></label>
+                                                                <input type="text" value=""  class="form-control"  formControlName='Unit'>
+                                                                
+                                                                
+                                                                <div *ngIf="Unit.invalid && (Unit.dirty || isSubmitted)" class="text-danger">
+                                                                            <div *ngIf="Unit.errors.required">Unit is required.</div>
+                                                                           
+                                                                </div>
+                                                             </div>
+
+                                                             <div class="form-group form-default">
+                                                                 <label class="float-label">Vehicle ID #<span class="text-danger" *ngIf="isVINvalidation">*</span><span style="padding-left:10px"><input id="removevinValidation" type="checkbox" (click)="removevinValidation($event)" formControlName='isNotReqired'><label for="removevinValidation" style="padding-left:10px">Remove Field Required Validation </label></span></label>
+                                                                <input type="text" value=""  class="form-control"  formControlName='SerialNumber' maxlength="17">
+                                                                
+                                                               
+                                                                <div *ngIf="SerialNumber.invalid && (SerialNumber.dirty || isSubmitted)" class="text-danger">
+                                                                  <div *ngIf="SerialNumber.errors.required">
+                                                                    Vehicle ID is required.
+                                                                  </div>
+                                                                  
+                                                                  <div *ngIf="(SerialNumber.errors.minlength || SerialNumber.errors.maxlength) && !SerialNumber.errors.required">
+                                                                    Vehicle ID must be exactly 17 characters.
+                                                                  </div>
+
+                                                                   <div class="error" *ngIf="SerialNumber.invalid && SerialNumber.errors.validSerialno">This Vehicle ID is already Active in FleetVIMS.  Please enter a different Vehicle ID</div>
+  
+                                                                    
+                                                                  
+                                                                </div> 
+                                                            </div>
+                                                            <div class="form-group form-default">
+                                                                 <label class="float-label">Year <span class="text-danger">*</span></label>
+                                                                <select  class="form-control" formControlName='ModelYear'>
+                                                            <option value="0">Select</option>
+                                                            <option  *ngFor="let year of years" [value]="year">{{year}}</option>
+                                                      </select> 
+                                                                
+                                                               
+                                                                <div *ngIf="ModelYear.invalid && (ModelYear.dirty || isSubmitted)" class="text-danger">
+                                                                            <div *ngIf="ModelYear.errors.required">Year is required.</div>
+                                                                            <div *ngIf="ModelYear.errors.pattern && !ModelYear.errors.required">Only Number allow</div>
+                                                                </div>
+                                                            </div>
+
+                                                             <div class="form-group form-default">
+                                                                    <label class="float-label">Make <span class="text-danger">*</span></label>
+                                                                    <select  class="form-control" formControlName='Makes'>
+                                                                            <option>Select</option>
+                                                                            <option *ngFor="let make of MakeList" value="{{make.Id}}">{{make.CompanyName}}</option>
+                                                                    </select>
+
+                                                                    
+                                                                    
+                                                                     <div *ngIf="Makes.invalid && (Makes.dirty || isSubmitted)" id="Makes" class="text-danger">
+                                                                            Make is required.
+                                                                     </div> 
+                                                            </div>
+
+                                                            <div class="form-group form-default">
+                                                                <label class="float-label">Added Date <span class="text-danger">*</span></label>
+                                                               <input bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY' }" type="text" value="" [minDate]="minAddedDate" class="form-control"  formControlName='Addedbound'>
+                                                                
+                                                                
+                                                                 <div *ngIf="Addedbound.invalid && (Addedbound.dirty || isSubmitted)" id="Addedbound" class="text-danger">
+                                                    Added Date is required.
+                                        </div>
+                                                                 
+                                                            </div>
+
+                                                            <div class="form-group form-default" *ngIf="this.IsPDPolicy">
+                                                                <label class="float-label">Value <span class="text-danger">*</span></label>
+                                                                <input type="text" value=""  class="form-control"  formControlName='Value' prefix="$ " mask="comma_separator" (input)="onValueChange($event.target.value)">
+                                                                
+                                                                
+                                                                 <div *ngIf="Value.invalid && (Value.dirty || isSubmitted)" id="Value" class="text-danger">
+                                                Value is required.
+                                                     </div> 
+                                                            <div class="text-danger" *ngIf="policyUnitLimit<ValuePolicyCheck">
+                                                                Stated Value is above Policy's Unit Limit. Please contact your agent to increase your Policy Per Unit Limit
+                                                            </div>
+                                                                 
+                                                            </div>
+                                                            <div class="form-group form-default" *ngIf="this.IsPDPolicy && showFutureValue==true">
+                                                                    <label class="float-label">Future Value</label>
+                                                                    <input type="text" value=""  class="form-control"  formControlName='FutureValue' prefix="$ " mask="comma_separator" >
+                                                                 
+                                                                </div>
+
+
+
+                                                                    <div class="form-group form-default" *ngIf="this.IsOAPolicy">
+                                                                        <label class="float-label">Cargo Type <span class="text-danger">*</span></label>
+                                                                        <select class="form-control" formControlName='CargoType'>
+                                                                            <option>Select</option>
+                                                                            <option *ngFor="let cargotype of CargoTypeMasterList" value="{{cargotype.Id}}">{{cargotype.Type}}</option>
+                                                                        </select>
+                                                                    </div>
+                                                                
+                                                           
+                                                    </fieldset>
+
+                                            <fieldset class="scheduler-border">
+                                    <legend class="scheduler-border">Additional Information</legend>   
+
+                                                            
+
+                                                            <div class="form-group form-default">
+                                                                <label class="float-label">Driver</label>
+                                                                <input type="text" value=""  class="form-control"  formControlName='Driver'>
+                                                                
+                                                                
+                                                                
+                                                            </div>
+
+                                                            <div class="form-group form-default">
+                                                                <label class="float-label">Driver2</label>
+                                                                <input type="text" value=""  class="form-control"  formControlName='Driver2'>
+                                                                
+                                                                
+                                                                
+                                                            </div>
+
+                                                           
+                                                            <div class="form-group form-default">
+                                                                <label class="float-label">Owner<span style="padding-left:10px"><input id="sameasdriver" type="checkbox" (click)="sameasdriver($event)"><label for="sameaddress" style="padding-left:10px">Same as Driver</label></span>
+                                                    <span style="padding-left:10px">
+                                                    <input id="sameasclient" type="checkbox" (click)="sameasclient($event)"><label for="sameaddress1" style="padding-left:10px">Same as Client</label></span></label>
+                                                                <input type="text" value=""  class="form-control"  formControlName='Owner'>
+                                                                
+                                                                
+                                                                
+                                                            </div>
+
+                                                            <div class="form-group form-default" *ngIf="this.IsPDPolicy">
+                                                                 <label class="float-label">Lienholder</label>
+                                                                  <ng-select [items]="LeinholderList" 
+                   bindValue="LeinholderId" formControlName='LienholderId1' [searchable]="true" bindLabel="LeinholderName">    
+                                                   <ng-template ng-option-tmp let-item="item">
+                                        {{item.LeinholderName}} <br />
+                                        <small>{{item.Address1}} {{item.City}} {{item.StateCode}}</small>
+                                    </ng-template></ng-select>
+
+                
+
+                                                                
+                                                                    
+                                                                   
+                                                                    
+                                                            </div>
+
+                                                            <div class="form-group form-default" *ngIf="this.IsPDPolicy">
+                                                                 <label class="float-label">Lienholder 2</label>
+
+                                                                <ng-select [items]="LeinholderList" 
+                   bindValue="LeinholderId" bindLabel="LeinholderName" formControlName='LienholderId2' [searchable]="true">  
+                                                   <ng-template ng-option-tmp let-item="item">
+                                        {{item.LeinholderName}} <br />
+                                        <small>{{item.Address1}} {{item.City}} {{item.StateCode}}</small>
+                                    </ng-template>
+
+                                     </ng-select>  
+
+                                                                
+                                                                
+                                                                
+                                                               
+                                                            </div>
+                                                            
+
+                                                             
+
+                                                            
+
+                                                             <div class="form-group form-default">
+                                                                     <label class="float-label">Certificate Notes</label>
+                                                                    <textarea class="form-control"  formControlName='CertificateNotes'></textarea>
+                                                                    
+                                                                   
+                                                             </div> 
+                                                        </fieldset> 
+                                                        </div><!--./card-block-->
+                                                        <div class="card-footer text-right">
+                                                                 <input type="hidden" class="form-control" id="VehicleId"  formControlName='VehicleId'> 
+                                                                
+
+                                                                
+                                                                <a [routerLink]="['/vehicles','client',clientid]" class="btn btn-default waves-effect" *ngIf="clientid>0">Close</a>
+                                                                
+                                                           
+                                                             
+                                                               <a [routerLink]="['/vehicles']" class="btn btn-default waves-effect"  *ngIf="clientid==0"> Close </a>
+                                                                
+                                            
+
+                                                                <button type='submit' class='btn btn-primary waves-effect waves-light'>Save<img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /></button>
+                                                        </div><!--./footer-->
+                                                        </form>
+                                                    </div>
+                                            </div>
+
+                                            <!-- site Analytics card end -->
+
+                                            <!-- site Analytics card start -->
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="card table-card latest-activity-card">
+                                                    <div class="card-header with-border">
+                                                        <h5 class="card-header-text">Vehicle Contacts</h5>
+                                                        <button data-toggle="modal" data-target="#add-contact" type="button" class="btn btn-sm btn-success waves-effect waves-light f-right" style="" (click)="openModal(content,0)">
+                                                                <i class="fa fa-plus" style="margin: 0;"></i> Add
+                                                        </button>  
+                                                    </div>
+                                                    <div class="card-block">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-borderless table-xs fleetvims-table">
+                                                                    <thead>
+                                                                        <tr style="background: #eee;">
+                                                                            <th>Type</th>
+                                                                            <th>Name</th>
+                                                                            <th>Email</th>
+                                                                            <th>OPTIONS</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                                 <tbody>
+                                                                    <tr *ngFor="let contact of ContactList">
+                                                                        <td>{{contact.RoleList[0].Role}}</td>
+                                                                        <td>{{contact.FirstName}} {{contact.LastName}}</td>
+                                                                        <td>{{contact.Email}}</td>
+                                                                       <td>
+                                                                            <a href="javascript:void(0)" (click)="openModal(content,contact)" class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon" tooltip="Edit" placement="top">
+                                                                        <i style="margin-right:0" class="fa fa-edit"></i>
+                                                                            </a>
+                                                                            <a href="javascript:void(0)" (click)="onDeleteContact(contact.UserId)" class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon" tooltip="Delete" placement="top">
+                                                                                <i style="margin-right:0" class="fa fa-remove"></i>
+                                                                            </a>
+
+                                                                           
+                                                                        </td>
+                                                                    </tr>
+
+                                                                         
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                </div>
+                                            </div>
+                                            <!-- site Analytics card end -->
+
+
+                                        </div>
+                                        <!-- [ page content ] end -->
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- [ breadcrumb ] end -->
+                        
+                    </div>
+
+<ng-template #content >
+    <div class="modal-header">
+        <h4 class="modal-title">Vehicle Contact - {{title}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+
+    <form class="" [formGroup]='contactregister'  (ngSubmit) = 'onVehicleContactSave()' novalidate>  
+
+    <div class="modal-body">
+                    <!---->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                            <label class="">Type <span class="text-danger">*</span></label>
+                                            <select name="type" class="form-control" formControlName='RoleId'>
+                                                
+                                                 <option *ngFor="let contactRoleList of ContactRoleList" value="{{contactRoleList.RoleId}}">{{contactRoleList.Role}}</option>
+
+                                               
+                                            </select>
+                                            <div *ngIf="RoleId.invalid && (RoleId.dirty || isSubmitted_contact)" id="RoleId" class="text-danger">
+                                                                Type is required.
+                                            </div>
+                                    </div>
+                                 </div>
+                                 <br>
+                                 <div class="row">   
+                                    <div class="col-md-6">
+                                            <label>Portal User ?</label><br>
+                                            <div class="checkbox-fade fade-in-primary d-">
+                                                <label>
+                                                    <input type="checkbox" value="1" formControlName='PortalAccess' (click)="showPasswordField()">
+                                                    <span class="cr"><i class="cr-icon fa fa-check txt-primary"></i></span>
+                                                    <span class="text-inverse">Yes</span>
+                                                </label>
+                                            </div>
+                                            
+                                    </div>
+                                     <div class="col-md-6" [hidden]="!showPassword">
+                                                <div class="form-group form-default">
+                                                        <label class="float-label">Password</label>
+                                                        <input type="password" class="form-control" formControlName='Password'>
+                                                        
+                                                        
+                                                        <div *ngIf="Password.invalid && (Password.dirty || isSubmitted_contact)" class="text-danger">
+                                                                <div *ngIf="Password.errors.required">New Password is required.</div>
+                                                                <div *ngIf="Password.errors.pattern && !Password.errors.required">Password should be Minimum eight characters, at least one letter, one number and one special character:</div>
+                                                        </div>
+                                                </div> 
+                                    </div>
+                                </div><!--./row-->
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                            <label>Reports</label>
+                                            <div class="form-radio">
+                                                    
+                                                        <div class="checkbox-fade fade-in-primary d-">
+                                                            <label>
+                                                                <input type="checkbox" value="1" formControlName='ReportMonthlySummary'>
+                                                                    <span class="cr"><i class="cr-icon fa fa-check txt-primary"></i></span>
+                                                                <span class="text-inverse">Monthly Summary</span>
+
+                                                                
+                                                            </label>
+                                                        </div>
+                                                        <div class="checkbox-fade fade-in-primary d-">
+                                                            <label>
+                                                                 <input type="checkbox" value="1" formControlName='ReportCertificates'>
+                                                                    <span class="cr"><i class="cr-icon fa fa-check txt-primary"></i></span>
+                                                                <span class="text-inverse">Certificates</span>
+
+                                                                
+                                                            </label>
+                                                        </div>
+                                                    
+                                            </div>
+                                    </div>
+                                    
+                            </div>
+                            <br>
+                            <div class="row">
+                                        <div class="col-md-12">
+                                                <div class="form-group form-default">
+                                                         <label class="float-label">Email <span class="text-danger">*</span></label>
+                                                        <input formControlName='ContactEmail' type="text" class="form-control" required="" email>
+                                                        
+                                                       
+                                                        <div *ngIf="ContactEmail.invalid && (ContactEmail.dirty || isSubmitted_contact)" class="text-danger">
+                                                                <div *ngIf="ContactEmail.errors.required">Email is required.</div>
+                                                                <div *ngIf="ContactEmail.errors.email && !ContactEmail.errors.required">Invalid email.</div>
+                                                        </div>
+                                                </div> 
+                                        </div>
+                                </div><!--./row-->
+                                <div class="row">
+                                        <div class="col-md-6">
+                                                <div class="form-group form-default">
+                                                         <label class="float-label">First Name <span class="text-danger">*</span></label>
+                                                        <input type="text"  class="form-control" required="" formControlName='ContactFirstName'>
+                                                        
+                                                       
+                                                        <div *ngIf="ContactFirstName.invalid && (ContactFirstName.dirty || isSubmitted_contact)" id="ContactFirstName" class="text-danger">
+                                                                First Name is required.
+                                                        </div>
+                                                    </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                                <div class="form-group form-default">
+                                                         <label class="float-label">Last Name <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" required="" formControlName='ContactLastName'>
+                                                        
+                                                       
+                                                         <div *ngIf="ContactLastName.invalid && (ContactLastName.dirty || isSubmitted_contact)" id="ContactLastName" class="text-danger">
+                                                                Last Name is required.
+                                                        </div>
+                                                    </div>
+                                        </div>
+                                </div><!--./row-->
+                                <div class="row">
+                                        <div class="col-md-6">
+                                                <div class="form-group form-default">
+                                                        <label class="float-label">Phone</label>
+                                                        <input type="text" class="form-control" formControlName='ContactPhone'>
+                                                        
+                                                        
+                                                        <div *ngIf="ContactPhone.invalid && (ContactPhone.dirty || isSubmitted_contact)" class="text-danger">
+                                                               
+                                                                <div *ngIf="ContactPhone.errors.pattern && !ContactPhone.errors.required">Invalid Phone.</div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                    </div><!--./row-->
+                                    <div class="row">
+                                            <div class="col-md-6">
+                                                    <div class="form-group form-default">
+                                                             <label class="float-label">Address 1</label>
+                                                            <textarea class="form-control"  formControlName='ContactAddress1'></textarea>
+                                                            
+                                                           
+                                                            
+                                                    </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                    <div class="form-group form-default">
+                                                            <label class="float-label">Address 2</label>
+                                                            <textarea class="form-control" formControlName='ContactAddress2'></textarea>
+                                                            
+                                                            
+                                                    </div>
+                                            </div>
+                                    </div><!--./row-->
+                                    <div class="row">
+                                            <div class="col-md-6">
+                                                    <div class="form-group form-default">
+                                                             <label class="float-label">State</label>
+                                                            <select  class="form-control" formControlName='ContactStateId' (change)="getContactCities($event.target.value)">
+                                                                        <option>Select</option>
+                                                                       <option *ngFor="let state of ContactStatelist" value="{{state.StateId}}">{{state.State}}</option>
+                                                                        
+                                                            </select>
+                                                            
+                                                           
+                                                            
+                                                    </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                    <div class="form-group form-default">
+                                                             <label class="float-label">City</label>
+                                                            <select class="form-control" formControlName='ContactCityId'>
+                                                                        <option>Select</option>
+                                                                        <option *ngFor="let city of ContactCitylist" value="{{city.CityId}}">{{city.City}}</option>
+                                                            </select>
+                                                            
+                                                           
+                                                            
+                                                    </div>
+                                            </div>
+                                            
+                                    </div><!--./row-->
+                                    <div class="row">
+                                            <div class="col-md-6">
+                                                    <div class="form-group form-default">
+                                                              <label class="float-label">Zip</label>
+                                                            <input type="text" class="form-control" formControlName='ContactZip'>
+                                                            
+                                                          
+                                                           
+                                                    </div>
+                                            </div>
+                                    </div><!--./row-->
+                       
+                    <!--./-->
+                </div>
+    <div class="modal-footer">
+        <input type="hidden" class="form-control" id="ContactId"  formControlName='ContactId'> 
+        <button type="button" class="btn btn-default waves-effect " (click)="modalRef.hide()">Close</button>
+        <button type='submit' class='btn btn-primary waves-effect waves-light'>Save changes <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /></button>
+        
+
+    </div>
+     </form>
+    
+</ng-template>
+             
+                

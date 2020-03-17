@@ -1,0 +1,1219 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>VIMS documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">VIMS documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>PolicyReportsComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/layout/policyreport/policyreports.component.ts</code>
+</p>
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-policyreports</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>policyreports.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./policyreports.component.html</code></td>
+            </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#alerts">alerts</a>
+                            </li>
+                            <li>
+                                <a href="#client">client</a>
+                            </li>
+                            <li>
+                                <a href="#id">id</a>
+                            </li>
+                            <li>
+                                <a href="#isDeleted">isDeleted</a>
+                            </li>
+                            <li>
+                                <a href="#itemsPerPage">itemsPerPage</a>
+                            </li>
+                            <li>
+                                <a href="#PageIndex">PageIndex</a>
+                            </li>
+                            <li>
+                                <a href="#reports">reports</a>
+                            </li>
+                            <li>
+                                <a href="#SearchText">SearchText</a>
+                            </li>
+                            <li>
+                                <a href="#totalItems">totalItems</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#getClientInfo">getClientInfo</a>
+                            </li>
+                            <li>
+                                <a href="#getPolicyReport">getPolicyReport</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#pageChanged">pageChanged</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(frmBuilder: <a href="https://angular.io/api/forms/FormBuilder" target="_blank">FormBuilder</a>, router: <a href="https://angular.io/api/router/ActivatedRoute" target="_blank">ActivatedRoute</a>, PoliciesService: <a href="../injectables/PoliciesService.html">PoliciesService</a>, http: <a href="https://angular.io/api/common/http/HttpClient" target="_blank">HttpClient</a>, chRef: <a href="https://angular.io/api/core/ChangeDetectorRef" target="_blank">ChangeDetectorRef</a>, modalService: BsModalService, commonService: <a href="../injectables/CommonService.html">CommonService</a>, spinner: NgxSpinnerService)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/layout/policyreport/policyreports.component.ts:37</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>frmBuilder</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="https://angular.io/api/forms/FormBuilder" target="_blank" >FormBuilder</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="https://angular.io/api/router/ActivatedRoute" target="_blank" >ActivatedRoute</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>PoliciesService</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="../injectables/PoliciesService.html" target="_self" >PoliciesService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>http</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="https://angular.io/api/common/http/HttpClient" target="_blank" >HttpClient</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>chRef</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="https://angular.io/api/core/ChangeDetectorRef" target="_blank" >ChangeDetectorRef</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>modalService</td>
+                                                  
+                                                        <td>
+                                                                    <code>BsModalService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>commonService</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="../injectables/CommonService.html" target="_self" >CommonService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>spinner</td>
+                                                  
+                                                        <td>
+                                                                    <code>NgxSpinnerService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section>
+    
+        <h3 id="methods">
+            Methods
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="getClientInfo"></a>
+                        <span class="name">
+                            <b>
+                            getClientInfo
+                            </b>
+                            <a href="#getClientInfo"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>getClientInfo()</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/layout/policyreport/policyreports.component.ts:49</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="getPolicyReport"></a>
+                        <span class="name">
+                            <b>
+                            getPolicyReport
+                            </b>
+                            <a href="#getPolicyReport"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>getPolicyReport(id: )</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">src/app/layout/policyreport/policyreports.component.ts:71</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>id</td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="ngOnInit"></a>
+                        <span class="name">
+                            <b>
+                            ngOnInit
+                            </b>
+                            <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>ngOnInit()</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="111" class="link-to-prism">src/app/layout/policyreport/policyreports.component.ts:111</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="pageChanged"></a>
+                        <span class="name">
+                            <b>
+                            pageChanged
+                            </b>
+                            <a href="#pageChanged"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>pageChanged(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="105" class="link-to-prism">src/app/layout/policyreport/policyreports.component.ts:105</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>event</td>
+                                                        <td>
+                                                                    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="alerts"></a>
+                        <span class="name">
+                            <b>
+                            alerts
+                            </b>
+                            <a href="#alerts"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>alerts:     <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/layout/policyreport/policyreports.component.ts:33</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="client"></a>
+                        <span class="name">
+                            <b>
+                            client
+                            </b>
+                            <a href="#client"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>client:     <code>any[]</code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>any[]</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/layout/policyreport/policyreports.component.ts:35</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="id"></a>
+                        <span class="name">
+                            <b>
+                            id
+                            </b>
+                            <a href="#id"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>id:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/layout/policyreport/policyreports.component.ts:32</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isDeleted"></a>
+                        <span class="name">
+                            <b>
+                            isDeleted
+                            </b>
+                            <a href="#isDeleted"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>isDeleted:     <code></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>false</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/layout/policyreport/policyreports.component.ts:36</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="itemsPerPage"></a>
+                        <span class="name">
+                            <b>
+                            itemsPerPage
+                            </b>
+                            <a href="#itemsPerPage"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>itemsPerPage:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>10</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/layout/policyreport/policyreports.component.ts:30</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="PageIndex"></a>
+                        <span class="name">
+                            <b>
+                            PageIndex
+                            </b>
+                            <a href="#PageIndex"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>PageIndex:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>1</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/layout/policyreport/policyreports.component.ts:31</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="reports"></a>
+                        <span class="name">
+                            <b>
+                            reports
+                            </b>
+                            <a href="#reports"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>reports:     <code>any[]</code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>any[]</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/layout/policyreport/policyreports.component.ts:34</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="SearchText"></a>
+                        <span class="name">
+                            <b>
+                            SearchText
+                            </b>
+                            <a href="#SearchText"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>SearchText:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>&#x27;&#x27;</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/layout/policyreport/policyreports.component.ts:37</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="totalItems"></a>
+                        <span class="name">
+                            <b>
+                            totalItems
+                            </b>
+                            <a href="#totalItems"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>totalItems:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>0</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/layout/policyreport/policyreports.component.ts:29</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpClientModule,HttpClient,HttpErrorResponse} from &#x27;@angular/common/http&#x27;
+import { Component, OnInit,ChangeDetectorRef,TemplateRef} from &#x27;@angular/core&#x27;;
+import { NgbModal, ModalDismissReasons} from &#x27;@ng-bootstrap/ng-bootstrap&#x27;;
+import { Router,ActivatedRoute } from &#x27;@angular/router&#x27;;
+import { routerTransition } from &#x27;../../router.animations&#x27;;
+import { PoliciesService} from &#x27;../../shared/services/policies.service&#x27;;
+import { CommonService} from &#x27;../../shared/services/common.service&#x27;;
+
+import { FormGroup, FormBuilder, Validators,EmailValidator } from &#x27;@angular/forms&#x27;;
+
+import { BsModalService } from &#x27;ngx-bootstrap/modal&#x27;;
+import { BsModalRef } from &#x27;ngx-bootstrap/modal/bs-modal-ref.service&#x27;;
+import { NgxSpinnerService } from &#x27;ngx-spinner&#x27;;
+
+
+
+
+@Component({
+    selector: &#x27;app-policyreports&#x27;,
+    templateUrl: &#x27;./policyreports.component.html&#x27;,
+    styleUrls: [&#x27;./policyreports.component.scss&#x27;],
+    animations: [routerTransition()]
+})
+
+
+export class PolicyReportsComponent implements OnInit {
+
+	// Our array of policyreports
+  totalItems: number &#x3D; 0;
+  itemsPerPage: number &#x3D; 10;
+  PageIndex: number &#x3D; 1;
+  id: number;
+  alerts: any &#x3D; []
+  reports: any[];
+  client: any[];
+  isDeleted &#x3D; false;
+  SearchText: string&#x3D;&#x27;&#x27;;
+
+  constructor(private frmBuilder: FormBuilder,private router: ActivatedRoute,private PoliciesService: PoliciesService,private http: HttpClient, private chRef: ChangeDetectorRef,private modalService: BsModalService,private commonService:CommonService,private spinner: NgxSpinnerService) {
+
+       if (this.router.snapshot.params[&quot;id&quot;]) {  
+            this.id &#x3D; this.router.snapshot.params[&quot;id&quot;];  
+
+        }  
+        
+
+   }
+
+   getClientInfo(){
+    this.PoliciesService.getPolicyById(this.id).subscribe((data : any)&#x3D;&gt;{  
+            
+              if(data.Result){ 
+
+                    this.client&#x3D;data.Result_value;
+                    console.log(this.client);
+                  
+                }else{
+                    
+                    
+                }
+        },
+        (err : HttpErrorResponse)&#x3D;&gt;{
+                console.log(err)
+                //this.loading &#x3D; false;
+                //this.alertService.error(&#x27;You have entered the invalid details.&#x27;);
+        })
+        
+  
+  }  
+
+   getPolicyReport(id) { 
+
+    this.spinner.show();
+    var _ClientsOptions &#x3D; {&quot;PageIndex&quot;: 
+    this.PageIndex,&quot;PageSize&quot;: this.itemsPerPage,&quot;SortBy&quot;: &quot;0&quot;,&quot;SortOrder&quot;:2,&quot;Filter&quot;: {&quot;ClientId&quot;:id,&quot;SearchText&quot;: this.SearchText,
+    &quot;Deleted&quot;: this.isDeleted}}
+
+    this.PoliciesService.getPolicyReport(_ClientsOptions).subscribe((data : any)&#x3D;&gt;{  
+
+            console.log(data);
+
+            if(data.Result){  
+                  this.totalItems&#x3D;data.Result_value.TotalRecords;
+                  this.reports &#x3D; data.Result_value.SearchResult;
+                  this.spinner.hide(); 
+                  
+
+              }else{
+                  //this.loading &#x3D; false;
+                  //this.alertService.error(&#x27;You have entered the invalid details.&#x27;);
+                  
+              }
+
+      },
+      (err : HttpErrorResponse)&#x3D;&gt;{
+              console.log(&quot;Some Error occured&quot;);
+              //this.loading &#x3D; false;
+             // this.alertService.error(&#x27;You have entered the invalid details.&#x27;);
+      })
+
+           
+
+    } 
+
+  pageChanged(event: any): void {
+      this.PageIndex&#x3D;event.page;
+     // console.log(this.PageIndex);
+      this.getPolicyReport(this.id);
+  }    
+
+  ngOnInit() {
+      if (this.id &gt; 0) {  
+          this.getClientInfo()
+          this.getPolicyReport(this.id);
+
+      }
+  }
+ } </code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html"> &lt;div class&#x3D;&quot;pcoded-content&quot; [@routerTransition]&gt;
+                        &lt;!-- [ breadcrumb ] start --&gt;
+                        &lt;div class&#x3D;&quot;page-header&quot;&gt;
+                            &lt;div class&#x3D;&quot;page-block&quot;&gt;
+                                &lt;div class&#x3D;&quot;row align-items-center&quot;&gt;
+                                    &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+                                        &lt;div class&#x3D;&quot;page-header-title&quot;&gt;
+                                            &lt;h4 class&#x3D;&quot;m-b-10&quot;&gt;Polices&lt;/h4&gt;
+                                        &lt;/div&gt;
+                                        &lt;ul class&#x3D;&quot;breadcrumb&quot;&gt;
+                                            &lt;li class&#x3D;&quot;breadcrumb-item&quot;&gt;
+                                                &lt;a [routerLink]&#x3D;&quot;[&#x27;/dashboard&#x27;]&quot;&gt;
+                                                    &lt;i class&#x3D;&quot;feather icon-home&quot;&gt;&lt;/i&gt;
+                                                &lt;/a&gt;
+                                            &lt;/li&gt;
+                                            &lt;li class&#x3D;&quot;breadcrumb-item&quot;&gt;
+                                                &lt;a [routerLink]&#x3D;&quot;[&#x27;/policies&#x27;]&quot;&gt;Policy&lt;/a&gt;
+                                                
+                                            &lt;/li&gt;
+                                            &lt;li class&#x3D;&quot;breadcrumb-item&quot;&gt;
+                                                &lt;a href&#x3D;&quot;javascript:void(0)&quot;&gt;Policy Report&lt;/a&gt;
+                                            &lt;/li&gt;
+                                        &lt;/ul&gt;
+                                         &lt;p style&#x3D;&quot;margin-top: 50px;background: #fff;padding: 5px;border-radius: 4px;margin-bottom: 0;display:none&quot;&gt;Policy Type: &lt;b&gt;&lt;a href&#x3D;&quot;javascript:void(0)&quot;&gt;&lt;/a&gt;&lt;/b&gt;&lt;br&gt;&lt;/p&gt;
+
+                                         &lt;p style&#x3D;&quot;margin-top: 50px;background: #fff;padding: 5px;border-radius: 4px;margin-bottom: 0;display: none&quot;&gt;Policy: &lt;b&gt; &lt;a href&#x3D;&quot;javascript:void(0)&quot;&gt;&lt;/a&gt;&lt;/b&gt;&lt;br&gt;&lt;/p&gt;
+
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+
+                         &lt;div class&#x3D;&quot;pcoded-inner-content&quot;&gt;
+                            &lt;div class&#x3D;&quot;main-body&quot;&gt;
+                                &lt;div class&#x3D;&quot;page-wrapper&quot;&gt;
+                                    &lt;div class&#x3D;&quot;page-body&quot;&gt;
+                                        &lt;!-- [ page content ] start --&gt;
+                                        &lt;div class&#x3D;&quot;row&quot;&gt;
+
+                                            &lt;div class&#x3D;&quot;alertbox&quot;&gt;     
+                                                &lt;div *ngFor&#x3D;&quot;let alert of alerts&quot;&gt;
+                                                        &lt;alert [type]&#x3D;&quot;alert.type&quot; [dismissOnTimeout]&#x3D;&quot;5000&quot;&gt;&lt;span [innerHtml]&#x3D;&quot;alert.msg&quot;&gt;&lt;/span&gt;&lt;/alert&gt;
+                                                &lt;/div&gt;
+                                            &lt;/div&gt; 
+                                             
+
+                                            &lt;!-- site Analytics card start --&gt;
+                                            &lt;div class&#x3D;&quot;col-lg-12 col-md-12&quot;&gt;
+                                                    &lt;div class&#x3D;&quot;card table-card latest-activity-card&quot;&gt;
+                                                        &lt;div class&#x3D;&quot;card-header with-border&quot;&gt;
+                                                            &lt;h5 class&#x3D;&quot;card-header-text&quot;&gt;Policy::Report&lt;/h5&gt;
+
+                                                            
+                                                        &lt;/div&gt;
+                                                        &lt;div class&#x3D;&quot;card-block&quot;&gt;
+                                                            &lt;div class&#x3D;&quot;table-responsive&quot;&gt;
+                                                                &lt;table class&#x3D;&quot;table table-borderless table-xs fleetvims-table&quot; id&#x3D;&quot;clients_table&quot;&gt;
+                                                                    &lt;thead&gt;       
+                                                                        &lt;tr style&#x3D;&quot;background: #eee;&quot;&gt;
+                                                                            &lt;th&gt;Period&lt;/th&gt;
+                                                                            &lt;th&gt;Trucks/Trailers/Other&lt;/th&gt;
+                                                                            &lt;th&gt;Value&lt;/th&gt;
+                                                                            &lt;th&gt;Premium&lt;/th&gt;
+                                                                            &lt;th&gt;Taxes&lt;/th&gt;
+                                                                            &lt;th&gt;Total Payment Due&lt;/th&gt;
+                                                                            &lt;th&gt;Report&lt;/th&gt;
+                                                                            &lt;th&gt;Regenerate&lt;/th&gt;
+                                                                            &lt;th&gt;Meta Data&lt;/th&gt;
+                                                                            
+                                                                        &lt;/tr&gt;
+                                                                        &lt;/thead&gt;
+                                                                        &lt;tbody&gt;
+                                                                         &lt;tr *ngFor&#x3D;&quot;let report of reports&quot;&gt;
+                                                                                &lt;td&gt;{{report.Period}}&lt;/td&gt;
+                                                                                &lt;td&gt;{{report.TotalUnit}}&lt;/td&gt;
+                                                                                &lt;td&gt;{{report.Rate | currency}}&lt;/td&gt;
+                                                                                &lt;td&gt;{{report.PeriodPremium | currency}}&lt;/td&gt;
+                                                                                &lt;td&gt;&lt;a href&#x3D;&quot;{{report.ReportPath}}&quot; target&#x3D;&quot;_blank&quot;&gt;PDF&lt;/a&gt;&lt;/td&gt;
+                                                                                &lt;td&gt;&lt;a href&#x3D;&quot;{{report.ReportPath}}&quot; target&#x3D;&quot;_blank&quot;&gt;Regenrate&lt;/a&gt;&lt;/td&gt;
+                                                                          &lt;/tr&gt;  
+
+                                                                
+
+                                                                        &lt;/tbody&gt;
+                                                                &lt;/table&gt;
+                                                            &lt;/div&gt;
+
+                                                             &lt;div class&#x3D;&quot;text-center&quot;&gt;
+
+                                                                &lt;pagination [totalItems]&#x3D;&quot;totalItems&quot; [itemsPerPage]&#x3D;&quot;itemsPerPage&quot; (pageChanged)&#x3D;&quot;pageChanged($event)&quot;  [maxSize]&#x3D;&quot;5&quot;&gt;&lt;/pagination&gt;
+
+                                                            &lt;/div&gt;
+
+                                                        &lt;/div&gt;
+                                                           
+                                                    &lt;/div&gt;
+                                                &lt;/div&gt;
+
+                                            
+                                            
+                                        
+
+                                            
+    
+                                                
+                                                
+                                            &lt;!-- site Analytics card end --&gt;
+
+
+                                        &lt;/div&gt;
+                                        &lt;!-- [ page content ] end --&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;!-- [ breadcrumb ] end --&gt;
+                        
+                    &lt;/div&gt;
+
+             
+                </code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div> <div class="pcoded-content" [@routerTransition]>                        <!-- [ breadcrumb ] start -->                        <div class="page-header">                            <div class="page-block">                                <div class="row align-items-center">                                    <div class="col-md-6">                                        <div class="page-header-title">                                            <h4 class="m-b-10">Polices</h4>                                        </div>                                        <ul class="breadcrumb">                                            <li class="breadcrumb-item">                                                <a [routerLink]="[\'/dashboard\']">                                                    <i class="feather icon-home"></i>                                                </a>                                            </li>                                            <li class="breadcrumb-item">                                                <a [routerLink]="[\'/policies\']">Policy</a>                                                                                            </li>                                            <li class="breadcrumb-item">                                                <a href="javascript:void(0)">Policy Report</a>                                            </li>                                        </ul>                                         <p style="margin-top: 50px;background: #fff;padding: 5px;border-radius: 4px;margin-bottom: 0;display:none">Policy Type: <b><a href="javascript:void(0)"></a></b><br></p>                                         <p style="margin-top: 50px;background: #fff;padding: 5px;border-radius: 4px;margin-bottom: 0;display: none">Policy: <b> <a href="javascript:void(0)"></a></b><br></p>                                    </div>                                </div>                            </div>                        </div>                         <div class="pcoded-inner-content">                            <div class="main-body">                                <div class="page-wrapper">                                    <div class="page-body">                                        <!-- [ page content ] start -->                                        <div class="row">                                            <div class="alertbox">                                                     <div *ngFor="let alert of alerts">                                                        <alert [type]="alert.type" [dismissOnTimeout]="5000"><span [innerHtml]="alert.msg"></span></alert>                                                </div>                                            </div>                                                                                          <!-- site Analytics card start -->                                            <div class="col-lg-12 col-md-12">                                                    <div class="card table-card latest-activity-card">                                                        <div class="card-header with-border">                                                            <h5 class="card-header-text">Policy::Report</h5>                                                                                                                    </div>                                                        <div class="card-block">                                                            <div class="table-responsive">                                                                <table class="table table-borderless table-xs fleetvims-table" id="clients_table">                                                                    <thead>                                                                               <tr style="background: #eee;">                                                                            <th>Period</th>                                                                            <th>Trucks/Trailers/Other</th>                                                                            <th>Value</th>                                                                            <th>Premium</th>                                                                            <th>Taxes</th>                                                                            <th>Total Payment Due</th>                                                                            <th>Report</th>                                                                            <th>Regenerate</th>                                                                            <th>Meta Data</th>                                                                                                                                                    </tr>                                                                        </thead>                                                                        <tbody>                                                                         <tr *ngFor="let report of reports">                                                                                <td>{{report.Period}}</td>                                                                                <td>{{report.TotalUnit}}</td>                                                                                <td>{{report.Rate | currency}}</td>                                                                                <td>{{report.PeriodPremium | currency}}</td>                                                                                <td><a href="{{report.ReportPath}}" target="_blank">PDF</a></td>                                                                                <td><a href="{{report.ReportPath}}" target="_blank">Regenrate</a></td>                                                                          </tr>                                                                                                                                          </tbody>                                                                </table>                                                            </div>                                                             <div class="text-center">                                                                <pagination [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" (pageChanged)="pageChanged($event)"  [maxSize]="5"></pagination>                                                            </div>                                                        </div>                                                                                                               </div>                                                </div>                                                                                                                                                                                                                                                                                                                            <!-- site Analytics card end -->                                        </div>                                        <!-- [ page content ] end -->                                    </div>                                </div>                            </div>                        </div>                        <!-- [ breadcrumb ] end -->                                            </div>                             </div>'
+    var COMPONENTS = [{'name': 'AccessDeniedComponent', 'selector': 'app-access-denied'},{'name': 'AgenciesComponent', 'selector': 'app-agencies'},{'name': 'AgencyContactsComponent', 'selector': 'app-agencycontacts'},{'name': 'AlertComponent', 'selector': 'alert'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChatComponent', 'selector': 'app-chat'},{'name': 'ClientContactsComponent', 'selector': 'app-clientcontacts'},{'name': 'ClientReportsComponent', 'selector': 'app-clientreports'},{'name': 'ClientsComponent', 'selector': 'app-clients'},{'name': 'ContractsComponent', 'selector': 'app-contracts'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'ForgotpasswordComponent', 'selector': 'app-login'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'InsurerContactsComponent', 'selector': 'app-insurercontacts'},{'name': 'InsurersComponent', 'selector': 'app-insurers'},{'name': 'LayoutComponent', 'selector': 'app-layout'},{'name': 'LienholderContactsComponent', 'selector': 'app-lienholdercontacts'},{'name': 'LienholdersComponent', 'selector': 'app-lienholders'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NotFoundComponent', 'selector': 'app-not-found'},{'name': 'NotificationComponent', 'selector': 'app-notification'},{'name': 'PageHeaderComponent', 'selector': 'app-page-header'},{'name': 'PoliciesComponent', 'selector': 'app-policies'},{'name': 'PolicyReportsComponent', 'selector': 'app-policyreports'},{'name': 'RolesComponent', 'selector': 'app-roles'},{'name': 'ServerErrorComponent', 'selector': 'app-server-error'},{'name': 'SidebarComponent', 'selector': 'app-sidebar'},{'name': 'StatComponent', 'selector': 'app-stat'},{'name': 'TimelineComponent', 'selector': 'app-timeline'},{'name': 'UsersComponent', 'selector': 'app-users'},{'name': 'VehicleContactsComponent', 'selector': 'app-vehiclecontacts'},{'name': 'VehicleTransactionLogsComponent', 'selector': 'app-vehicletransactionlogs'},{'name': 'VehiclesComponent', 'selector': 'app-vehicles'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'PolicyReportsComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'PolicyReportsComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <script src="../js/menu-wc.js"></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

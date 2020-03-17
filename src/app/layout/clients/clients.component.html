@@ -1,0 +1,560 @@
+ <div class="pcoded-content" [@routerTransition]>
+                        <!-- [ breadcrumb ] start -->
+                        <div class="page-header">
+                            <div class="page-block">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8">
+                                        <div class="page-header-title">
+                                            <h4 class="m-b-10">Clients</h4>
+                                        </div>
+                                        <ul class="breadcrumb">
+                                            <li class="breadcrumb-item">
+                                                <a [routerLink]="['/dashboard']">
+                                                    <i class="feather icon-home"></i>
+                                                </a>
+                                            </li>
+                                            <li class="breadcrumb-item">
+                                                <a href="JavaScript:void(0)">Clients</a>
+                                                
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="pcoded-inner-content">
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <div class="page-body">
+                                        <!-- [ page content ] start -->
+                                        <div class="row">
+
+                                            <div class="alertbox">     
+                                                <div *ngFor="let alert of alerts">
+                                                        <alert [type]="alert.type" [dismissOnTimeout]="5000"><span [innerHtml]="alert.msg"></span></alert>
+                                                </div>
+                                            </div> 
+                                             
+
+                                            <!-- site Analytics card start -->
+                                            <div class="col-lg-12 col-md-12">
+                                                    <div class="card table-card latest-activity-card">
+                                                        <div class="card-header with-border">
+                                                            <h5 class="card-header-text">Clients</h5>
+
+                                                            <button data-toggle="modal" data-target="#large-Modal" type="button" class="btn btn-sm btn-success waves-effect waves-light f-right" (click)="openModal(content,0)" *ngIf="RolesService.roleMatch('Client',['AddEditAccess']) && showprnt">    <!---  UserInfo.Module!='3'" --->
+                                                                    <i class="fa fa-plus" style="margin: 0;"></i> Add
+                                                            </button>
+                                                            <button data-toggle="modal" data-target="#large-Modal" type="button" class="btn btn-sm btn-success waves-effect waves-light f-right" (click)="exportClient()" *ngIf="RolesService.roleMatch('Bulk Import',['AddEditAccess'])">
+                                                                 Export
+                                                            </button> 
+                                                            <div class="input-group" style="width: 200px;float: right;margin: 0;" *ngIf=" UserInfo.Module!='3'">
+
+                                                                    <input type="text" class="form-control" placeholder="Search" title="" [(ngModel)]="search_value">
+                                                                    <span class="input-group-prepend" id="name" style="margin: 0;cursor:pointer" (click)="onFilter(search_value)" >
+                                                                        <label class="input-group-text" style="background: white;color: #b2b2b2;"><i class="fa fa-search" style="cursor:pointer"></i></label>
+                                                                    </span> 
+                                                            </div>
+                                                            <div class="input-group" style="width: 207px;float: right;margin: 0 15px 0 0;" *ngIf=" UserInfo.Module!='3'">
+                                                                    <span class="input-group-prepend" id="name" style="margin: 0;">
+                                                                    <label class="input-group-text" style="background: white;color: #b2b2b2;">show</label>
+                                                                    </span>
+                                                                    <select style="border: 1px solid #ccc;" aria-controls="basic-col-reorder" class="form-control" (change)="statusFilter($event.target.value)">
+                                                                        <option value="1">Active</option>
+                                                                        <option value="0">Not Active</option>
+                                                                    </select>  
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-block">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-borderless table-xs fleetvims-table" id="clients_table">
+                                                                    <thead>       
+                                                                        <tr style="background: #eee;">
+                                                                            <th><a href="javascript:void(0)" (click)="Sorting(4)">Name</a></th>
+                                                                            <th><a href="javascript:void(0)" (click)="Sorting(1)">Agency</a></th>
+                                                                            <th><a href="javascript:void(0)" (click)="Sorting(2)">Producer</a></th>
+                                                                            <th style="text-align:center;"><a href="javascript:void(0)" (click)="Sorting(3)">Policies</a></th>
+                                                                            <th *ngIf="!isDeleted" style="text-align:center;">Units</th>
+                                                                             <th style="text-align:center;">AL</th>
+                                                                            <th style="text-align:center;">PD</th>
+                                                                            <th style="text-align:center;">NT</th>
+                                                                            <th style="text-align:center;">OA</th>
+                                                                            <th style="text-align:center;">PA</th>
+                                                                            
+                                                                            <th *ngIf="!isDeleted && RolesService.roleMatch('Client Report',['AddEditAccess','DeleteAccess','ViewAccess'])">Reports</th>
+                                                                            <th *ngIf="RolesService.roleMatch('Client',['AddEditAccess']) || RolesService.roleMatch('Client',['DeleteAccess'])">OPTIONS</th>
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                    <tr *ngFor="let client of clients">
+                                                                        
+                                                                        <td>{{client.ClientName}}</td>
+                                                                        <td>{{client.AgencyName}}</td>
+                                                                        <td>{{client.ProducerName}}</td>
+                                                                        <td style="text-align:center;">
+                                                                            <a *ngIf="UserInfo.Module!='5'" [routerLink]="['/policies/client/', client.ClientId]">{{client.Policies}}</a>
+                                                                            <span *ngIf="UserInfo.Module=='5'">{{client.Policies}}</span>
+
+                                                                        </td>
+
+
+                                                                        <td style="text-align:center;" *ngIf="!isDeleted">
+                                                                            
+                                                                                        <a *ngIf="RolesService.roleMatch('Vehicle',['DeleteAccess','ViewAccess','AddEditAccess'])" class="btn waves-effect waves-dark btn-success btn-outline-success btn-icon" tooltip="Vehicles" placement="top" [routerLink]="['/vehicles/client/', client.ClientId]" >
+                                                                                                <i style="margin-right:0" class="fa fa-truck"></i>
+                                                                                        </a>
+                                                                                        
+
+
+                                                                        </td>
+                                                                        <td style="text-align:center;">{{client.ALPolicyCount}}</td>
+                                                                        <td style="text-align:center;">{{client.PDPolicyCount}}</td>
+                                                                        <td style="text-align:center;">{{client.NTPolicyCount}}</td>
+                                                                        <td style="text-align:center;">{{client.OAPolicyCount}}</td>
+                                                                        <td style="text-align:center;">{{client.PAPolicyCount}}</td>
+                                                                        
+
+                                                                        <td *ngIf="!isDeleted && RolesService.roleMatch('Client Report',['AddEditAccess','DeleteAccess','ViewAccess'])" style="text-align:center;">  <a [routerLink]="['/client/report/', client.ClientId,client.ClientName]" class="btn waves-effect waves-dark btn-info btn-outline-info btn-icon" tooltip="View Reports" placement="top" >
+                                                                            <i style="margin-right:0" class="fa fa-eye"></i>
+                                                                                            </a>
+                                                                                        </td>
+                                                                        
+                                                                        <td *ngIf="RolesService.roleMatch('Client',['AddEditAccess']) || RolesService.roleMatch('Client',['DeleteAccess'])"><a *ngIf="!isDeleted && RolesService.roleMatch('Client',['AddEditAccess'])" [routerLink]="['/client/edit/', client.ClientId]" class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon" tooltip="Edit" placement="top">
+                                                                        <i style="margin-right:0" class="fa fa-edit"></i>
+                                                                            </a>
+
+                                                                            <a *ngIf="RolesService.roleMatch('Client',['DeleteAccess']) && !isDeleted" href="javascript:void(0)" (click)="onDelete(client.ClientId)" class="btn waves-effect waves-dark btn-danger btn-outline-danger btn-icon" tooltip="Delete" placement="top" ng-if="client.Deleted === false">
+                                                                                            <i style="margin-right:0" class="fa fa-remove"></i>
+                                                                                        </a>
+
+                                                                             <a *ngIf="RolesService.roleMatch('Client',['DeleteAccess']) && isDeleted" href="javascript:void(0)" (click)="onRestore(client.ClientId)" class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon" tooltip="Restore" placement="top">
+                                                                                 <i style="margin-right:0" class="fa fa-undo"></i>
+                                                                            </a> 
+
+                                                                            <a [routerLink]="['/client/transactionlog/', client.ClientId]" class="btn waves-effect waves-dark btn-info btn-outline-info btn-icon" placement="top" tooltip="Transactions" *ngIf="RolesService.roleMatch('Client Report',['AddEditAccess','DeleteAccess','ViewAccess'])">
+                                                                    <i style="margin-right:0" class="fa fa-exchange"></i>
+                                                            </a>           
+
+                                                                           
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr *ngIf="! clients?.length">
+                                                                           <td colspan="11">  No data found...</td>
+                                                                    </tr>
+
+                                                                        </tbody>
+                                                                </table>
+                                                            </div>
+                                                             <div class="card-footer no-border">
+                                                               
+                                                                   <div class="row">
+                                                                     <div class="col-md-11"> 
+                                                                        <pagination [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" (pageChanged)="pageChanged($event)"  [maxSize]="5"></pagination>
+
+                                                                        </div> 
+                                                                        <div class="col-md-1" style="float:right;">
+                                                                               <select (change)="itemsPerPageChange($event.target.value)">
+                                                                                        <option value="10" [selected]="itemsPerPage==10">10</option>
+                                                                                        <option value="25" [selected]="itemsPerPage==25">25</option>
+                                                                                        <option value="100" [selected]="itemsPerPage==100">100</option>
+                                                                                        <option [value]="totalItems">ALL</option>
+                                                                                </select>
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
+                                                        </div>
+                                                           
+                                                    </div>
+                                                </div>
+
+                                            
+                                            
+                                        
+
+                                            
+    
+                                                
+                                                
+                                            <!-- site Analytics card end -->
+
+
+                                        </div>
+                                        <!-- [ page content ] end -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- [ breadcrumb ] end -->
+                        
+                    </div>
+
+<ng-template #content >
+
+    <div class="modal-header">
+        <h4 class="modal-title">Clients - {{title}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+     <form class="" [formGroup]='register'  (ngSubmit) = 'onClientsSave()' novalidate>
+                            
+    <div class="modal-body">
+                        
+
+                        <div class="row">
+                             <div class="col-md-12" *ngIf="UserInfo.Module=='1'">
+                                        <div class="form-group form-default">
+                                                <label class="float-label">Agency <span class="text-danger">*</span></label>
+                                                <select name="type" class="form-control" formControlName='AgencyId' (change)="getAgencyProducer($event.target.value)">
+                                                         <option>Select</option>
+                                                         <option *ngFor="let agency of Agencylist" [value]="agency.AgencyId">{{agency.AgencyName}}</option>
+                                                          
+                                                    </select>
+                                                
+                                                <div *ngIf="AgencyId.invalid && (AgencyId.dirty || isSubmitted)" id="AgencyId" class="text-danger">
+                                                Agency is required.
+                                            </div> 
+                                        </div>
+                            </div>
+
+                        </div>    
+                        <div class="row">
+                             <div class="col-md-12" *ngIf="UserInfo.Module!='3'">
+                                        <div class="form-group form-default">
+                                                 <label class="float-label">Producer <span class="text-danger">*</span></label>
+                                                <select name="type" class="form-control" formControlName='ProducerId'>
+                                                         <option>Select</option>
+                                                         <option *ngFor="let producer of Producers" [value]="producer.UserId">{{producer.Name}}</option>
+                                                          
+                                                    </select>
+
+                                               
+                                                
+                                               
+                                                <div *ngIf="ProducerId.invalid && (ProducerId.dirty || isSubmitted)" id="ProducerId" class="text-danger">
+                                                Producer is required.
+                                                </div>
+                                        </div>
+                             </div>
+                            
+                           
+                            
+                        </div><!--./row-->
+                        
+
+                       <fieldset class="scheduler-border">
+                                    <legend class="scheduler-border">Client Information</legend> 
+
+                        <div class="row">
+                                 <!-- <div class="col-md-12">
+                                    <div class="form-group form-default">
+                                            <label class="float-label">Parent Client</label>
+                                            <select  class="form-control" formControlName='parentClientId'>
+                                                            <option value="0">Select</option>
+                                                             <option *ngFor="let client of ClientList" [value]="client[0]">{{client[1]}}</option>
+                                            </select>
+                                            
+                                            
+                                             
+                                    </div>
+                                </div> -->
+                        </div> 
+                        <div class="row">
+                                
+                                <div class="col-md-6">
+                                    <div class="form-group form-default">
+                                            <label class="float-label">Client Name <span class="text-danger">*</span></label>
+                                            <input type="text" name="footer-email" class="form-control" required="" formControlName='ClientName'>
+                                            
+                                            
+                                            <div *ngIf="ClientName.invalid && (ClientName.dirty || isSubmitted)" id="ClientName" class="text-danger">
+                                                Client Name is required.
+                                            </div> 
+                                    </div>
+                                </div>
+
+                                 <div class="col-md-6">
+                                         <label class="float-label">DOT #</label> 
+                                         <input type="text" class="form-control" formControlName='DOT'>
+                                         
+                                        
+                                        
+                                           <div *ngIf="DOT.invalid && (DOT.dirty || isSubmitted)" class="text-danger">
+                                                     
+                                                      
+                                                      <div *ngIf="(DOT.errors.maxlength)">
+                                                       Invalid DOT #.
+                                                      </div>
+                                                      
+                                        </div> 
+                                         
+                                </div>
+
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-12" *ngIf="UserInfo.Module!='3'">
+                                       <div class="form-group form-default">
+                                                <label class="float-label">Email's CSR <span class="text-danger"></span></label>
+                                               <select name="type" class="form-control" formControlName='user_emailId'>
+                                                        <option>Select</option>
+                                                        <option *ngFor="let Emailproducer of EmailProducers" [value]="Emailproducer.UserId">{{Emailproducer.Name}}</option>
+                                                         
+                                                   </select>                                                                                                                                
+                                       </div>
+                            </div>
+                       
+                        </div>
+
+                    </fieldset>
+                        
+                     <fieldset class="scheduler-border">
+                                    <legend class="scheduler-border">Address Informaiton</legend> 
+                        <div class="row">
+                                <div class="col-md-12">
+                                        <div class="form-group form-default">
+                                                <label class="float-label"> Physical Address</label>
+                                                <input type="text" name="footer-email" class="form-control" formControlName='Address1'>
+                                                
+                                                
+                                                
+                                        </div>
+                                </div>
+                        </div><!--./row-->
+
+                       <div class="row">
+                            <div class="col-md-6"> 
+                                <div class="form-group form-default">
+                                    <label class="float-label">State</label>
+                                    <select id="StateId" class="form-control" formControlName='StateId' (change)="getCities($event.target.value)">
+                                            <option>Select</option>
+                                            <option *ngFor="let state of Statelist" value="{{state.StateId}}">{{state.State}}</option>
+                                            
+                                    </select>
+                                    
+                                    
+                                
+                                </div>
+                             </div>
+                             <div class="col-md-6">  
+                                <div class="form-group form-default">
+                                     <label class="float-label">City</label>
+                                    <select  class="form-control" formControlName='CityId'>
+                                            <option>Select</option>
+                                            <option *ngFor="let city of Citylist" value="{{city.CityId}}">{{city.City}}</option>
+                                    </select>
+                                    
+                                   
+                                
+
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="row">
+                                <div class="col-md-6">
+                                        <div class="form-group form-default">
+                                                <label class="float-label">Zip</label>
+                                                <input type="text" name="footer-email" class="form-control"  formControlName='Zip'>
+                                                
+                                                
+                                            
+                                        </div>
+                                </div>
+                         </div>
+
+                         
+
+                        <div class="row">
+                                <div class="col-md-12">
+                                        <div class="form-group form-default">
+                                              
+                                              <input id="sameaddress" type="checkbox" (click)="sameasAddress($event)">
+                                              <label for="sameaddress">
+                                                     Same address as physical address
+                                                </label>    
+                                                
+                                        </div>
+                                </div>
+                        </div><!--./row-->
+   
+                        <div class="row">
+                                <div class="col-md-12">
+
+                                         <div class="form-group form-default">
+                                                 <label class="float-label"> Mailling Address</label>
+                                                <input type="text" name="footer-email" class="form-control" formControlName='MailingAddress1'>
+                                                
+                                               
+                                                
+                                        </div>
+
+                                        
+                                </div>
+                        </div><!--./row-->
+                        
+  
+                       <div class="row">
+                            <div class="col-md-6"> 
+                                <div class="form-group form-default">
+                                     <label class="float-label">State</label>
+                                    <select id="StateId" class="form-control" formControlName='MailingStateId' (change)="getMailingCities($event.target.value)">
+                                            <option>Select</option>
+                                            <option *ngFor="let state of MailingStatelist" value="{{state.StateId}}">{{state.State}}</option>
+                                            
+                                    </select>
+                                    
+                                   
+                                
+                                </div>
+                             </div>
+                             <div class="col-md-6">  
+                                <div class="form-group form-default">
+                                     <label class="float-label">City</label>
+                                    <select  class="form-control" formControlName='MailingCityId'>
+                                            <option>Select</option>
+                                            <option *ngFor="let city of MailingCitylist" value="{{city.CityId}}">{{city.City}}</option>
+                                    </select>
+                                    
+                                   
+                                
+
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="row">
+                                <div class="col-md-6">
+                                        <div class="form-group form-default">
+                                                <label class="float-label">Zip</label>
+                                                <input type="text" name="footer-email" class="form-control"  formControlName='MailingZip'>
+                                                
+                                                
+                                            
+                                        </div>
+                                </div>
+                         </div>
+                         <div class="row">
+                                <div class="col-md-12">
+                                        <div class="form-group form-default">
+                                                <label class="float-label">Comments</label>
+                                                <textarea class="form-control" formControlName='Description'></textarea>   
+                                                
+                                                
+                                            
+                                        </div>
+                                </div>
+                         </div>    
+                </fieldset>    
+                <fieldset class="scheduler-border">
+                                    <legend class="scheduler-border">Additional Information</legend> 
+                         <div class="row">
+                                <div class="col-md-12" *ngIf="UserInfo.Module!='3'">
+                                        <div class="form-group form-default">
+                                                <label class="float-label">Parent Client</label>
+                                                <select  class="form-control" formControlName='parentClientId'>
+                                                                <option value="0">Select</option>
+                                                                 <option *ngFor="let client of ClientList" [value]="client[0]">{{client[1]}}</option>
+                                                </select>
+                                                
+                                                
+                                                 
+                                        </div>
+                                    </div>
+
+
+
+                                <div class="col-md-12">
+                                     <div class="form-group form-default">
+                                        <h4 class="sub-title">Policies do not display</h4>
+                                        <div class="checkbox-color checkbox-primary">
+                                                <input id="checkbox1850" type="checkbox"  formControlName='PolicyPD'>
+                                                <label for="checkbox1850">
+                                                    PD
+                                                </label>
+                                        </div>
+                                        <div class="checkbox-color checkbox-primary">
+                                                <input id="checkbox1860" type="checkbox"  formControlName='PolicyNT'>
+                                                <label for="checkbox1860">
+                                                    NT
+                                                </label>
+                                        </div>
+                                        <div class="checkbox-color checkbox-primary">
+                                                <input id="checkbox1870" type="checkbox" formControlName='PolicyOA'>
+                                                <label for="checkbox1870">
+                                                    OA
+                                                </label>
+                                        </div>
+                                        <div class="checkbox-color checkbox-primary">
+                                                <input id="checkbox1880" type="checkbox" formControlName='PolicyPA'>
+                                                <label for="checkbox1880">
+                                                    PA
+                                                </label>
+                                        </div>
+                                        <div class="checkbox-color checkbox-primary">
+                                                <input id="checkbox1890" type="checkbox" formControlName='PolicyAL'>
+                                                <label for="checkbox1890">
+                                                    AL
+                                                </label>
+                                        </div>
+                                </div>
+                               </div> 
+                        </div>
+                        <div class="row">
+                                <div class="col-md-12">
+                                     <div class="form-group form-default">
+                                        <h4 class="sub-title">Certificate Policy do not display</h4>
+                                        <div class="checkbox-color checkbox-primary">
+                                                <input id="checkbox1950" type="checkbox"  formControlName='CertificatePD'>
+                                                <label for="checkbox1950">
+                                                    PD
+                                                </label>
+                                        </div>
+                                        <div class="checkbox-color checkbox-primary">
+                                                <input id="checkbox1960" type="checkbox"  formControlName='CertificateNT'>
+                                                <label for="checkbox1960">
+                                                    NT
+                                                </label>
+                                        </div>
+                                        <div class="checkbox-color checkbox-primary">
+                                                <input id="checkbox1970" type="checkbox" formControlName='CertificateOA'>
+                                                <label for="checkbox1970">
+                                                    OA
+                                                </label>
+                                        </div>
+                                        <div class="checkbox-color checkbox-primary">
+                                                <input id="checkbox1980" type="checkbox" formControlName='CertificatePA'>
+                                                <label for="checkbox1980">
+                                                    PA
+                                                </label>
+                                        </div>
+                                        <div class="checkbox-color checkbox-primary">
+                                                <input id="checkbox1990" type="checkbox" formControlName='CertificateAL'>
+                                                <label for="checkbox1990">
+                                                    AL
+                                                </label>
+                                        </div>
+                                </div>
+                            </div>    
+                        </div>
+                        
+                </fieldset>
+
+
+                            
+        
+    </div>
+    <div class="modal-footer">
+        <input type="hidden" class="form-control" id="ClientId"  formControlName='ClientId'>    
+        <button type="button" class="btn btn-default waves-effect " (click)="modalRef.hide()">Close</button>
+        <button type='submit' class='btn btn-primary waves-effect waves-light'>Save changes <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /></button>
+        
+
+    </div>
+    </form>
+</ng-template>
+
+             
+                

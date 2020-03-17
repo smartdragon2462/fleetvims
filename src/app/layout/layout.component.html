@@ -1,0 +1,47 @@
+<div id="pcoded" class="pcoded iscollapsed" theme-layout="horizontal" horizontal-placement="top" horizontal-layout="widebox" pcoded-device-type="desktop" hnavigation-view="view1" fream-type="theme1" layout-type="light" horizontal-nav-type="expanded" nav-type="st2">
+        <div class="pcoded-overlay-box"></div>
+        <div class="pcoded-container navbar-wrapper">
+            <!-- [ Header ] start -->
+            <nav class="navbar header-navbar pcoded-header iscollapsed" pcoded-header-position="relative" header-theme="theme1" style="background:white">
+                <div class="navbar-wrapper">
+                        <div class="navbar-logo" style="background: #fff;margin-top:10px ">
+                            <a [routerLink]="['/dashboard']">
+
+                                <img class="img-fluid"  src="/assets/images/Transure-logo.png" alt="Transure" *ngIf="!UserInfo.AgencyLogo"  style="background: #FFF;">
+                                 <img class="img-fluid"  src="{{UserInfo.AgencyLogo}}" alt="{{UserInfo.AgencyName}}" *ngIf="UserInfo.AgencyLogo" style="height: 46px">
+
+                            </a>
+                        </div>
+                        <div class="navbar-container container-fluid">
+                            <app-header></app-header>
+                        </div>
+                </div>
+            </nav>
+            <!-- [ Header ] end -->
+
+            
+
+            <div class="pcoded-main-container" >
+                <div class="pcoded-wrapper">
+                    <!-- [ navigation menu ] start -->
+                    <app-sidebar></app-sidebar>
+                    <!-- [ navigation menu ] end -->
+                    <router-outlet></router-outlet>
+
+                <div class="row" style="background: #fff; display: none">
+                    <div class="col-lg-2" style="margin-top: 16px;">
+                        <a href="assets/pdf/EULA-FleetVIMS.pdf" target="_blank" style="color: #666;padding-left:25px;font-size: 15px;">Terms of Use</a>
+                    </div>
+                     <div class="col-lg-8" style="text-align: center;">
+                        <img class="img-fluid"  src="/assets/images/Powered-by-FV.png" alt="Theme-Logo" />
+                    </div>
+                     <div class="col-lg-2" style="margin-top: 16px;text-align: right;">
+                        <span id="siteseal"><script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=XqltIaYWfyV4Y7wOxk9189ENuuzQDANS8RtGE9gfYDLrPoSH69Me9fPiFqrW"></script></span>
+                    </div>
+                </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+   <ngx-spinner></ngx-spinner> 

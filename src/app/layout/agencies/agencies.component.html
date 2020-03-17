@@ -1,0 +1,317 @@
+ <div class="pcoded-content" [@routerTransition]>
+                        <!-- [ breadcrumb ] start -->
+                        <div class="page-header">
+                            <div class="page-block">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8">
+                                        <div class="page-header-title">
+                                            <h4 class="m-b-10">Agencies</h4>
+                                        </div>
+                                        <ul class="breadcrumb">
+                                            <li class="breadcrumb-item">
+                                                <a [routerLink]="['/dashboard']">
+                                                    <i class="feather icon-home"></i>
+                                                </a>
+                                            </li>
+                                            <li class="breadcrumb-item">
+                                                <a href="JavaScript:void(0)">Agencies</a>
+                                                
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="pcoded-inner-content">
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <div class="page-body">
+                                        <!-- [ page content ] start -->
+                                        <div class="row">
+
+
+                                            <div class="alertbox">     
+                                                <div *ngFor="let alert of alerts">
+                                                        <alert [type]="alert.type" [dismissOnTimeout]="5000"><span [innerHtml]="alert.msg"></span></alert>
+                                                </div>
+                                            </div> 
+
+                                            <!-- site Analytics card start -->
+                                            <div class="col-lg-12 col-md-12">
+                                                    <div class="card table-card latest-activity-card">
+                                                        <div class="card-header with-border">
+                                                            <h5 class="card-header-text">Agencies</h5>
+
+                                                            <button  data-toggle="modal" data-target="#large-Modal" type="button" class="btn btn-sm btn-success waves-effect waves-light f-right" (click)="openModal(content,0)" *ngIf="UserInfo.Module=='1' && RolesService.roleMatch('Agency',['AddEditAccess'])">
+                                                                    <i class="fa fa-plus" style="margin: 0;"></i> Add
+                                                            </button> 
+                                                            <div class="input-group" *ngIf="UserInfo.Module=='1'" style="width: 200px;float: right;margin: 0;">
+
+                                                                    <input type="text" class="form-control" placeholder="Search" title="" [(ngModel)]="search_value">
+                                                                    <span class="input-group-prepend" id="name" style="margin: 0;cursor:pointer" (click)="onFilter(search_value)" >
+                                                                        <label class="input-group-text" style="background: white;color: #b2b2b2;"><i class="fa fa-search" style="cursor:pointer"></i></label>
+                                                                    </span> 
+                                                            </div>
+                                                            <div *ngIf="UserInfo.Module=='1'" class="input-group" style="width: 207px;float: right;margin: 0 15px 0 0;">
+                                                                    <span class="input-group-prepend" id="name" style="margin: 0;">
+                                                                    <label class="input-group-text" style="background: white;color: #b2b2b2;">show</label>
+                                                                    </span>
+                                                                    <select style="border: 1px solid #ccc;" aria-controls="basic-col-reorder" class="form-control" (change)="statusFilter($event.target.value)">
+                                                                        <option value="1">Active</option>
+                                                                        <option value="0">Expired</option>
+                                                                    </select>  
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-block">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-borderless table-xs fleetvims-table" id="agencies_table">
+                                                                    <thead>       
+                                                                        <tr style="background: #eee;">
+                                                                            
+                                                                            <th><a href="javascript:void(0)" (click)="Sorting(0)">Name</a></th>
+                                                                            <th><a href="javascript:void(0)" (click)="Sorting(1)">Phone</a></th>
+                                                                            <th><a href="javascript:void(0)" >Email</a></th>
+                                                                            <th><a href="javascript:void(0)" (click)="Sorting(2)">Address1</a></th>
+                                                                            <th><a href="javascript:void(0)" (click)="Sorting(3)">Address2</a></th>
+                                                                            <th><a href="javascript:void(0)" (click)="Sorting(4)">State</a></th>
+                                                                            <th><a href="javascript:void(0)" (click)="Sorting(5)">City</a></th>
+                                                                            <th><a href="javascript:void(0)" (click)="Sorting(6)">Zipcode</a></th>
+                                                                            <th>Option</th>
+                                                                          </tr>  
+                                                                        </thead>
+                                                                        <tbody>
+                                                                    <tr *ngFor="let agency of agencies">
+                                                                        
+                                                                        <td>{{agency.AgencyName}}</td>
+                                                                        <td>{{agency.Phone}}</td>
+                                                                        <td>{{agency.Email}}</td>
+                                                                        <td>{{agency.Address1}}</td>
+                                                                        <td>{{agency.Address2}}</td>
+                                                                        <td>{{agency.State}}</td>
+                                                                        <td>{{agency.City}}</td>
+                                                                        <td> {{agency.Zip}}</td>
+                                                                        
+                                                                        <td ><a *ngIf="RolesService.roleMatch('Agency',['AddEditAccess'])" [routerLink]="['/agency/edit/', agency.AgencyId]" class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon" tooltip="Edit" placement="top">
+                                                                        <i style="margin-right:0" class="fa fa-edit"></i>
+                                                                            </a>
+                                                                            <a *ngIf="UserInfo.Module=='1' && RolesService.roleMatch('Agency',['DeleteAccess'])" href="javascript:void(0)" (click)="onDelete(agency.AgencyId)" class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon" tooltip="Delete" placement="top" ng-if="agency.Deleted === false">
+                                                                                <i style="margin-right:0" class="fa fa-remove"></i>
+                                                                            </a>
+
+                                                                            <a *ngIf="UserInfo.Module=='1'" (click)="onAgencyReport(agency.AgencyId)" class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon" tooltip="Report" placement="top" >
+                                                                                <i style="margin-right:0" class="fa fa-eye"></i>
+                                                                            </a>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr *ngIf="! agencies?.length">
+                                                                           <td colspan="9">  No data found...</td>
+                                                                    </tr>
+
+                                                                        </tbody>
+                                                                </table>
+                                                            </div>
+
+                                                            <div class="card-footer no-border">
+                                                               
+                                                                   <div class="row">
+                                                                     <div class="col-md-11"> 
+                                                                        
+                                                                <pagination [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" (pageChanged)="pageChanged($event)"  [maxSize]="5"></pagination>
+
+                                                                        </div> 
+                                                                        <div class="col-md-1" style="float:right;">
+                                                                                <select (change)="itemsPerPageChange($event.target.value)">
+                                                                                        <option value="10" [selected]="itemsPerPage==10">10</option>
+                                                                                        <option value="25" [selected]="itemsPerPage==25">25</option>
+                                                                                        <option value="100" [selected]="itemsPerPage==100">100</option>
+                                                                                        <option [value]="totalItems">ALL</option>
+                                                                                </select>
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
+
+                                                             
+
+                                                        </div>
+                                                           
+                                                    </div>
+                                                </div>
+
+                                            
+                                            
+                                        
+
+                                            
+    
+                                                
+                                                
+                                            <!-- site Analytics card end -->
+
+
+                                        </div>
+                                        <!-- [ page content ] end -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- [ breadcrumb ] end -->
+                        
+                    </div>
+
+<ng-template #content >
+
+    <div class="modal-header">
+        <h4 class="modal-title">Agencies - {{title}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+     <form class="" [formGroup]='register'  (ngSubmit) = 'onAgenciesSave()' novalidate>
+                            
+    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">    
+                                <div class="form-group form-default">
+                                     <label class="float-label"> Name <span class="text-danger">*</span></label>
+                                    <input type="text"  class="form-control"  formControlName='AgencyName' required="">
+                                    
+                                   
+                                    <div *ngIf="AgencyName.invalid && (AgencyName.dirty || isSubmitted)" id="AgencyName" class="text-danger">
+                                                Name is required.
+                                    </div> 
+                                </div>
+                            </div>
+                            <div class="col-md-6">  
+                                <div class="form-group form-default">
+                                     <label class="float-label">Phone <span class="text-danger"></span></label>
+                                    <input type="text" class="form-control" formControlName='Phone' >
+                                    
+                                   
+
+                                     <!-- <div *ngIf="Phone.invalid && (Phone.dirty || isSubmitted)" class="text-danger">
+                                                                <div *ngIf="Phone.errors.required">Phone is required.</div>
+                                                                <div *ngIf="Phone.errors.pattern && !Phone.errors.required">Invalid Phone.</div>
+                                    </div> -->
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">   
+
+                                <div class="form-group form-default">
+                                    <label class="float-label">Address1 <span class="text-danger">*</span></label>
+                                    <input type="text"  class="form-control" formControlName='Address1' required="">
+                                    
+                                    
+                                    <div *ngIf="Address1.invalid && (Address1.dirty || isSubmitted)" id="Address1" class="text-danger">
+                                                Address1 is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6"> 
+
+                                <div class="form-group form-default">
+                                     <label class="float-label">Address2</label>
+                                    <input type="text"  class="form-control" formControlName='Address2'>
+                                   
+                                   
+                                </div>
+                            </div>
+                        </div> 
+
+                        <div class="row">
+                            <div class="col-md-6"> 
+                                <div class="form-group form-default">
+                                    <label class="float-label">State <span class="text-danger">*</span></label>
+                                    <select id="StateId" class="form-control" formControlName='StateId' (change)="getCities($event.target.value)">
+                                            <option>Select</option>
+                                            <option *ngFor="let state of Statelist" value="{{state.StateId}}">{{state.State}}</option>
+                                            
+                                    </select>
+                                    
+                                    
+                                     <div *ngIf="StateId.invalid && (StateId.dirty || isSubmitted)" id="StateId" class="text-danger">
+                                                State is required.
+                                    </div>
+                                </div>
+                             </div>
+                             <div class="col-md-6">  
+                                <div class="form-group form-default">
+                                    <label class="float-label">City <span class="text-danger">*</span></label>
+                                    
+                                    <select  class="form-control" formControlName='CityId'>
+                                            <option>Select</option>
+                                            <option *ngFor="let city of Citylist" value="{{city.CityId}}">{{city.City}}</option>
+                                    </select>
+                                   
+                                    <div *ngIf="CityId.invalid && (CityId.dirty || isSubmitted)" id="CityId" class="text-danger">
+                                                City is required.
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>     
+                        <div class="row">
+                            
+                            <div class="col-md-6"> 
+
+                                <div class="form-group form-default">
+                                    <label class="float-label">Zip <span class="text-danger">*</span></label>
+                                    
+                                    <input type="text"  class="form-control" formControlName='Zip' required="">
+                                    
+                                    <div *ngIf="Zip.invalid && (Zip.dirty || isSubmitted)" id="Zip" class="text-danger">
+                                                Zip is required.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6"> 
+
+                                <div class="form-group form-default">
+                                    <label class="float-label">Email <span class="text-danger"></span></label>
+                                    
+                                    <input type="text"  class="form-control" formControlName='Email' >
+                                    
+                                    <!-- <div *ngIf="Zip.invalid && (Zip.dirty || isSubmitted)" id="Zip" class="text-danger">
+                                                Zip is required.
+                                    </div> -->
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="row">
+                                    <div class="col-md-6">
+                                            <label class="">Logo</label>
+                                            <input type="file"  class="form-control" (change)="onSelectlogoFile($event)" > 
+                                            <b>Dimension :</b> (W x H : 112px x 35px)<br><b> Type:</b> jpg,jpeg,png <br>
+                                    </div>
+                                    <div class="col-md-6">
+                                         <label class=""></label>    
+                                        <img [src]="agencylogo"  width="112" *ngIf="agencylogo"></div>
+                         </div>
+
+                            
+        
+    </div>
+    <div class="modal-footer">
+        <input type="hidden" class="form-control" id="AgencyId"  formControlName='AgencyId'>    
+        <button type="button" class="btn btn-default waves-effect " (click)="modalRef.hide()">Close</button>
+        <button type='submit' class='btn btn-primary waves-effect waves-light'>Save changes <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /></button>
+        
+
+    </div>
+    </form>
+</ng-template>
+
+
+             
+                

@@ -1,0 +1,53 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+
+
+@import "bootstrap/bootstrap";
+@import "spinner";
+@import "pages";
+
+
+@import "partials/variables";
+@import "partials/mixins";
+@import "partials/general";
+@import "partials/generic";
+
+// Menu
+@import "partials/menu/_menu";
+@import "partials/menu/_horizontal-menu";
+
+// Important Theme elements
+@import "partials/theme-elements/button";
+@import "partials/theme-elements/form-elements";
+
+// Theme elements
+@import "partials/theme-elements/label-badges";
+
+// Tables
+@import "partials/tables/tables";
+
+// Other
+@import "partials/other/chat";
+@import "partials/other/progress-bar";
+
+// Responsive css
+@import "partials/responsive/responsive";
+
+// dark layout css
+// dark layout css
+@import "partials/dark";
+
+@import 'feather.css';
+//@import '/assets/icon/icofont/css/icofont.scss';
+
+
+//angular custom
+@import "partials/custom";
+
+//angular custom
+@import "vims";
+
+
+
+

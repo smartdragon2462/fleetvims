@@ -1,0 +1,118 @@
+ <div class="pcoded-content" [@routerTransition]>
+                        <!-- [ breadcrumb ] start -->
+                        <div class="page-header">
+                            <div class="page-block">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6">
+                                        <div class="page-header-title">
+                                            <h4 class="m-b-10">Polices</h4>
+                                        </div>
+                                        <ul class="breadcrumb">
+                                            <li class="breadcrumb-item">
+                                                <a [routerLink]="['/dashboard']">
+                                                    <i class="feather icon-home"></i>
+                                                </a>
+                                            </li>
+                                            <li class="breadcrumb-item">
+                                                <a [routerLink]="['/policies']">Policy</a>
+                                                
+                                            </li>
+                                            <li class="breadcrumb-item">
+                                                <a href="javascript:void(0)">Policy Report</a>
+                                            </li>
+                                        </ul>
+                                         <p style="margin-top: 50px;background: #fff;padding: 5px;border-radius: 4px;margin-bottom: 0;display:none">Policy Type: <b><a href="javascript:void(0)"></a></b><br></p>
+
+                                         <p style="margin-top: 50px;background: #fff;padding: 5px;border-radius: 4px;margin-bottom: 0;display: none">Policy: <b> <a href="javascript:void(0)"></a></b><br></p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="pcoded-inner-content">
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <div class="page-body">
+                                        <!-- [ page content ] start -->
+                                        <div class="row">
+
+                                            <div class="alertbox">     
+                                                <div *ngFor="let alert of alerts">
+                                                        <alert [type]="alert.type" [dismissOnTimeout]="5000"><span [innerHtml]="alert.msg"></span></alert>
+                                                </div>
+                                            </div> 
+                                             
+
+                                            <!-- site Analytics card start -->
+                                            <div class="col-lg-12 col-md-12">
+                                                    <div class="card table-card latest-activity-card">
+                                                        <div class="card-header with-border">
+                                                            <h5 class="card-header-text">Policy::Report</h5>
+
+                                                            
+                                                        </div>
+                                                        <div class="card-block">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-borderless table-xs fleetvims-table" id="clients_table">
+                                                                    <thead>       
+                                                                        <tr style="background: #eee;">
+                                                                            <th>Period</th>
+                                                                            <th>Period Recipients</th>
+                                                                            <th>Rate</th>
+                                                                            <th>Period Premium</th>
+                                                                            <th>Report</th>
+                                                                            <th>Regenerate</th>
+                                                                            
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                         <tr *ngFor="let report of reports">
+                                                                                <td>{{report.Period}}</td>
+                                                                                <td>{{report.TotalUnit}}</td>
+                                                                                <td>{{report.Rate | currency}}</td>
+                                                                                <td>{{report.PeriodPremium | currency}}</td>
+                                                                                <td><a class="btn waves-effect waves-dark btn-danger btn-outline-danger btn-icon" data-toggle="tooltip" data-placement="top" data-original-title="PDF"  href="{{report.ReportPath}}"  target="_blank"> <i style="margin-right:0" class="fa fa-file-text"></i></a></td>
+                                                                                <td><a href="JavaScript:void(0)" (click)="RegenerateReprt(report.Id)">Regenerate</a></td>
+                                                                          </tr>  
+
+                                                                
+
+                                                                        </tbody>
+                                                                </table>
+                                                            </div>
+
+                                                             <div class="text-center">
+
+                                                                <pagination [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" (pageChanged)="pageChanged($event)"  [maxSize]="5"></pagination>
+
+                                                            </div>
+
+                                                        </div>
+                                                           
+                                                    </div>
+                                                </div>
+
+                                            
+                                            
+                                        
+
+                                            
+    
+                                                
+                                                
+                                            <!-- site Analytics card end -->
+
+
+                                        </div>
+                                        <!-- [ page content ] end -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- [ breadcrumb ] end -->
+                        
+                    </div>
+
+             
+                

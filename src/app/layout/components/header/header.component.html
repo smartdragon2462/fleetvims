@@ -1,0 +1,31 @@
+<ul class="nav-left" style="display: none">
+    <li>
+        <a href="#!" onclick="javascript:toggleFullScreen()" class="waves-effect waves-light">
+        <i class="full-screen feather icon-maximize"></i>
+        </a>
+    </li>
+    
+</ul>   
+<ul class="nav-right">
+            <li class="user-profile header-notification" ngbDropdown>
+                <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle style="color: #666">
+                    <span>{{login_name}}</span>
+                    <i class="feather icon-chevron-down"></i>
+                </a>
+                <ul class="dropdown-menu" ngbDropdownMenu>
+                             <li> 
+                            <a class="dropdown-item" [routerLink]="['/login']" (click)="onLoggedout()">
+                                <i class="feather icon-log-out"></i> {{ 'Log Out' | translate }}   
+                            </a>
+                        </li>
+                         <li> 
+                            <a class="dropdown-item" [routerLink]="['/changepassword']" >
+                                <i class="feather icon-log-out"></i> {{ 'Change Password' | translate }}   
+                            </a>
+                        </li>
+                    </ul>
+                
+            </li>
+                 
+        
+</ul>

@@ -1,0 +1,907 @@
+ <div class="pcoded-content" [@routerTransition]>
+                        <!-- [ breadcrumb ] start -->
+                        <div class="page-header">
+                            <div class="page-block">
+                                <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="page-header-title">
+                        <h4 class="m-b-10">Policies  </h4>
+                    </div>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a [routerLink]="['/dashboard']">
+                                <i class="feather icon-home"></i>
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="JavaScript:void(0)">Policies</a>
+                            
+                        </li>
+                    </ul>
+                    <p style="margin-top: 50px;background: #fff;padding: 5px;border-radius: 4px;margin-bottom: 0;" [hidden]="!clientid">Client: <b><a href="index.php?module=VIMS&amp;action=index&amp;table=vehicles&amp;ownerno=131"> {{ClientName}}</a></b>
+                                    <br></p>
+                </div>
+                <div class="col-md-3" [hidden]="!clientid" style="display: none">
+                                        <div class="card" style="margin-bottom: 5px;">
+                                                <div class="card-block" style="padding:0;border-radius:4px;overflow:hidden">
+                                                        <table class="table table-borderless table-xs fleetvims-table" style="margin: 0;">
+                                                            <thead>
+                                                                <tr style="background: #eee;">
+                                                                    <th>Coverage</th>
+                                                                    <th style="text-align:center;">Units</th>
+                                                                    <th style="text-align:center;">Values</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th>Trucks</th>
+                                                                    <th style="text-align:center;">0</th>
+                                                                    <th style="text-align:center;">$0</th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Trailers</th>
+                                                                    <th style="text-align:center;">0</th>
+                                                                    <th style="text-align:center;">$0</th>
+                                                                </tr>
+                                                                <tr>
+                                                                     <th>Others</th>
+                                                                     <th style="text-align:center;">0</th>
+                                                                     <th style="text-align:center;">$0</th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Total</th>
+                                                                    <th style="text-align:center;">0</th>
+                                                                    <th style="text-align:center;">$0</th>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                </div>
+                                        </div>
+                    </div>
+                    <div class="col-md-3" [hidden]="!clientid" style="display: none">
+                                        <div class="card" style="margin-bottom: 5px;">
+                                            <div class="card-block" style="padding:0;border-radius:4px;overflow:hidden">
+                                                    <table class="table table-borderless table-xs fleetvims-table" style="margin: 0;">
+                                                        <thead>
+                                                            <tr style="background: #eee;">
+                                                                <th>Coverage</th>
+                                                                <th style="text-align:center;">Units</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <th>Non Trucking</th>
+                                                                <th style="text-align:center;">0</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Occupational Accident</th>
+                                                                <th style="text-align:center;">0</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Passenger Accident</th>
+                                                                <th style="text-align:center">0</th>
+                                                            </tr>
+                                                            <tr>
+                                                                    <th>&nbsp;</th>
+                                                                    <th style="text-align:center">&nbsp;</th>
+                                                                </tr>
+                                                        </tbody>
+                                                    </table>
+                                            </div>
+                                        </div>
+                    </div>
+            </div>
+                                
+                            </div>
+                        </div>
+
+                         <div class="pcoded-inner-content">
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <div class="page-body">
+                                        <!-- [ page content ] start -->
+                                        <div class="row">
+
+
+                                            <div class="alertbox">     
+                                                <div *ngFor="let alert of alerts">
+                                                        <alert [type]="alert.type" [dismissOnTimeout]="5000"><span [innerHtml]="alert.msg"></span></alert>
+                                                </div>
+                                            </div> 
+
+                                            <!-- site Analytics card start -->
+                                            <div class="col-lg-12 col-md-12">
+                                                    <div class="card table-card latest-activity-card">
+                                                        <div class="card-header with-border">
+                                                            <h5 class="card-header-text">Policies</h5>
+
+                                                            <button data-toggle="modal" data-target="#large-Modal" type="button" class="btn btn-sm btn-success waves-effect waves-light f-right" (click)="openModal(content,0)" *ngIf="RolesService.roleMatch('Policy',['AddEditAccess'])">
+                                                                    <i class="fa fa-plus" style="margin: 0;"></i> Add
+                                                            </button> 
+                                                            <button data-toggle="modal" data-target="#large-Modal" type="button" class="btn btn-sm btn-success waves-effect waves-light f-right" (click)="exportPolicy()" *ngIf="RolesService.roleMatch('Bulk Import',['AddEditAccess'])">
+                                                                  Export
+                                                            </button>
+                                                            <div class="input-group" style="width: 200px;float: right;margin: 0;">
+
+                                                                    <input type="text" class="form-control" placeholder="Search" title="" [(ngModel)]="search_value">
+                                                                    <span class="input-group-prepend" id="name" style="margin: 0;cursor:pointer" (click)="onFilter(search_value)" >
+                                                                        <label class="input-group-text" style="background: white;color: #b2b2b2;"><i class="fa fa-search" style="cursor:pointer"></i></label>
+                                                                    </span> 
+                                                            </div>
+                                                            <div class="input-group" style="width: 207px;float: right;margin: 0 15px 0 0;">
+                                                                    <span class="input-group-prepend" id="name" style="margin: 0;">
+                                                                    <label class="input-group-text" style="background: white;color: #b2b2b2;">show</label>
+                                                                    </span>
+                                                                    <select style="border: 1px solid #ccc;" aria-controls="basic-col-reorder" class="form-control" (change)="statusFilter($event.target.value)">
+                                                                        <option value="0" [selected]="isStatus==0" >ALL</option>
+                                                                        <option value="1" [selected]="isStatus==1">Active</option>
+                                                                        <option value="2" [selected]="isStatus==2">Cancelled</option>
+                                                                        <option value="3" [selected]="isStatus==3">Future</option>
+                                                                        <option value="5" [selected]="isStatus==5">Expired</option>
+                                                                        
+
+                                                                    </select>  
+                                                            </div>
+                                                            <div class="input-group" style="width: 207px;float: right;margin: 0 15px 0 0;">
+                                                                <span class="input-group-prepend" id="name" style="margin: 0;">
+                                                                <label class="input-group-text" style="background: white;color: #b2b2b2;">show</label>
+                                                                </span>
+                                                                <select style="border: 1px solid #ccc;" aria-controls="basic-col-reorder" class="form-control" (change)="coverageTypeFilter($event.target.value)">
+                                                                        <option value="0">ALL</option>
+                                                                        <option value="1">PD</option>
+                                                                        <option value="2">NT</option>
+                                                                        <option value="3">OA</option>
+                                                                        <option value="4">PA</option>
+                                                                        <option value="6">AL</option>
+                                                                </select>  
+                                                             </div>
+                                                        </div>
+                                                        <div class="card-block">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-borderless table-xs fleetvims-table" id="policies_table">
+                                                                    <thead>       
+                                                                        <tr style="background: #eee;">
+                                                                            <th *ngIf="this.UserInfo.Module!='3'"><a href="javascript:void(0)" (click)="Sorting(0)">Client</a></th>
+                                                                            <th><a href="javascript:void(0)" (click)="Sorting(1)">Coverage</a></th>
+                                                                            <th><a href="javascript:void(0)" (click)="Sorting(2)">Policy</a></th>
+                                                                            <th><a href="javascript:void(0)" (click)="Sorting(3)">Unit Coverage Type</a></th>
+                                                                            <th><a href="javascript:void(0)" (click)="Sorting(4)">Eff. Date</a></th>
+                                                                            <th><a href="javascript:void(0)" (click)="Sorting(5)">Exp. Date</a></th>
+                                                                            <th><a href="javascript:void(0)" (click)="Sorting(6)">Insurance Company</a></th>
+                                                                            <th *ngIf="this.UserInfo.Module=='9' || this.UserInfo.Module=='1'"><a href="javascript:void(0)" (click)="Sorting(7)">Contract</a></th>
+                                                                            <th style="text-align:center;">Units</th>
+                                                                            <th>Option</th>
+
+                                                                            <th *ngIf="RolesService.roleMatch('Policy Report',['AddEditAccess','DeleteAccess','ViewAccess'])">Reports</th>
+                                                                        </tr> 
+                                                                        </thead>
+                                                                        <tbody>
+                                                                    <tr *ngFor="let policy of policies">
+                                                                        <td *ngIf="this.UserInfo.Module!='3'">{{policy.ClientName}}</td>
+                                                                        <td>{{policy.CoverageTypeText}}</td>
+                                                                        <td>{{policy.Policy}}</td>
+                                                                        <td>{{policy.PolicyTypeText}}</td>
+                                                                        <td>{{policy.EffectiveDate | date:'MM-dd-yyyy'}}</td>
+                                                                        <td>{{policy.ExpirationDate | date:'MM-dd-yyyy'}}</td>
+                                                                        <td>{{policy.InsurerName}}</td>
+                                                                        <td *ngIf="UserInfo.Module=='9' || UserInfo.Module=='1'">{{policy.ContractNo}}</td>
+                                                                        <td style="text-align:center;" >
+                                                                                        <a *ngIf="policy.Status!=2 && this.UserInfo.Module!='4'" class="btn waves-effect waves-dark btn-success btn-outline-success btn-icon" data-toggle="tooltip" data-placement="top" data-original-title="Vehicles"  [routerLink]="['/vehicles/policies/', policy.PolicyId,policy.Policy,policy.ClientId]">
+                                                                                                <i style="margin-right:0" class="fa fa-truck"></i>
+                                                                                        </a>
+                                                                                       
+                                                                                    </td>
+                                                                        
+                                                                        <td >
+                                                                             <a *ngIf="policy.Status!=2 && RolesService.roleMatch('Policy',['DeleteAccess'])" href="javascript:void(0)" (click)="onDeleteRestore(policy,2)" class="btn waves-effect waves-dark btn-danger btn-outline-danger btn-icon" tooltip="Delete" placement="top">
+                                                                                            <i style="margin-right:0" class="fa fa-remove"></i>
+                                                                                        </a>
+                                                                            <a *ngIf="policy.Status==2 && RolesService.roleMatch('Policy',['DeleteAccess'])" href="javascript:void(0)" (click)="onDeleteRestore(policy,1)" class="btn waves-effect waves-dark btn-danger btn-outline-danger btn-icon" tooltip="Restore" placement="top">
+                                                                                             <i style="margin-right:0" class="fa fa-undo"></i>
+                                                                                        </a>  
+                                                                                        <a  (click)="openModal(content,policy)" class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon" tooltip="Edit" placement="top" *ngIf="policy.Status!=2 && RolesService.roleMatch('Policy',['AddEditAccess'])">
+                                                                        <i style="margin-right:0" class="fa fa-edit"></i>
+                                                                            </a>          
+                                                                            
+                                                                        </td>
+                                                                        <td>
+                                                                                            
+                                                                                             <a [routerLink]="['/policy/transactionlog/', policy.PolicyId]" class="btn waves-effect waves-dark btn-info btn-outline-info btn-icon" placement="top" tooltip="Transactions" *ngIf="RolesService.roleMatch('Policy Report',['AddEditAccess','DeleteAccess','ViewAccess'])"> <i style="margin-right:0" class="fa fa-exchange"></i>
+                                                            </a>       <a class="btn waves-effect waves-dark btn-info btn-outline-info btn-icon" data-toggle="tooltip" data-placement="top" data-original-title="View Reports" *ngIf="policy.Status!=2 && RolesService.roleMatch('Policy Report',['AddEditAccess','DeleteAccess','ViewAccess'])" [routerLink]="['/policy/report/', policy.PolicyId]">
+                                                                                                    <i style="margin-right:0" class="fa fa-eye"></i>
+                                                                                            </a>
+                                                                                            
+                                                                                    </td>
+                                                                    </tr>
+
+                                                                    <tr *ngIf="! policies?.length">
+                                                                           <td colspan="11">  No data found...</td>
+                                                                    </tr>
+
+                                                                        </tbody>
+                                                                </table>
+                                                            </div>
+
+                                                            <div class="card-footer no-border">
+                                                               
+                                                                   <div class="row">
+                                                                     <div class="col-md-11"> 
+                                                                        
+                                                               <pagination [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" (pageChanged)="pageChanged($event)"  [maxSize]="5"></pagination>
+
+                                                                        </div> 
+                                                                        <div class="col-md-1" style="float:right;">
+                                                                                <select (change)="itemsPerPageChange($event.target.value)">
+                                                                                        <option value="10" [selected]="itemsPerPage==10">10</option>
+                                                                                        <option value="25" [selected]="itemsPerPage==25">25</option>
+                                                                                        <option value="100" [selected]="itemsPerPage==100">100</option>
+                                                                                        <option [value]="totalItems">ALL</option>
+                                                                                </select>
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
+
+                                                             
+
+                                                        </div>
+                                                           
+                                                    </div>
+                                                </div>
+
+                                            
+                                            
+                                        
+
+                                            
+    
+                                                
+                                                
+                                            <!-- site Analytics card end -->
+
+
+                                        </div>
+                                        <!-- [ page content ] end -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- [ breadcrumb ] end -->
+                        
+                    </div>
+
+<ng-template #content >
+
+    <div class="modal-header">
+        <h4 class="modal-title">Policies - {{title}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true" (click)="modelhide()">&times;</span>
+        </button>
+
+    </div>
+    <form  [formGroup]='register'   >    <!--(ngSubmit) = 'onPoliciesSave(0);' -->
+                            
+    <div class="modal-body">
+                        
+                        
+
+                        
+                                <div class="row"> 
+                                        <div class="col-md-12">    
+                                            <div class="form-group">
+                                                <label class="form-control-label"> Client <span class="text-danger">*</span></label>
+
+                                                 <select  class="form-control" formControlName='ClientId' [ngClass]="{'disabled': title=='Renew' }" >
+                                                        <option value="">Select</option>
+                                                        <option *ngFor="let client of ClientList" [value]="client[0]">{{client[1]}}</option>
+                                                </select>
+                                                
+                                                
+                                                <div *ngIf="ClientId.invalid && (ClientId.dirty || isSubmitted)" id="VaClientId" class="text-danger">
+                                                            Client is required.
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                </div>
+                                   
+                        
+
+                         <fieldset class="scheduler-border">
+                            <legend class="scheduler-border">Insurance Information</legend>  
+
+                            
+
+                             <div class="row">    
+                                <div class="col-md-6">    
+                                    <div class="form-group">
+                                         <label class="form-control-label"> Effective Date <span class="text-danger">*</span><span *ngIf="title=='Renew'">({{OldEffectiveDate | date:'MM-dd-yyyy'}})</span></label>
+                                        <input type="text"  class="form-control"  formControlName='EffectiveDate'  bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY' }" (bsValueChange)="onEffectiveDateChange($event)">
+                                        
+                                       
+                                         <div *ngIf="EffectiveDate.invalid && (EffectiveDate.dirty || isSubmitted)" id="EffectiveDate" class="text-danger">
+                                                    Effective Date is required.
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">  
+                                    <div class="form-group">
+                                        <label class="form-control-label">Expiration Date <span class="text-danger">*</span><span *ngIf="title=='Renew'">({{OldExpirationDate | date:'MM-dd-yyyy'}})</span></label>
+                                        <input type="text" class="form-control" formControlName='ExpirationDate'  bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY' }" [minDate]="ExpirationMinDate"   (bsValueChange)="onExpirationDateChange($event)">
+                                        
+                                        
+                                        <div *ngIf="ExpirationDate.invalid && (ExpirationDate.dirty || isSubmitted)" id="ExpirationDate" class="text-danger">
+                                                    Expiration Date is required.
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div> 
+                                   
+                         <div class="row">
+
+                            <div class="col-md-6">  
+                                <div class="form-group">
+                                    <label class="form-control-label">Coverage</label>
+                                     <select  class="form-control" formControlName='CoverageType' (change)="checkCovrageType(CoverageType)" [ngClass]="{'disabled': title=='Edit' || title=='Renew' }"  (change)="coverageTypeChange($event.target.value)">
+                                            <option value="">Select</option>
+                                            <option *ngFor="let CoverageType of CoverageTypeList" value="{{CoverageType.Id}}">{{CoverageType.Type}}</option>
+                                    </select>
+                                </div>
+                      
+                            </div>
+
+                            <div class="col-md-6">    
+                                <div class="form-group">
+                                    <label class="form-control-label"> Insurance Company <span class="text-danger">*</span></label>
+                                     <select  class="form-control" formControlName='InsurerId'>
+                                            <option value="">Select</option>
+                                            <option *ngFor="let insurer of InsurerList" [value]="insurer[0]">{{insurer[1]}}</option>
+                                    </select>
+                                    
+                                    
+                                     <div *ngIf="InsurerId.invalid && (InsurerId.dirty || isSubmitted)" id="InsurerId" class="text-danger">
+                                                Insurer Company is required.
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+
+                          
+                             
+                        </div>   
+
+
+                        <div class="row">      
+                             <div class="col-md-6">    
+                                <div class="form-group">
+                                    <label class="form-control-label"> Unit Coverage Type <span class="text-danger">*</span></label>
+                                     <select  class="form-control" formControlName='PolicyType'>
+                                            <option value="">Select</option>
+                                            <option *ngFor="let PolicyType of PolicyTypeList" value="{{PolicyType.Id}}">{{PolicyType.Type}}</option>
+                                    </select>
+                                    
+                                    
+                                    <div *ngIf="PolicyType.invalid && (PolicyType.dirty || isSubmitted)" id="PolicyType" class="text-danger">
+                                                Unit Coverage Type is required.
+                                    </div>
+                                     
+                                </div>
+                            </div>
+                            <div class="col-md-6">    
+                                <div class="form-group">
+                                    <label class="form-control-label"> Unit Limit</label>
+                                    <input type="text"  class="form-control"  formControlName='UnitLimit' prefix="$ " mask="comma_separator">
+                                    
+                                    
+                                    <div *ngIf="UnitLimit.errors && UnitLimit.errors.pattern"  class="text-danger">Invalid Unit value.</div>
+                                </div>
+                            </div>
+
+                            
+                        </div>
+
+                        <div class="row">
+
+                             <div class="col-md-6">    
+                                <div class="form-group">
+                                    <label class="form-control-label"> Deductible Type <span class="text-danger" *ngIf="requirdeDeductibleType">*</span></label>
+                                    
+                                     <select  class="form-control" formControlName='DeductibleType'>
+                                            <option value="">Select</option>
+                                            <option *ngFor="let DeductibleType of DeductibleTypeList" value="{{DeductibleType.Id}}">{{DeductibleType.Type}}</option>
+                                    </select>
+                                    
+                                    
+
+                                    <div *ngIf="DeductibleType.invalid && (DeductibleType.dirty || isSubmitted)" id="DeductibleType" class="text-danger">
+                                                Deductible Type is required.
+                                    </div>
+                                     
+                                </div>
+                            </div>
+                            <div class="col-md-6">    
+                                <div class="form-group">
+
+                                  <label class="form-control-label"> Deductible <span class="text-danger">*</span></label>  
+                                  <input type="text"  class="form-control"  formControlName='DeductibleAmount' (input)="checkDeductibleType($event)"  prefix="$ " mask="comma_separator">
+                                    
+                                    
+
+                                     <div *ngIf="DeductibleAmount.invalid && (DeductibleAmount.dirty || isSubmitted)" class="text-danger">
+                                                                <div *ngIf="DeductibleAmount.errors.required">Deductible is required.</div>
+                                                                <div *ngIf="DeductibleAmount.errors.pattern && !DeductibleAmount.errors.required">Invalid Deductible value.</div>
+                                    </div>
+
+
+                                    
+                                   
+                                </div>
+                            </div>
+
+                        </div> 
+
+                        <div class="row">
+                            <div class="col-md-6" *ngIf="coveragetypeId!='1'">  
+                                <div class="form-group">
+                                    <label class="form-control-label">Policy Limit</label>
+                                    <input type="text" class="form-control" formControlName='PolicyLimit' prefix="$" mask="comma_separator">
+                                    
+                                    
+                                    <div *ngIf="PolicyLimit.errors && PolicyLimit.errors.pattern"  class="text-danger">Invalid Policy Limit value.</div>
+
+                                </div>
+                            </div>
+                            
+
+                            <div class="col-md-6">    
+                                <div class="form-group">
+                                    <label class="form-control-label"> Policy #<span class="text-danger">*</span><span *ngIf="title=='Renew'">({{OldPolicyName}})</span></label>
+                                    <input type="text"  class="form-control"  formControlName='Policy' >
+
+                                    
+                                    
+                                    <div *ngIf="Policy.invalid && (Policy.dirty || isSubmitted)" id="Policy" class="text-danger">
+                                                Policy is required.
+                                    </div>
+                                     
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                                    <div class="col-md-12" *ngIf="this.UserInfo.Module=='9' || this.UserInfo.Module=='1'">    
+                                        <div class="form-group">
+                                            <label class="form-control-label"> Contract #</label>
+                                             <select  class="form-control" formControlName='ContractId'>
+                                                    <option value="">Select</option>
+                                                    <option *ngFor="let Contract of ContractList" value="{{Contract.ContractId}}">{{Contract.ContractNo}}</option>
+                                            </select>
+                                            
+                                            
+                                           
+                                        </div>
+                                    </div>
+                        </div> 
+
+                     </fieldset> 
+                      <fieldset class="scheduler-border">
+                            <legend class="scheduler-border">Billing Information</legend>      
+
+                          
+                        <!------------start multi select ---------------->
+                
+                       
+                            <div class="form-group" *ngIf="viewOACheckbox==true">
+                                    <input id="IsOA" type="checkbox" formControlName='IsOA' (click)="checkNew(3)">
+                                                  <label for="IsOA">
+                                                        OA Matrix Applicable
+                                                  </label>
+                                                      
+                            </div>
+                       
+                            <div class="form-group" *ngIf="viewPDCheckbox==true">
+                                    <input id="IsPD" type="checkbox" formControlName='IsPD' (click)="checkNew(1)">
+                                                  <label for="IsPD">
+                                                        PD Matrix Of Rates By Value
+                                                  </label>
+                                                      
+                            </div>
+
+
+
+
+                <div class="row" *ngIf="AddOA_MatrixView==true">                     
+                                  
+                        <div class="box-body" style="width:100%;min-height:150px;max-height:350px;"> 
+                                <div class="box">
+                                    <div class="card-block">
+                                        <div >
+                                            <table class="table table-bordered table-xs fleetvims-table" id="policies_table">
+                                    <thead>
+                                <tr style="background: #eee;">
+                                 <th>Select Cargo type</th>
+                                <th>Monthly Rate</th>                                
+                                <th><button class="btn btn-success btn-sm" (click)="AddCargoRow()"> <i class="fa fa-plus" style="margin: 0;"></i></button>
+                                </th>
+                                </tr>
+                                </thead>
+                                <tbody>                                
+                                        <ng-container formArrayName="dropdownList">
+                                                <tr *ngFor="let ctrl of register.get('dropdownList')['controls']; let i = index" 
+                                                [formGroupName]="i">  <!---- let i = index" [formGroupName]="i" -->
+                                                   <td>
+                                                    <ng-multiselect-dropdown 
+                                                    name="CargoItemRow"
+                                                    [placeholder]="'Select Cargo Type'"
+                                                    [data]="CargoTypeMasterList"
+                                                    formControlName="selectedItems"
+                                                    [settings]="dropdownSettings"
+                                                    (onSelect)="onItemSelect1($event)" 
+                                                    (onSelectAll)="onSelectAll1($event)" 
+                                                    (onDeSelect)="onItemDeSelect1($event)"                                               
+                                                    >
+                                                </ng-multiselect-dropdown>
+                                                </td> 
+                                                  <td><input type="text" class="form-control" formControlName="CargoValue"></td> 
+                                               <td><button class="btn btn-warning btn-sm" (click)="RemoveCargoRow(i,dropdownList,ctrl)"> <i  style="margin: 0;">-</i></button>
+                                               </td>
+                                                </tr>
+                                              </ng-container>
+                                         
+
+
+                                    <!-- <label>registe {{register.value.dropdownList | json}}</label>  ------>
+                                        <!-- <ng-container formArrayName="dropdownList">
+                                                <tr *ngFor="let ctrl of register.get('dropdownList')['cargoItem']; let i = index" [formGroupName]="i">
+                                           -->
+                                                        <!-- <tr *ngFor="let ctrl of dropdownList; let i = index" [formGroupName]="i">
+                                           -->
+                                                    <!-- <td><input type="text" class="form-control" formControlName="selectedItems"></td>
+                                                  <td><input type="text" class="form-control" formControlName="CargoValue"></td>
+                                                 -->
+                                                  <!-- <td >
+                                                        <ng-multiselect-dropdown 
+                                                        name="CargoTyp"
+                                                        [placeholder]="'select Cargo type'"
+                                                        [data]="CargoTypeMasterList"
+                                                        formControlName="selectedItems"
+                                                        [settings]="dropdownSettings"
+                                                        (onSelect)="onItemSelect1($event)"
+                                                        id="selectedItems{{i}}"
+                                                        >
+                                                    </ng-multiselect-dropdown>
+                                                </td> -->
+                                                <!-- <td>
+                                                        <input type="text" value="" class="form-control" formControlName="CargoValue">                                
+                                                </td>
+                                                
+                                                </tr>
+                                              </ng-container> -->
+
+
+                                <!-- <tr *ngFor="let dt of dropdownList; let i=index" [formGroupName]="i">
+                                <td >
+                                        <ng-multiselect-dropdown 
+                                        name="CargoTyp"
+                                        [placeholder]="'select Cargo type'"
+                                        [data]="CargoTypeMasterList"
+                                        formControlName="selectedItems"
+                                        [settings]="dropdownSettings"
+                                        (onSelect)="onItemSelect1($event)"
+                                        id="selectedItems{{i}}"
+                                        >
+                                    </ng-multiselect-dropdown>
+                                </td>
+                                <td>
+                                        <input type="text" value="" class="form-control" formControlName="CargoValue">                                
+                                </td>
+                               
+                                
+                                </tr> -->
+                                </tbody>
+                                </table>
+                            </div> </div>
+                                
+                                </div>
+                                </div>
+
+
+                             
+                                         
+                             
+
+                </div>
+                
+
+
+<!---------(PD MULTISELECT START)------------->
+
+<div class="row" *ngIf="AddPD_MatrixView==true">                     
+                                  
+        <div class="box-body" style="width:100%;min-height:150px;max-height:350px;"> 
+                <div class="box">
+                    <div class="card-block">
+                        <div >
+                            <table class="table table-bordered table-xs fleetvims-table" id="policies_table">
+                    <thead>
+                <tr style="background: #eee;text-align:center;">
+                 <!-- <th colspan="2">Value</th> -->
+                 <th>Begning  Value</th> 
+                 <th>Ending Value</th>
+                 <th>Monthly Rate($)</th>                           
+                 <th>Annual Rate(%)</th>                                
+                <th><button class="btn btn-success btn-sm" (click)="AddPDMatrixRow()"> <i class="fa fa-plus" style="margin: 0;"></i></button>
+                </th>
+                </tr>
+                </thead>
+                <tbody>                                
+                        <ng-container formArrayName="dropdownListPD">
+                                <tr  style="text-align:center;" *ngFor="let ctrl of register.get('dropdownListPD')['controls']; let i = index" 
+                                [formGroupName]="i">  
+                                  <td><input type="text" class="form-control" [readonly]="StartValue=='$0'" prefix="$" mask="comma_separator" formControlName="StartValue">{{StartValue}}</td> 
+                                  <td><input type="text" class="form-control" prefix="$" mask="comma_separator" formControlName="EndValue" (input)="CheckEndDate($event)"></td> 
+                                  <td><input type="text" class="form-control" prefix="$" mask="comma_separator" [readonly]="coveragetypeId=='1'"  formControlName="MonthlyValue"></td> 
+                                  <td><input type="text" class="form-control"  formControlName="RateAnnualValue" (input)="MonthlyRateCalcnew($event,i)"></td> 
+                            
+                                  <td><button class="btn btn-warning btn-sm" (click)="RemoveRow(i,dropdownListPD,ctrl)"> <i  style="margin: 0;">-</i></button>
+                               </td>
+                                </tr>
+                              </ng-container>
+                       
+                </tbody>
+                </table>
+
+                
+            </div> </div>
+                
+                </div>
+                </div>
+
+
+             
+                         
+             
+
+</div>
+
+<!--------(PD END MULTISELECT )-------------->
+
+
+
+
+
+                <!------------ end multi select ---------------->
+<!-- 
+<div>
+
+        <angular2-multiselect [data]="dropdownList" [(ngModel)]="selectedItems11" 
+        [settings]="dropdownSettings" 
+        (onSelect)="onItemSelect($event)" 
+        (onDeSelect)="OnItemDeSelect($event)"
+        (onSelectAll)="onSelectAll($event)"
+        (onDeSelectAll)="onDeSelectAll($event)"></angular2-multiselect>
+</div> -->
+
+                            <div class="row" *ngIf="AddOA_MatrixView==false && AddPD_MatrixView==false">    
+                                
+                                <div class="col-md-6">  
+                                    <div class="form-group">
+
+                                        <label class="form-control-label">Monthly Rate({{anularateSign}}) <span class="text-danger" *ngIf="AddOA_MatrixView==false">*</span></label>
+                                        <input type="text" class="form-control" formControlName='MonthlyRate'  [readonly]="coveragetypeId=='1'" (input)="AnnualRateCalc($event)">
+                                        
+                                        
+
+                                        <div *ngIf="MonthlyRate.invalid && (MonthlyRate.dirty || isSubmitted) && AddOA_MatrixView==false" class="text-danger">
+                                                                    <div *ngIf="MonthlyRate.errors.required">Monthly Rate is required.</div>
+                                                                    <div *ngIf="MonthlyRate.errors.pattern && !MonthlyRate.errors.required">Invalid Monthly Rate.</div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">    
+                                    <div class="form-group">
+
+                                        <label class="form-control-label"> Annual Rate({{anularateSign}}) <span class="text-danger" *ngIf="AddOA_MatrixView==false">*</span></label>
+                                        <input type="text"  class="form-control"  formControlName='AnnualRate'  [readonly]="coveragetypeId!='1'" (input)="MonthlyRateCalc($event)">
+                                        
+                                        
+
+                                        <div *ngIf="AnnualRate.invalid && (AnnualRate.dirty || isSubmitted) && AddOA_MatrixView==false" class="text-danger">
+                                                                    <div *ngIf="AnnualRate.errors.required">Annual Rate is required.</div>
+                                                                    <div *ngIf="AnnualRate.errors.pattern && !AnnualRate.errors.required">Invalid Annual Rate.</div>
+                                        </div>
+
+                                        
+
+
+                                    </div>
+                                </div>
+                        </div> 
+
+                        <div class="row">
+                            <div class="col-md-6">  
+                                <div class="form-group">
+
+                                    <label class="form-control-label">Estimated Premium</label>
+                                    <input type="text" class="form-control" formControlName='EstimatedPremium' prefix="$ " mask="comma_separator">
+                                    
+                                    
+                                    <div *ngIf="EstimatedPremium.errors && EstimatedPremium.errors.pattern"  class="text-danger">Invalid Policy Limit value.</div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">    
+                                <div class="form-group">
+
+                                    <label class="form-control-label"> Billing Type</label>
+                                     <select  class="form-control" formControlName='BillingType'>
+                                            <option value="">Select</option>
+                                            <option *ngFor="let BillingType of BillingTypeList" value="{{BillingType.Id}}">{{BillingType.Type}}</option>
+                                    </select>
+                                    
+                                    
+                                    
+                                </div>
+                            </div>
+                            
+                        </div>
+
+
+
+                            
+                         <div class="row"> 
+
+
+                            <div class="col-md-6">    
+                                <div class="form-group">
+                                     <label class="form-control-label"> Billing Structure</label>
+                                     <select  class="form-control" formControlName='BillingCode'  (change)="billingCodeChange($event.target.value)">
+                                            <option value="">Select</option>
+                                            <option *ngFor="let BillingCode of BillingCodeList" value="{{BillingCode.Id}}">{{BillingCode.Code}}</option>
+                                    </select>
+                                    
+                                   
+                                     
+                                </div>
+                            </div>
+
+                             <div class="col-md-6">    
+                                <div class="form-group">
+
+                                     <label class="form-control-label"> Report Day</label>
+                                    <input type="text"  class="form-control"  formControlName='ReportDay' >
+                                    
+                                   
+                                    <div *ngIf="ReportDay.errors && ReportDay.errors.pattern"  class="text-danger">Invalid Report day value.</div>
+
+                                     
+                                </div>
+                            </div>        
+
+                             
+                        </div>
+                        <div class="row">  
+                             <div class="col-md-6" *ngIf="billingCodeId=='6'">    
+                                <div class="form-group">
+                                    <label class="form-control-label">Percentage</label>
+                                    <input type="text"  class="form-control"  formControlName='DepositPercentage' >
+                                    
+                                    
+                                </div>
+                            </div>   
+                            
+
+                            <div class="col-md-6" *ngIf="billingCodeId=='6'">    
+                                <div class="form-group">
+                                    <label class="form-control-label">No. of Installments</label>
+                                    <input type="text"  class="form-control"  formControlName='Installments' >
+                                    
+                                    
+                                </div>
+                            </div>
+                             <div class="col-md-12" *ngIf="billingCodeId=='5'">    
+                                <div class="form-group">
+                                    <label class="form-control-label">Enter Value</label>
+                                    <input type="text"  class="form-control"  formControlName='OtherValue' >
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">    
+                            
+                             <div class="col-md-6">    
+                                <div class="form-group">
+                                    <label class="form-control-label"> Tax State</label>
+                                     <select  class="form-control" formControlName='StateId' (change)="getTaxRate($event)">
+                                            <option value="">Select</option>
+                                            <option *ngFor="let State of StateList" value="{{State.StateId}}" class="">{{State.State}}</option>
+                                    </select>
+                                    
+                                    
+                                     
+                                </div>
+                            </div>
+                            <div class="col-md-6">    
+                                <div class="form-group">
+                                     <label class="form-control-label"> Tax Rate</label>
+                                    <input type="text"  class="form-control"  readonly formControlName='TaxRate' >
+                                    
+                                   
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                    </fieldset>
+                        
+                        
+                     <fieldset class="scheduler-border">
+                            <legend class="scheduler-border">Additional Information</legend>      
+                        
+                        <div class="row">
+    
+                           
+                            <div class="col-md-6">    
+                                <div class="form-group">
+                                     <label class="form-control-label"> Comments</label>
+                                    <input type="text"  class="form-control"  formControlName='Description' >
+                                    
+                                   
+
+                                </div>
+                            </div>    
+                            <div class="col-md-6">    
+                                <div class="form-group">
+                                    <label class="form-control-label"> Status</label>
+                                     <select  class="form-control" formControlName='Status'>
+                                            <option value="">Select</option>
+                                            <option *ngFor="let PolicyStatus of PolicyStatusList" value="{{PolicyStatus.Id}}">{{PolicyStatus.Status}}</option>
+                                    </select>
+                                    
+                                    
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                    </fieldset>    
+                        
+                            
+                        
+
+                            
+        
+    </div>
+    <div class="modal-footer">
+
+       
+
+         <button type="button" class="btn btn-primary"  (click)="renewPolicy()" *ngIf="title=='Edit'">Renew</button>
+
+        <input type="hidden" class="form-control" id="PolicyId"  formControlName='PolicyId'>  
+        <input type="hidden" class="form-control" id="PolicyRenew"  formControlName='PolicyRenew'>  
+
+        
+
+        <button type="button" class="btn btn-default waves-effect " (click)="modalRef.hide()">Close</button>
+        <button type='submit' class='btn btn-primary waves-effect waves-light' (click) = 'onPoliciesSave(0);'>
+            Save changes <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /></button>
+        
+
+    </div>
+    </form>
+</ng-template>
+
+
+
+
+             
+                

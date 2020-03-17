@@ -1,0 +1,2544 @@
+<style>
+    ul.pagination li.page-item a.page-link {
+        padding: 2px 4px !important;
+    }
+    ul.pagination.mypagination li>a.page-link {
+    padding: 5px !important;
+}
+</style>
+<!-- <link href="./vehicles.component.scss" rel="stylesheet"> -->
+
+
+<div #screen>
+
+
+    <div class="pcoded-content" [@routerTransition]>
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+
+
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row align-items-center">
+                            <div class="col-md-12">
+                                <div class="page-header-title">
+                                    <h4 class="m-b-10">Vehicles
+
+                                    </h4>
+                                </div>
+                                <ul class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a [routerLink]="['/dashboard']">
+                                            <i class="feather icon-home"></i>
+                                        </a>
+                                    </li>
+                                    <li class="breadcrumb-item">
+                                        <a href="JavaScript:void(0)">Vehicles</a>
+
+                                    </li>
+                                </ul>
+
+                                <p style="margin-top: 50px;background: #fff;padding: 5px;border-radius: 4px;margin-bottom: 0;"
+                                    [hidden]="!ClientName">Client: <b> {{ClientName}}</b>
+                                    <br></p>
+
+
+                            </div>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-md-12" [hidden]="!policyid">
+                                <p style="margin-top: 10px;background: #fff;padding: 5px;border-radius: 4px;margin-bottom: 0;"
+                                    [hidden]="!policyid">Policy: <b> {{PolicyName}}</b>
+                                    <br></p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--cole nd-->
+                    <div class="col-md-6">
+                        <div class="row" style="margin-top:100px;">
+                            <div class="col-md-6" [hidden]="!clientid1">
+                                <div class="card" style="margin-bottom: 5px;display: none">
+                                    <div class="card-block" style="padding:0;border-radius:4px;overflow:hidden">
+                                        <table class="table table-borderless table-xs fleetvims-table"
+                                            style="margin: 0;">
+                                            <thead>
+                                                <tr style="background: #eee;">
+                                                    <th>Physical<br> Damage</th>
+                                                    <th style="text-align:center;">Units</th>
+                                                    <th style="text-align:center;">Values</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th>Trucks</th>
+                                                    <th style="text-align:center;">{{ClientPDTrucksUnit}}</th>
+                                                    <th style="text-align:right;">
+                                                        {{ClientPDTrucksValue | currency : 'USD' : 'symbol' : '1.0' }}
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Trailers</th>
+                                                    <th style="text-align:center;">{{ClientPDTrailersUnit}}</th>
+                                                    <th style="text-align:right;">
+                                                        {{ClientPDTrailersValue | currency : 'USD' : 'symbol' : '1.0' }}
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Others</th>
+                                                    <th style="text-align:center;">{{ClientPDOthersUnit}}</th>
+                                                    <th style="text-align:right;">
+                                                        {{ClientPDOthersValue | currency : 'USD' : 'symbol' : '1.0' }}
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Total</th>
+                                                    <th style="text-align:center;">{{ClientPDTotalUnit}}</th>
+                                                    <th style="text-align:right;">
+                                                        {{ClientPDTotalValue | currency : 'USD' : 'symbol' : '1.0' }}
+                                                    </th>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 offset-md-6" [hidden]="!clientid1" style="margin-top:10px;">
+                                <div class="card" style="margin-bottom: 5px;">
+                                    <div class="card-block" style="padding:0;border-radius:4px;overflow:hidden">
+                                        <table class="table table-borderless table-xs fleetvims-table"
+                                            style="margin: 0;">
+                                            <!-- <thead>
+                                                                                    <tr style="background: #eee;">
+                                                                                        <th>Coverage</th>
+                                                                                        <th style="text-align:center;">Units</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody> 
+                                                                                    <tr>
+                                                                                        <th>Auto Liability</th>
+                                                                                        <th style="text-align:center;">{{ClientALUnit}}</th>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th>Physical Damage</th>
+                                                                                        <th style="text-align:center">{{ClientPDUnit}}</th>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th>Non Trucking</th>
+                                                                                        <th style="text-align:center;">{{ClientNTUnit}}</th>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th>Occupational Accident</th>
+                                                                                        <th style="text-align:center;">{{ClientOAUnit}}</th>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th>Passenger Accident</th>
+                                                                                        <th style="text-align:center">{{ClientPAUnit}}</th>
+                                                                                    </tr>
+                                                                                    
+                                                                                    
+                                                                                    
+                                                                                
+                                                                                </tbody> -->
+
+
+                                            <tr style="background: #eee;">
+                                                <th>Coverage</th>
+                                                <th style="text-align:center">AL</th>
+                                                <th style="text-align:center">PD</th>
+                                                <th style="text-align:center">NT</th>
+                                                <th style="text-align:center">OA</th>
+                                                <th style="text-align:center">PA</th>
+                                            </tr>
+
+                                            <tr>
+                                                <th>Units</th>
+                                                <th style="text-align:center;">{{ClientALUnit}}</th>
+                                                <th style="text-align:center">{{ClientPDUnit}}</th>
+                                                <th style="text-align:center">{{ClientNTUnit}}</th>
+                                                <th style="text-align:center">{{ClientOAUnit}}</th>
+                                                <th style="text-align:center">{{ClientPAUnit}}</th>
+
+                                            </tr>
+
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--cole nd-->
+                </div>
+                <!--row end-->
+
+
+
+            </div>
+        </div>
+
+        <div class="pcoded-inner-content">
+            <div class="main-body">
+                <div class="page-wrapper">
+                    <div class="page-body">
+                        <!-- [ page content ] start -->
+                        <div class="row">
+
+
+                            <div class="alertbox">
+                                <div *ngFor="let alert of alerts">
+                                    <alert [type]="alert.type" [dismissOnTimeout]="5000"><span
+                                            [innerHtml]="alert.msg"></span></alert>
+                                </div>
+                            </div>
+
+                            <!-- site Analytics card start -->
+                            <div class="col-lg-12 col-md-12">
+                                <div class="card table-card latest-activity-card">
+                                    <div class="card-header with-border" style="padding:5px 20px">
+                                        <h5 class="card-header-text" style="padding-top:12px">Vehicles</h5>
+
+                                        <button data-toggle="modal" data-target="#large-Modal" type="button"
+                                            class="btn btn-sm btn-success waves-effect waves-light f-right"
+                                            (click)="openModal(content,0)"
+                                            *ngIf="RolesService.roleMatch('Vehicle',['AddEditAccess'])">
+                                            <i class="fa fa-plus" style="margin: 0;"></i> Add
+                                        </button>
+
+                                        <button data-toggle="modal" data-target="#large-Modal" type="button"
+                                            class="btn btn-sm btn-success waves-effect waves-light f-right"
+                                            (click)="openModalImport(bulkupload)"
+                                            *ngIf="RolesService.roleMatch('Bulk Import',['AddEditAccess'])"
+                                            [hidden]="!clientid">
+                                            <i class="fa fa-plus" style="margin: 0;"></i> Bulk Import
+                                        </button>
+
+                                        <button data-toggle="modal" data-target="#large-Modal" type="button"
+                                            class="btn btn-sm btn-success waves-effect waves-light f-right"
+                                            (click)="exportVehicle()"
+                                            *ngIf="RolesService.roleMatch('Bulk Import',['AddEditAccess'])">
+                                            Export
+                                        </button>
+
+                                        <div class="input-group" style="width: 150px;float: right;margin: 0;">
+                                            <label style="float: left;width: 100%;font-size:11px;margin-bottom:0.1em">
+                                                &nbsp;</label>
+                                            <input type="text" class="form-control" placeholder="Search" title=""
+                                                [(ngModel)]="search_value" style="height: 20px">
+                                            <span class="input-group-prepend" id="name"
+                                                style="margin: 0;cursor:pointer;" (click)="onFilter(search_value)">
+                                                <label class="input-group-text"
+                                                    style="background: white;color: #b2b2b2;height: 20px;padding-top:0px;line-height: 0.5"><i
+                                                        class="fa fa-search" style="cursor:pointer"></i></label>
+                                            </span>
+                                        </div>
+                                        <div class="input-group " style="width: 150px;float: right;margin: 0 15px 0 0;">
+                                            <label
+                                                style="float: left;width: 100%;font-size:11px;margin-bottom:0.1em">Unit
+                                                Type</label>
+                                            <select style="border: 1px solid #ccc;height: 20px;padding:.200rem .55rem"
+                                                aria-controls="basic-col-reorder" class="form-control"
+                                                (change)="unitTypeFilter($event.target.value)">
+                                                <option value="0">ALL</option>
+
+                                                <option [selected]="-1 == VehicleUnitType" value="-1"
+                                                    style="font-weight: bold">Power Units</option>
+
+                                                <option *ngFor="let unittype of PowerUnitTypeList"
+                                                    [selected]="unittype.Id == VehicleUnitType" value="{{unittype.Id}}">
+                                                    --{{unittype.Type}}</option>
+                                                <option [selected]="-2 == VehicleUnitType" value="-2"
+                                                    style="font-weight: bold">Non-Power Units</option>
+
+                                                <option *ngFor="let unittype of NonPowerUnitTypeList"
+                                                    [selected]="unittype.Id == VehicleUnitType" value="{{unittype.Id}}">
+                                                    --{{unittype.Type}}</option>
+                                                <option [selected]="-3 == VehicleUnitType" value="-3"
+                                                    style="font-weight: bold">Unassigned Units</option>
+                                            </select>
+
+                                        </div>
+
+                                        <div class="input-group" style="width: 150px;float: right;margin: 0 15px 0 0;">
+                                            <label style="float: left;width: 100%;font-size:11px;margin-bottom:0.1em">
+                                                Status</label>
+                                            <select style="border: 1px solid #ccc;height: 20px;padding:.200rem .55rem"
+                                                aria-controls="basic-col-reorder" class="form-control"
+                                                (change)="statusFilter($event.target.value)">
+                                                <option value="1">Active</option>
+                                                <option value="0">Not Active</option>
+                                            </select>
+
+                                        </div>
+
+                                        <div class="input-group" style="width: 150px;float: right;margin: 0 15px 0 0;">
+                                            <label style="float: left;width: 100%;font-size:11px;margin-bottom:0.1em">
+                                                Coverage</label>
+                                            <select style="border: 1px solid #ccc;height: 20px;padding:.200rem .55rem"
+                                                aria-controls="basic-col-reorder" class="form-control"
+                                                (change)="vehicleType($event.target.value)">
+                                                <option value="0">ALL</option>
+                                                <option value="1">Sponsored</option>
+                                                <option value="2">Non Sponsored</option>
+                                                <option value="3">Future</option>
+                                            </select>
+
+                                        </div>
+
+
+      <!---------------------use to download screenshot  (start)------------------->
+
+                                        <!-- <div class="input-group"
+                                            style="width: 27px;float: right;margin: 11px 18px 0 0;">
+
+                                            <button (click)="downloadImage()" data-toggle="tooltip" data-placement="top"
+                                                title="For Screenchot" style="BORDER: NONE;"><img
+                                                    src="/assets/images/ScreenshotIcon1.png" alt="Transure"
+                                                    style="width: 25px;background: #FFF;"></button>
+
+                                        </div> -->
+
+ <!---------------------use to download screenshot  (end)------------------->
+
+                                    </div>
+                                    <div class="card-block">
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless table-xs fleetvims-table"
+                                                id="vehicles_table">
+
+                                                <tr>
+                                                    <th colspan="8" *ngIf="!isDeleted && !ShoWFuture">
+
+                                                        <button tooltip="Batch Edit" placement="top" type="button"
+                                                            class="btn btn-mini btn-primary waves-effect waves-light f-right"
+                                                            style="margin-right:5px;padding: 5px 10px"
+                                                            (click)="openModalBatchEdit(batchedit)"
+                                                            [hidden]="!clientid">
+                                                            <i class="fa fa-edit" style="margin: 0;"></i>
+                                                        </button>
+                                                        <button (click)="PrintBatchCertificate()"
+                                                            tooltip="Print Batch Certificate" placement="top"
+                                                            type="button"
+                                                            class="btn btn-mini btn-primary waves-effect waves-light f-right"
+                                                            style="margin-right:5px;padding: 5px 10px"
+                                                            [hidden]="!clientid">
+                                                            <i class="fa fa-certificate" style="margin: 0;"></i>
+                                                        </button>
+                                                        <button tooltip="Batch Email" placement="top" type="button"
+                                                            class="btn btn-mini btn-primary waves-effect waves-light f-right"
+                                                            style="margin-right:5px;padding: 5px 10px"
+                                                            (click)="openModalBatchEmail(batchemail,0,'')"
+                                                            [hidden]="!clientid">
+                                                            <i class="fa fa-envelope" style="margin: 0;"></i>
+                                                        </button>
+
+                                                    </th>
+                                                    <th colspan="9" *ngIf="!isDeleted && ShoWFuture">
+
+                                                        <button tooltip="Batch Edit" placement="top" type="button"
+                                                            class="btn btn-mini btn-primary waves-effect waves-light f-right"
+                                                            style="margin-right:5px;padding: 5px 10px"
+                                                            (click)="openModalBatchEdit(batchedit)"
+                                                            [hidden]="!clientid">
+                                                            <i class="fa fa-edit" style="margin: 0;"></i>
+                                                        </button>
+                                                        <button (click)="PrintBatchCertificate()"
+                                                            tooltip="Print Batch Certificate" placement="top"
+                                                            type="button"
+                                                            class="btn btn-mini btn-primary waves-effect waves-light f-right"
+                                                            style="margin-right:5px;padding: 5px 10px"
+                                                            [hidden]="!clientid">
+                                                            <i class="fa fa-certificate" style="margin: 0;"></i>
+                                                        </button>
+                                                        <button tooltip="Batch Email" placement="top" type="button"
+                                                            class="btn btn-mini btn-primary waves-effect waves-light f-right"
+                                                            style="margin-right:5px;padding: 5px 10px"
+                                                            (click)="openModalBatchEmail(batchemail,0,'')"
+                                                            [hidden]="!clientid">
+                                                            <i class="fa fa-envelope" style="margin: 0;"></i>
+                                                        </button>
+
+                                                    </th>
+                                                    <th style="text-align:center;" *ngIf="!isDeleted"
+                                                        [hidden]="clientid >0 && !PolicyAL">
+                                                        <button style="padding:5px" tooltip="Print - Auto Liability"
+                                                            placement="top" class="btn btn-mini btn-primary"
+                                                            (click)="getPrintCovrageReport(6)" [hidden]="!clientid">
+                                                            <i style="margin: 0;" class="fa fa-print"></i>
+                                                            AL
+                                                        </button>
+                                                    </th>
+                                                    <th style="text-align:center;" *ngIf="!isDeleted"
+                                                        [hidden]="clientid >0 && !PolicyPD">
+                                                        <button style="padding:5px"
+                                                            tooltip="Print - Physical Damage Coverage" placement="top"
+                                                            class="btn btn-mini btn-primary"
+                                                            (click)="getPrintCovrageReport(1)" [hidden]="!clientid">
+                                                            <i style="margin: 0;" class="fa fa-print"></i>
+                                                            PD
+                                                        </button>
+                                                    </th>
+                                                    <th style="text-align:center;" *ngIf="!isDeleted"
+                                                        [hidden]="clientid >0 && !PolicyNT">
+                                                        <button style="padding:5px"
+                                                            tooltip="Print - Non Trucking Coverage" placement="top"
+                                                            class="btn btn-mini btn-primary"
+                                                            (click)="getPrintCovrageReport(2)" [hidden]="!clientid">
+                                                            <i style="margin: 0;" class="fa fa-print"></i>
+                                                            NT
+                                                        </button>
+                                                    </th>
+                                                    <th style="text-align:center;" *ngIf="!isDeleted"
+                                                        [hidden]="clientid >0 && !PolicyOA">
+                                                        <button style="padding:5px"
+                                                            tooltip="Print - Occupational Accident Coverage"
+                                                            placement="top" class="btn btn-mini btn-primary"
+                                                            (click)="getPrintCovrageReport(3)" [hidden]="!clientid">
+                                                            <i style="margin: 0;" class="fa fa-print"></i>
+                                                            OA
+                                                        </button>
+                                                    </th>
+                                                    <th style="text-align:center;" *ngIf="!isDeleted"
+                                                        [hidden]="clientid >0 && !PolicyPA">
+                                                        <button style="padding:5px"
+                                                            tooltip="Print - Passenger Accident Coverage"
+                                                            placement="top" class="btn btn-mini btn-primary"
+                                                            (click)="getPrintCovrageReport(4)" [hidden]="!clientid">
+                                                            <i style="margin: 0;" class="fa fa-print"></i>
+                                                            PA
+                                                        </button>
+                                                    </th>
+
+                                                    <th colspan="2" style="text-align: right;">
+                                                        <div>
+                                                            <select (change)="itemsPerPageChange($event.target.value)">
+                                                                <option value="10" [selected]="itemsPerPage==10">10
+                                                                </option>
+                                                                <option value="25" [selected]="itemsPerPage==25">25
+                                                                </option>
+                                                                <option value="100" [selected]="itemsPerPage==100">100
+                                                                </option>
+                                                                <option [value]="1000" [selected]="itemsPerPage==1000">
+                                                                    1000</option>
+                                                            </select>
+                                                        </div>
+                                                    </th>
+                                                    <th colspan="3" align="right">
+                                                        <pagination class="mypagination" [totalItems]="totalItems"
+                                                            [itemsPerPage]="itemsPerPage"
+                                                            (pageChanged)="pageChanged($event)" [maxSize]="5">
+                                                        </pagination>
+                                                        <!-- <button (click)="downloadImage()"><img  src="/assets/images/ScreenshotIcon.png" alt="Transure"   style="width: 25px;background: #FFF;"></button>
+                    -->
+                                                    </th>
+                                                </tr>
+                                                <tr style="background: #eee;">
+
+                                                    <th *ngIf="clientid && !isDeleted" style="text-align:left;">
+                                                        <div class="checkbox-color checkbox-primary"
+                                                            style="padding-bottom:10px">
+                                                            <input type="checkbox" (change)="checkAllVehicle($event)"
+                                                                id="checkboxallvehicle" [(ngModel)]="checkAllMain">
+                                                            <label for="checkboxallvehicle">
+
+                                                            </label>
+                                                        </div>
+                                                    </th>
+                                                    <th style="text-align:left;"><a href="javascript:void(0)"
+                                                            (click)="Sorting(1)">Unit</a></th>
+                                                    <th style="text-align:left;"><a href="javascript:void(0)"
+                                                            (click)="Sorting(2)">Vehicle ID #</a></th>
+                                                    <th style="text-align:left;"><a href="javascript:void(0)"
+                                                            (click)="Sorting(3)">Year</a></th>
+                                                    <th style="text-align:left;"><a href="javascript:void(0)"
+                                                            (click)="Sorting(4)">Make</a></th>
+                                                    <th style="text-align:right;"><a href="javascript:void(0)"
+                                                            (click)="Sorting(5)">Value</a></th>
+                                                    <th style="text-align:right;" *ngIf="ShoWFuture"><a
+                                                            href="javascript:void(0)">Future Value</a></th>
+                                                    <th style="text-align:left;" *ngIf="!clientid"><a
+                                                            href="javascript:void(0)" (click)="Sorting(6)">Client
+                                                            Name</a></th>
+
+
+                                                    <th style="text-align:left;"><a href="javascript:void(0)"
+                                                            (click)="Sorting(6)">Type</a></th>
+                                                    <th><a href="javascript:void(0)" (click)="Sorting(13)">DT</a></th>
+                                                    <th style="text-align:center;" *ngIf="!isDeleted"
+                                                        [hidden]="clientid >0 && !PolicyAL">AL</th>
+                                                    <th style="text-align:center;" *ngIf="!isDeleted"
+                                                        [hidden]="clientid >0 && !PolicyPD">PD</th>
+                                                    <th style="text-align:center;" *ngIf="!isDeleted"
+                                                        [hidden]="clientid >0 && !PolicyNT">NT</th>
+                                                    <th style="text-align:center;" *ngIf="!isDeleted"
+                                                        [hidden]="clientid >0 && !PolicyOA">OA</th>
+                                                    <th style="text-align:center;" *ngIf="!isDeleted"
+                                                        [hidden]="clientid >0 && !PolicyPA">PA</th>
+
+                                                    <th>OPTIONS <a href="javascript:void(0)" tooltip="FAQ"
+                                                            placement="top" (click)="openFAQModal(FAQcontent)"
+                                                            style="text-align: center;padding-left: 10px"><i
+                                                                class="fa fa-question-circle"
+                                                                style="margin: 0;font-size: 18px"></i></a></th>
+                                                    <th style="text-align:left;"><a href="javascript:void(0)"
+                                                            (click)="Sorting(15)">Driver</a></th>
+                                                    <th style="text-align:left;"><a href="javascript:void(0)"
+                                                            (click)="Sorting(14)">Owner</a></th>
+                                                    <th style="text-align:left;"><a href="javascript:void(0)"
+                                                            (click)="Sorting(12)">Lienholder</a></th>
+                                                </tr>
+
+                                                <tbody>
+                                                    <tr *ngFor="let vehicle of vehicles">
+
+                                                        <td *ngIf="clientid && !isDeleted">
+                                                            <div class="checkbox-color checkbox-primary">
+                                                                <input id="checkbox{{vehicle.VehicleId}}"
+                                                                    type="checkbox" value="{{vehicle.VehicleId}}"
+                                                                    (change)="updateCheckedOptions(vehicle.VehicleId, $event)"
+                                                                    [checked]="checkAll" [(ngModel)]="vehicle.selected">
+                                                                <label for="checkbox{{vehicle.VehicleId}}">
+
+                                                                </label>
+
+                                                            </div>
+
+                                                        </td>
+                                                        <td>{{vehicle.Unit}}</td>
+                                                        <td>{{vehicle.SerialNumber}}</td>
+                                                        <td>{{vehicle.ModelYear}}</td>
+                                                        <td>{{vehicle.MakeCompanyName}}</td>
+                                                        <td style="text-align: right;">
+                                                            {{vehicle.Value | currency : 'USD' : 'symbol' : '1.0' }}
+                                                        </td>
+                                                        <td style="text-align: right;" *ngIf="ShoWFuture">
+                                                            {{vehicle.FutureValue | currency : 'USD' : 'symbol' : '1.0' }}
+                                                        </td>
+
+                                                        <td *ngIf="!clientid">{{vehicle.ClientName}}</td>
+
+
+                                                        <td>{{vehicle.UnitTypeName}}</td>
+                                                        <!--                                                     
+                                                    style="text-align:center;" -->
+
+                                                        <td>
+                                                            <span *ngIf="(vehicle.DriverType == 2)">IC</span>
+                                                            <span *ngIf="(vehicle.DriverType == 1)">E</span>
+                                                            <span *ngIf="(vehicle.DriverType == 3)">LC</span>
+
+                                                        </td>
+                                                        <td *ngIf="!isDeleted" [hidden]="clientid >0 && !PolicyAL"
+                                                            style="text-align:center;"><button
+                                                                class="btn-popup-coverage" type="button"
+                                                                data-toggle="modal"
+                                                                (click)="openModalPolicyUpdate(policyupdate,'6',vehicle.VehicleId,vehicle.ALCoverageType,vehicle.EffectiveDate,vehicle.ExpirationDate,vehicle.Lienholder3,vehicle.ClientId,vehicle.ALPolicyId)"
+                                                                [disabled]="vehicle.ALCoverageType===5"
+                                                                data-target="#myModal"
+                                                                *ngIf="vehicle.UniyCategoryTypeId==1"
+                                                                style="-webkit-appearance:none;border: none">
+                                                                <span
+                                                                    class="btn waves-effect waves-dark btn-success btn-outline-warning btn-icon"
+                                                                    *ngIf="vehicle.ALCoverageType==4"><i
+                                                                        class="fa fa-check-circle fa"
+                                                                        style="color: #35DB0B;margin-right:0"></i></span>
+
+
+
+                                                                <span
+                                                                    class="btn waves-effect waves-dark btn-danger btn-outline-danger btn-icon"
+                                                                    *ngIf="vehicle.ALCoverageType==0 || vehicle.ALCoverageType==1"><i
+                                                                        class="fa  fa-exclamation-circle"
+                                                                        style="color: #ED1923;margin-right:0"></i></span>
+
+
+                                                                <span
+                                                                    class="btn waves-effect waves-dark btn-secondary btn-outline-secondary btn-icon"
+                                                                    *ngIf="vehicle.ALCoverageType==2"><i
+                                                                        class="fa  fa-minus-circle"
+                                                                        style="color: #D3D3D3;margin-right:0"></i></span>
+
+
+                                                                <span
+                                                                    class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon"
+                                                                    *ngIf="vehicle.ALCoverageType==3"
+                                                                    style="border-color: #76afd3;"><i
+                                                                        class="fa fa-check-circle fa"
+                                                                        style="color: #76afd3 ;margin-right:0"></i></span>
+
+
+                                                            </button></td>
+                                                        <td *ngIf="!isDeleted" [hidden]="clientid >0 && !PolicyPD"
+                                                            style="text-align:center;"><button
+                                                                class="btn-popup-coverage" type="button"
+                                                                (click)="openModalPolicyUpdate(policyupdate,'1',vehicle.VehicleId,vehicle.PDCoverageType,vehicle.EffectiveDate,vehicle.ExpirationDate,vehicle.Lienholder3,vehicle.ClientId,vehicle.PDPolicyId)"
+                                                                [disabled]="vehicle.PDCoverageType===5"
+                                                                style="-webkit-appearance:none;border: none">
+
+                                                                <span
+                                                                    class="btn waves-effect waves-dark btn-success btn-outline-warning btn-icon"
+                                                                    *ngIf="vehicle.PDCoverageType==4"><i
+                                                                        class="fa fa-check-circle fa"
+                                                                        style="color: #35DB0B;margin-right:0"></i></span>
+
+
+
+                                                                <span
+                                                                    class="btn waves-effect waves-dark btn-danger btn-outline-danger btn-icon"
+                                                                    *ngIf="vehicle.PDCoverageType==0 || vehicle.PDCoverageType==1"><i
+                                                                        class="fa  fa-exclamation-circle"
+                                                                        style="color: #ED1923;margin-right:0"></i></span>
+
+
+                                                                <span
+                                                                    class="btn waves-effect waves-dark btn-secondary btn-outline-secondary btn-icon"
+                                                                    *ngIf="vehicle.PDCoverageType==2"><i
+                                                                        class="fa  fa-minus-circle"
+                                                                        style="color: #D3D3D3;margin-right:0"></i></span>
+
+
+                                                                <span
+                                                                    class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon"
+                                                                    *ngIf="vehicle.PDCoverageType==3"
+                                                                    style="border-color: #76afd3;"><i
+                                                                        class="fa fa-check-circle fa"
+                                                                        style="color: #76afd3;margin-right:0"></i></span>
+
+
+                                                            </button>
+                                                        </td>
+
+                                                        <td *ngIf="!isDeleted" [hidden]="clientid >0 && !PolicyNT"
+                                                            style="text-align:center;"><button
+                                                                class="btn-popup-coverage"
+                                                                (click)="openModalPolicyUpdate(policyupdate,'2',vehicle.VehicleId,vehicle.NTCoverageType,vehicle.EffectiveDate,vehicle.ExpirationDate,vehicle.Lienholder3,vehicle.ClientId,vehicle.NTPolicyId)"
+                                                                [disabled]="vehicle.NTCoverageType===5" type="button"
+                                                                data-toggle="modal" data-target="#myModal"
+                                                                *ngIf="vehicle.UniyCategoryTypeId==1 && vehicle.DriverType!=1"
+                                                                style="-webkit-appearance:none;border: none">
+                                                                <span
+                                                                    class="btn waves-effect waves-dark btn-success btn-outline-warning btn-icon"
+                                                                    *ngIf="vehicle.NTCoverageType==4"><i
+                                                                        class="fa fa-check-circle fa"
+                                                                        style="color: #35DB0B;margin-right:0"></i></span>
+
+
+
+                                                                <span
+                                                                    class="btn waves-effect waves-dark btn-danger btn-outline-danger btn-icon"
+                                                                    *ngIf="vehicle.NTCoverageType==0 || vehicle.NTCoverageType==1"><i
+                                                                        class="fa  fa-exclamation-circle"
+                                                                        style="color: #ED1923;margin-right:0"></i></span>
+
+
+                                                                <span
+                                                                    class="btn waves-effect waves-dark btn-secondary btn-outline-secondary btn-icon"
+                                                                    *ngIf="vehicle.NTCoverageType==2"><i
+                                                                        class="fa  fa-minus-circle"
+                                                                        style="color: #D3D3D3;margin-right:0"></i></span>
+
+
+                                                                <span
+                                                                    class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon"
+                                                                    *ngIf="vehicle.NTCoverageType==3"
+                                                                    style="border-color: #76afd3;"><i
+                                                                        class="fa fa-check-circle fa"
+                                                                        style="color: #76afd3;margin-right:0"></i></span>
+
+
+                                                            </button></td>
+                                                        <td *ngIf="!isDeleted" [hidden]="clientid >0 && !PolicyOA"
+                                                            style="text-align:center;"><button
+                                                                class="btn-popup-coverage"
+                                                                (click)="openModalPolicyUpdate(policyupdate,'3',vehicle.VehicleId,vehicle.OACoverageType,vehicle.EffectiveDate,vehicle.ExpirationDate,vehicle.Lienholder3,vehicle.ClientId,vehicle.OAPolicyId)"
+                                                                [disabled]="vehicle.OACoverageType===5" type="button"
+                                                                data-toggle="modal" data-target="#myModal"
+                                                                *ngIf="vehicle.UniyCategoryTypeId==1 && vehicle.DriverType!=1"
+                                                                style="-webkit-appearance:none;border: none">
+                                                                <span
+                                                                    class="btn waves-effect waves-dark btn-success btn-outline-warning btn-icon"
+                                                                    *ngIf="vehicle.OACoverageType==4"><i
+                                                                        class="fa fa-check-circle fa"
+                                                                        style="color: #35DB0B;margin-right:0"></i></span>
+
+
+
+                                                                <span
+                                                                    class="btn waves-effect waves-dark btn-danger btn-outline-danger btn-icon"
+                                                                    *ngIf="vehicle.OACoverageType==0 || vehicle.OACoverageType==1"><i
+                                                                        class="fa  fa-exclamation-circle"
+                                                                        style="color: #ED1923;margin-right:0"></i></span>
+
+
+                                                                <span
+                                                                    class="btn waves-effect waves-dark btn-secondary btn-outline-secondary btn-icon"
+                                                                    *ngIf="vehicle.OACoverageType==2"><i
+                                                                        class="fa fa-minus-circle"
+                                                                        style="color: #D3D3D3;margin-right:0"></i></span>
+
+
+                                                                <span
+                                                                    class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon"
+                                                                    *ngIf="vehicle.OACoverageType==3"
+                                                                    style="border-color: #76afd3;"><i
+                                                                        class="fa fa-check-circle fa"
+                                                                        style="color: #76afd3;margin-right:0"></i></span>
+
+
+                                                            </button></td>
+                                                        <td *ngIf="!isDeleted" [hidden]="clientid >0 && !PolicyPA"
+                                                            style="text-align:center;"><button
+                                                                class="btn-popup-coverage" type="button"
+                                                                data-toggle="modal"
+                                                                (click)="openModalPolicyUpdate(policyupdate,'4',vehicle.VehicleId,vehicle.PACoverageType,vehicle.EffectiveDate,vehicle.ExpirationDate,vehicle.Lienholder3,vehicle.ClientId,vehicle.PAPolicyId)"
+                                                                [disabled]="vehicle.PACoverageType===5"
+                                                                data-target="#myModal"
+                                                                *ngIf="vehicle.UniyCategoryTypeId==1"
+                                                                style="-webkit-appearance:none;border: none">
+                                                                <span
+                                                                    class="btn waves-effect waves-dark btn-success btn-outline-warning btn-icon"
+                                                                    *ngIf="vehicle.PACoverageType==4"><i
+                                                                        class="fa fa-check-circle fa"
+                                                                        style="color: #35DB0B;margin-right:0"></i></span>
+
+
+
+                                                                <span
+                                                                    class="btn waves-effect waves-dark btn-danger btn-outline-danger btn-icon"
+                                                                    *ngIf="vehicle.PACoverageType==0 || vehicle.PACoverageType==1"><i
+                                                                        class="fa  fa-exclamation-circle"
+                                                                        style="color: #ED1923;margin-right:0"></i></span>
+
+
+                                                                <span
+                                                                    class="btn waves-effect waves-dark btn-secondary btn-outline-secondary btn-icon"
+                                                                    *ngIf="vehicle.PACoverageType==2">
+
+                                                                    <i class="fa fa-minus-circle"
+                                                                        style="color: #D3D3D3;margin-right:0"></i>
+
+                                                                </span>
+
+
+                                                                <span
+                                                                    class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon"
+                                                                    *ngIf="vehicle.PACoverageType==3"
+                                                                    style="border-color: #76afd3;"><i
+                                                                        class="fa fa-check-circle fa"
+                                                                        style="color: #76afd3;margin-right:0"></i></span>
+
+
+                                                            </button></td>
+
+                                                        <td> <a *ngIf="!isDeleted && (vehicle.NTCoverageType==4 || vehicle.PDCoverageType==4 || vehicle.OACoverageType==4 || vehicle.PACoverageType==4 || vehicle.ALCoverageType==4)"
+                                                                class="btn waves-effect waves-dark btn-success btn-outline-success btn-icon"
+                                                                placement="top" tooltip="Certificate of Insurance"
+                                                                href="JavaScript:void(0)"
+                                                                (click)="getVehicleCertificate(vehicle)">
+                                                                <i style="margin-right:0" class="fa fa-certificate"></i>
+                                                            </a>
+                                                            <a *ngIf="!isDeleted && (vehicle.NTCoverageType!=4 && vehicle.PDCoverageType!=4 && vehicle.OACoverageType!=4 && vehicle.PACoverageType!=4 &&  vehicle.ALCoverageType!=4)"
+                                                                class="btn waves-effect waves-dark btn-success btn-outline-success btn-icon"
+                                                                style="visibility: hidden;">
+                                                                <i style="margin-right:0" class="fa fa-certificate"></i>
+                                                            </a>
+
+                                                            <a (click)="openModalBatchEmail(batchemail,vehicle.VehicleId,vehicle.Unit)"
+                                                                class="btn waves-effect waves-dark btn-primary btn-outline-primary btn-icon"
+                                                                placement="top" tooltip="Send Email"
+                                                                *ngIf="!isDeleted &&(vehicle.NTCoverageType==4 || vehicle.PDCoverageType==4 || vehicle.OACoverageType==4 || vehicle.PACoverageType==4 || vehicle.ALCoverageType==4)">
+                                                                <i style="margin-right:0" class="fa fa-envelope"></i>
+                                                            </a>
+
+                                                            <a (click)="openModalBatchEmail(batchemail,vehicle.VehicleId,vehicle.Unit)"
+                                                                class="btn waves-effect waves-dark btn-primary btn-outline-primary btn-icon"
+                                                                placement="top" tooltip="Send Email"
+                                                                *ngIf="!isDeleted && (vehicle.NTCoverageType!=4 && vehicle.PDCoverageType!=4 && vehicle.OACoverageType!=4 && vehicle.PACoverageType!=4 && vehicle.ALCoverageType!=4)"
+                                                                class="btn waves-effect waves-dark btn-success btn-outline-success btn-icon"
+                                                                style="visibility: hidden;">
+                                                                <i style="margin-right:0" class="fa fa-envelope"></i>
+                                                            </a>
+
+
+                                                            <a *ngIf="!isDeleted && (RolesService.roleMatch('Vehicle',['AddEditAccess']))"
+                                                                [routerLink]="['/vehicle/edit/', vehicle.VehicleId,clientid]"
+                                                                class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon"
+                                                                tooltip="Edit" placement="top">
+                                                                <i style="margin-right:0" class="fa fa-edit"></i>
+                                                            </a>
+                                                            <a [routerLink]="['/vehicle/transactionlog/', vehicle.VehicleId,clientid]"
+                                                                class="btn waves-effect waves-dark btn-info btn-outline-info btn-icon"
+                                                                placement="top" tooltip="Transactions"
+                                                                *ngIf="RolesService.roleMatch('Vehicle Transaction',['AddEditAccess','DeleteAccess','ViewAccess'])">
+                                                                <i style="margin-right:0" class="fa fa-exchange"></i>
+                                                            </a>
+
+                                                            <a *ngIf="RolesService.roleMatch('Vehicle',['DeleteAccess']) && !isDeleted"
+                                                                href="javascript:void(0)"
+                                                                (click)="onDelete(vehicle.VehicleId)"
+                                                                class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon"
+                                                                tooltip="Delete" placement="top">
+                                                                <i style="margin-right:0" class="fa fa-remove"></i>
+                                                            </a>
+
+                                                            <a *ngIf="RolesService.roleMatch('Vehicle',['DeleteAccess']) && isDeleted"
+                                                                href="javascript:void(0)"
+                                                                (click)="onRestore(vehicle.VehicleId)"
+                                                                class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon"
+                                                                tooltip="Restore" placement="top">
+                                                                <i style="margin-right:0" class="fa fa-undo"></i>
+                                                            </a>
+
+
+
+
+                                                        </td>
+
+
+                                                        <td>{{vehicle.Driver}}</td>
+                                                        <td>{{vehicle.Owner}}</td>
+                                                        <td>{{vehicle.Lienholder1Name}}</td>
+
+                                                    </tr>
+
+                                                    <tr *ngIf="! vehicles?.length">
+                                                        <td colspan="20"> No data found...</td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div class="card-footer no-border">
+
+                                            <div class="row">
+                                                <div class="col-md-11">
+
+                                                    <pagination [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
+                                                        (pageChanged)="pageChanged($event)" [maxSize]="5"></pagination>
+
+                                                </div>
+
+                                                <div class="col-md-1" style="float:right;">
+                                                    <select (change)="itemsPerPageChange($event.target.value)">
+                                                        <option value="10" [selected]="itemsPerPage==10">10</option>
+                                                        <option value="25" [selected]="itemsPerPage==25">25</option>
+                                                        <option value="100" [selected]="itemsPerPage==100">100</option>
+                                                        <option [value]="1000" [selected]="itemsPerPage==1000">1000
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+
+
+                            <!-- site Analytics card end -->
+
+
+                        </div>
+                        <!-- [ page content ] end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
+
+    </div>
+</div>
+<ng-template #content>
+
+    <div class="modal-header">
+        <h4 class="modal-title">Vehicles - {{title}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+    <form class="" [formGroup]='register' (ngSubmit)='onVehiclesSave()' novalidate>
+
+        <div class="modal-body">
+            <div class="row" *ngIf="UserInfo.Module!='3'">
+                <div class="col-md-12">
+                    <div class="form-group form-default">
+                        <label class="float-label">Client <span class="text-danger">*</span></label>
+                        <select class="form-control" formControlName='ClientId'
+                            (change)="getPolicies($event.target.value)">
+                            <option value="0">Select</option>
+                            <option *ngFor="let client of ClientList" [value]="client[0]">{{client[1]}}</option>
+                        </select>
+
+
+                        <div *ngIf="ClientId.invalid && (ClientId.dirty || isSubmitted)" id="ClientId"
+                            class="text-danger">
+                            Client is required.
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group form-default">
+                        <label class="float-label">Unit Type</label>
+                        <select class="form-control" formControlName='UnitType'
+                            (change)="chageUnitTypePolicy($event.target.value)">
+                            <option>Select</option>
+                            <optgroup label="Power Units">
+                                <option *ngFor="let unittype of PowerUnitTypeList" value="{{unittype.Id}}">
+                                    {{unittype.Type}}</option>
+                            </optgroup>
+                            <optgroup label="Non-Power Units">
+                                <option *ngFor="let unittype of NonPowerUnitTypeList" value="{{unittype.Id}}">
+                                    {{unittype.Type}}</option>
+                            </optgroup>
+                        </select>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+            
+
+
+
+            <div class="row" *ngIf="UnitTypeValue==1">
+
+                <div class="col-md-12">
+                    <div class="form-group form-default">
+                        <label class="float-label">Driver Type</label>
+
+                        <select class="form-control" formControlName='DriverType'
+                            (change)="chageDriverTypePolicy($event.target.value)">
+                            <option>Select</option>
+                            <option *ngFor="let drivertype of DriverTypeList" value="{{drivertype.Id}}">
+                                {{drivertype.Type}}</option>
+                        </select>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <fieldset class="scheduler-border" *ngIf="this.coveragePolicy.length >0">
+                <legend class="scheduler-border">Coverage Selection</legend>
+                <div class="row" *ngIf="this.coveragePolicy.length >0">
+
+
+                    <div class="col-md-6">
+
+                        <div class="form-group form-default" *ngIf="!this.coveragePolicy[1]">
+
+                            <h4 class="sub-title">PD Policy</h4>
+                            <div>
+                                <label style="font-size:10px">
+                                    No PD Policy
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-default"
+                            *ngIf="this.coveragePolicy[1] && this.coveragePolicy[1].length >1">
+
+                            <label class="float-label">PD Policy</label>
+                            <select class="form-control" formControlName='Policies'
+                                (change)="updatePolicyOptions('PD', $event)">
+                                <option value="0">Select</option>
+
+
+                                <option *ngFor="let Policy of this.coveragePolicy[1]" [value]="Policy.Id">
+                                    {{Policy.Name}}</option>
+
+                            </select>
+
+
+
+
+                        </div>
+                        <div class="form-group form-default"
+                            *ngIf="this.coveragePolicy[1] && this.coveragePolicy[1].length ==1">
+
+                            <h4 class="sub-title">PD Policy</h4>
+                            <div class="checkbox-color checkbox-primary">
+                                <input id="checkbox1850PD" type="checkbox" value="{{this.coveragePolicy[1][0].Id}}"
+                                    formControlName='Policies' (click)="updatePolicyOptions('PD', $event)"
+                                    checked="false">
+                                <label for="checkbox1850PD">
+                                    {{this.coveragePolicy[1][0].Name}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6" *ngIf="DriverTypeValue!=1 && UnitTypeValue!=2">
+
+                        <div class="form-group form-default" *ngIf="!this.coveragePolicy[2]">
+
+                            <h4 class="sub-title">NT Policy</h4>
+                            <div>
+                                <label style="font-size:10px">
+                                    No NT Policy
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-default"
+                            *ngIf="this.coveragePolicy[2] && this.coveragePolicy[2].length >1">
+
+                            <label class="float-label">NT Policy</label>
+                            <select class="form-control" formControlName='Policies'
+                                (change)="updatePolicyOptions('NT', $event)">
+                                <option value="0">Select</option>
+
+
+                                <option *ngFor="let Policy of this.coveragePolicy[2]" [value]="Policy.Id">
+                                    {{Policy.Name}}</option>
+
+                            </select>
+
+
+
+
+                        </div>
+                        <div class="form-group form-default"
+                            *ngIf="this.coveragePolicy[2] && this.coveragePolicy[2].length ==1">
+
+                            <h4 class="sub-title">NT Policy</h4>
+                            <div class="checkbox-color checkbox-primary">
+                                <input id="checkbox1860NT" type="checkbox" value="{{this.coveragePolicy[2][0].Id}}"
+                                    formControlName='Policies' (click)="updatePolicyOptions('NT', $event)"
+                                    checked="false">
+                                <label for="checkbox1860NT">
+                                    {{this.coveragePolicy[2][0].Name}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+                <div class="row" *ngIf="this.coveragePolicy.length >0">
+
+
+                    <div class="col-md-6" *ngIf="DriverTypeValue!=1  && UnitTypeValue!=2">
+
+                        <div class="form-group form-default" *ngIf="!this.coveragePolicy[3]">
+
+                            <h4 class="sub-title">OA Policy</h4>
+                            <div>
+                                <label style="font-size:10px">
+                                    No OA Policy
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-default"
+                            *ngIf="this.coveragePolicy[3] && this.coveragePolicy[3].length >1">
+
+                            <label class="float-label">OA Policy</label>
+                            <select class="form-control" formControlName='Policies'
+                                (change)="updatePolicyOptions('OA', $event)">
+                                <option value="0">Select</option>
+
+
+                                <option *ngFor="let Policy of this.coveragePolicy[3]" [value]="Policy.Id">
+                                    {{Policy.Name}}</option>
+
+                            </select>
+
+
+
+
+                        </div>
+                        <div class="form-group form-default"
+                            *ngIf="this.coveragePolicy[3] && this.coveragePolicy[3].length ==1">
+
+                            <h4 class="sub-title">OA Policy</h4>
+                            <div class="checkbox-color checkbox-primary">
+                                <input id="checkbox1870OA" type="checkbox" value="{{this.coveragePolicy[3][0].Id}}"
+                                    formControlName='Policies' (click)="updatePolicyOptions('OA', $event)"
+                                    checked="false">
+                                <label for="checkbox1870OA">
+                                    {{this.coveragePolicy[3][0].Name}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6" *ngIf="UnitTypeValue!=2">
+
+                        <div class="form-group form-default" *ngIf="!this.coveragePolicy[4]">
+
+                            <h4 class="sub-title">PA Policy</h4>
+                            <div>
+                                <label style="font-size:10px">
+                                    No PA Policy
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-default"
+                            *ngIf="this.coveragePolicy[4] && this.coveragePolicy[4].length >1">
+
+                            <label class="float-label">PA Policy</label>
+                            <select class="form-control" formControlName='Policies'
+                                (change)="updatePolicyOptions('PA', $event)">
+                                <option value="0">Select</option>
+
+
+                                <option *ngFor="let Policy of this.coveragePolicy[4]" [value]="Policy.Id">
+                                    {{Policy.Name}}</option>
+
+                            </select>
+
+
+
+
+                        </div>
+                        <div class="form-group form-default"
+                            *ngIf="this.coveragePolicy[4] && this.coveragePolicy[4].length ==1">
+
+                            <h4 class="sub-title">PA Policy</h4>
+                            <div class="checkbox-color checkbox-primary">
+                                <input id="checkbox1880PA" type="checkbox" value="{{this.coveragePolicy[4][0].Id}}"
+                                    formControlName='Policies' (click)="updatePolicyOptions('PA', $event)"
+                                    checked="false">
+                                <label for="checkbox1880PA">
+                                    {{this.coveragePolicy[4][0].Name}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="row" *ngIf="this.coveragePolicy.length >0">
+
+
+                    <div class="col-md-6" *ngIf="DriverTypeValue!=1  && UnitTypeValue!=2">
+
+                        <div class="form-group form-default" *ngIf="!this.coveragePolicy[6]">
+
+                            <h4 class="sub-title">AL Policy</h4>
+                            <div>
+                                <label style="font-size:10px">
+                                    No AL Policy
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-default"
+                            *ngIf="this.coveragePolicy[6] && this.coveragePolicy[6].length >1">
+
+                            <label class="float-label">AL Policy</label>
+                            <select class="form-control" formControlName='Policies'
+                                (change)="updatePolicyOptions('AL', $event)">
+                                <option value="0">Select</option>
+
+
+                                <option *ngFor="let Policy of this.coveragePolicy[6]" [value]="Policy.Id">
+                                    {{Policy.Name}}</option>
+
+                            </select>
+
+
+
+
+                        </div>
+                        <div class="form-group form-default"
+                            *ngIf="this.coveragePolicy[6] && this.coveragePolicy[6].length ==1">
+
+                            <h4 class="sub-title">AL Policy</h4>
+                            <div class="checkbox-color checkbox-primary">
+                                <input id="checkboxAL1870AL" type="checkbox" value="{{this.coveragePolicy[6][0].Id}}"
+                                    formControlName='Policies' (click)="updatePolicyOptions('AL', $event)"
+                                    checked="false">
+                                <label for="checkboxAL1870AL">
+                                    {{this.coveragePolicy[6][0].Name}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </fieldset>
+
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">Vehicle Information</legend>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group form-default">
+                            <label class="float-label">Unit # <span class="text-danger">*</span></label>
+                            <input type="text" value="" class="form-control" formControlName='Unit'>
+
+
+                            <div *ngIf="Unit.invalid && (Unit.dirty || isSubmitted)" class="text-danger">
+                                <div *ngIf="Unit.errors.required">Unit is required.</div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-default">
+                            <label class="float-label">Vehicle ID <span class="text-danger"
+                                    *ngIf="isVINvalidation">*</span><span style="padding-left:10px"><input
+                                        id="removevinValidation" type="checkbox" (click)="removevinValidation($event)"
+                                        formControlName='isNotReqired'><label for="removevinValidation"
+                                        style="padding-left:10px;margin-bottom:0px">Remove Field Required Validation
+                                    </label></span></label>
+                            <input type="text" value="" class="form-control" formControlName='SerialNumber'
+                                maxlength="17">
+
+
+                            <div *ngIf="SerialNumber.invalid && (SerialNumber.dirty || isSubmitted)"
+                                class="text-danger">
+                                <div *ngIf="SerialNumber.errors.required">
+                                    Vehicle ID is required.
+                                </div>
+
+                                <div
+                                    *ngIf="(SerialNumber.errors.minlength || SerialNumber.errors.maxlength) && !SerialNumber.errors.required">
+                                    Vehicle ID must be exactly 17 characters.
+                                </div>
+                                <div class="error" *ngIf="SerialNumber.invalid && SerialNumber.errors.validSerialno">
+                                    This Vehicle ID is already Active in FleetVIMS. Please enter a different Vehicle ID
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--./row-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group form-default">
+
+                            <label class="float-label">Year <span class="text-danger">*</span></label>
+                            <select class="form-control" formControlName='ModelYear'>
+                                <option value="0">Select</option>
+                                <option *ngFor="let year of years" [value]="year">{{year}}</option>
+                            </select>
+
+
+
+                            <div *ngIf="ModelYear.invalid && (ModelYear.dirty || isSubmitted)" class="text-danger">
+                                <div *ngIf="ModelYear.errors.required">Year is required.</div>
+                                <div *ngIf="ModelYear.errors.pattern && !ModelYear.errors.required">Only Number allow
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-default">
+                            <label class="float-label">Make <span class="text-danger">*</span></label>
+                            <select class="form-control" formControlName='Makes'>
+                                <option>Select</option>
+                                <option *ngFor="let make of MakeList" value="{{make.Id}}">{{make.CompanyName}}</option>
+                            </select>
+
+
+
+                            <div *ngIf="Makes.invalid && (Makes.dirty || isSubmitted)" id="Makes" class="text-danger">
+                                Make is required.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--./row-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group form-default">
+                            <label class="float-label">Added Date <span class="text-danger">*</span> </label>
+                            <input bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY' }" [minDate]="minAddedDate"
+                                type="text" value="" class="form-control" formControlName='Addedbound'>
+
+                            <div *ngIf="Addedbound.invalid && (Addedbound.dirty || isSubmitted)" id="Addedbound"
+                                class="text-danger">
+                                Added Date is required.
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6" *ngIf="this.IsPDPolicy">
+                        <div class="form-group form-default">
+                            <label class="float-label">Value <span class="text-danger">*</span> </label>
+                            <input type="text" class="form-control" formControlName='Value' prefix="$ "
+                                mask="comma_separator" (input)="onValueChange($event.target.value)">
+
+
+                            <div *ngIf="Value.invalid && (Value.dirty || isSubmitted)" id="Value" class="text-danger">
+                                Value is required.
+                            </div>
+                        </div>
+                        <div class="text-danger" *ngIf="policyUnitLimit<ValuePolicyCheck">
+                            Stated Value is above Policy's Unit Limit. Please contact your agent to increase your Policy
+                            Per Unit Limit
+                        </div>
+                    </div>
+                </div>
+                <!--./row-->
+
+
+
+
+
+                <div class="row">
+
+                    <div class="col-md-6" *ngIf="this.IsPDPolicy">
+                        <div class="form-group form-default">
+                            <label class="float-label">Future Value </label>
+                            <input type="text" class="form-control" formControlName='FutureValue' prefix="$ "
+                                mask="comma_separator">
+
+
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- <div class="col-md-6" *ngIf="this.IsOAPolicy ">
+                        <div class="form-group form-default">
+                            <label class="float-label">Cargo Type <span class="text-danger">*</span></label>
+                            <select class="form-control" formControlName='CargoType'>
+                                <option>Select</option>
+                                <option *ngFor="let cargotype of CargoTypeMasterList" value="{{cargotype.Id}}">{{cargotype.Type}}</option>
+                            </select>
+                        </div>
+                    </div> -->
+
+
+                    <div class="col-md-6"  *ngIf="this.IsOAPolicy && UnitTypeValue==1 && ShowChildView==true">
+                      
+                            <div class="form-group form-default">
+                                <label class="float-label">Cargo Type</label>
+                                <select class="form-control" formControlName='CargoType'>
+                                    <option>Select</option>
+                                    <option *ngFor="let cargotype of CargoTypeMasterList" value="{{cargotype.Id}}">{{cargotype.Type}}</option>
+                                </select>
+        
+                            </div>
+                      
+                    </div>
+
+
+
+                </div>
+                <!--./row-->
+
+
+            </fieldset>
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">Additional Information</legend>
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="form-group form-default">
+                            <label class="float-label">Driver</label>
+                            <input type="text" value="" class="form-control" formControlName='Driver'>
+
+
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group form-default">
+                            <label class="float-label">Driver2</label>
+                            <input type="text" value="" class="form-control" formControlName='Driver2'>
+
+
+
+                        </div>
+                    </div>
+
+
+
+
+
+                </div>
+                <!--./row-->
+                <div class="row">
+
+
+
+
+                    <div class="col-md-12">
+                        <div class="form-group form-default">
+                            <label class="float-label">Owner <span style="padding-left:10px"><input id="sameasdriver"
+                                        type="checkbox" (click)="sameasdriver($event)"><label for="sameaddress"
+                                        style="padding-left:10px">Same as Driver</label></span>
+                                <span style="padding-left:10px">
+                                    <input id="sameasclient" type="checkbox" (click)="sameasclient($event)"><label
+                                        for="sameaddress1" style="padding-left:10px">Same as Client</label></span>
+                            </label>
+                            <input type="text" value="" class="form-control" formControlName='Owner'>
+
+
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <!--./row-->
+                <div class="row" *ngIf="this.IsPDPolicy">
+
+                    <div class="col-md-6">
+                        <div class="form-group form-default">
+                            <label class="float-label">Lienholder</label>
+
+
+                            <ng-select [items]="LeinholderList" bindValue="LeinholderId" formControlName='LienholderId1'
+                                [searchable]="true" bindLabel="LeinholderName">
+                                <ng-template ng-option-tmp let-item="item">
+                                    {{item.LeinholderName}} <br />
+                                    <small>{{item.Address1}} {{item.City}} {{item.StateCode}}</small>
+                                </ng-template>
+                            </ng-select>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="float-label">Lienholder 2</label>
+                        <div class="form-group form-default">
+                            <ng-select [items]="LeinholderList" bindValue="LeinholderId" bindLabel="LeinholderName"
+                                formControlName='LienholderId2' [searchable]="true">
+                                <ng-template ng-option-tmp let-item="item">
+                                    {{item.LeinholderName}} <br />
+                                    <small>{{item.Address1}} {{item.City}} {{item.StateCode}}</small>
+                                </ng-template>
+
+                            </ng-select>
+
+
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+                <!--./row-->
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group form-default">
+                            <label class="float-label">Certificate Notes</label>
+                            <textarea class="form-control" formControlName='CertificateNotes'></textarea>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!--./row-->
+            </fieldset>
+
+
+
+
+
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" class="form-control" id="VehicleId" formControlName='VehicleId'>
+            <button type="button" class="btn btn-default waves-effect " (click)="modalRef.hide()">Close</button>
+            <button type='submit' class='btn btn-primary waves-effect waves-light'>Save changes <img *ngIf="loading"
+                    src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /></button>
+
+
+        </div>
+    </form>
+</ng-template>
+
+<ng-template #batchemail>
+
+    <div class="modal-header">
+        <h4 class="modal-title">Send Email</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+
+    <form class="" [formGroup]='batchemailform' (ngSubmit)='onBatchEmail()' novalidate>
+
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group form-default">
+                        <label class="float-label">Recipient's Email*</label>
+                        <input type="text" class="form-control" formControlName='RecepientEmails'>
+
+
+                        <div *ngIf="RecepientEmails.invalid && (RecepientEmails.dirty || isSubmitted)"
+                            class="text-danger">
+                            <div *ngIf="RecepientEmails.errors.required">Recipient's is required.</div>
+                            <div *ngIf="RecepientEmails.errors.email && !RecepientEmails.errors.required">Invalid
+                                Recipient's email.</div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group form-default">
+                        <label class="float-label">From*</label>
+                        <input type="text" class="form-control" formControlName='FromEmail' readonly="true">
+
+
+
+                        <div *ngIf="FromEmail.invalid && (FromEmail.dirty || isSubmitted)" class="text-danger">
+                            <div *ngIf="FromEmail.errors.required">From is required.</div>
+                            <div *ngIf="FromEmail.errors.email && !FromEmail.errors.required">Invalid From email.</div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group form-default">
+                        <label class="float-label">Subject*</label>
+                        <input type="text" class="form-control" formControlName='Subject'>
+
+
+                        <div *ngIf="Subject.invalid && (Subject.dirty || isSubmitted)" id="Subject" class="text-danger">
+                            Subject is required.
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group form-default">
+                        <label class="float-label">Additional Message</label>
+
+                        <textarea class="form-control" formControlName='Message'></textarea>
+
+                        <div *ngIf="Message.invalid && (Message.dirty || isSubmitted)" id="Message" class="text-danger">
+                            Message is required.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--./row-->
+
+
+
+
+
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" class="form-control" id="VehicleId">
+            <button type="button" class="btn btn-default waves-effect " (click)="modalRef.hide()">Close</button>
+            <button type='submit' class='btn btn-primary waves-effect waves-light'>Send Email <img *ngIf="loading"
+                    src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /></button>
+
+
+        </div>
+    </form>
+</ng-template>
+
+<ng-template #policyupdate>
+
+    <div class="modal-header">
+        <h4 class="modal-title">{{UpdateCoveragePopupTitle}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+    <form class="" [formGroup]='updatecoverage' (ngSubmit)='onUpdatecoverage()' novalidate>
+
+        <div class="modal-body">
+            <!---->
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="form-radio">
+
+                        <div class="radio" *ngIf="this.coveragePolicy[policyType]">
+                            <label>
+                                <input checked="checked" type="radio" formControlName='CoverageType' value="4"
+                                    [checked]="CoverageType==4" (click)="changeCoverage(4)">
+                                <i class="helper"></i>
+                                <i class="fa fa-check-circle fa-2x" style="color: #35DB0B"></i>
+
+                                Confirmed for Sponsored Coverage
+                            </label>
+                        </div>
+
+                        <div class="row" *ngIf="CoverageType == '4'">
+                            <br>
+                            <div class="col-md-12" *ngIf="this.coveragePolicy[policyType].length >1">
+                                <div class="form-group form-default">
+                                    <label class="float-label">Policy <span class="text-danger">*</span></label>
+                                    <select name="type" class="form-control" formControlName='PolicyId'>
+                                        <option value="">Select</option>
+                                        <option *ngFor="let Policy of this.coveragePolicy[policyType]"
+                                            [value]="Policy.Id">{{Policy.Name}}</option>
+
+                                    </select>
+
+
+
+
+
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-12" *ngIf="this.coveragePolicy[policyType].length ==1">
+                                <div class="form-group form-default">
+
+
+                                    <label>Policy<span class="text-danger">*</span></label><br>
+                                    <div class="checkbox-fade fade-in-primary d-">
+                                        <label>
+                                            <input id="checkbox1850" type="checkbox"
+                                                value="{{this.coveragePolicy[policyType][0].Id}}"
+                                                formControlName='PolicyId' disabled="true">
+
+
+                                            <span class="cr"><i class="cr-icon fa fa-check txt-primary"></i></span>
+                                            <span class="text-inverse">
+                                                {{this.coveragePolicy[policyType][0].Name}}</span>
+                                        </label>
+                                    </div>
+
+
+
+
+
+
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <div *ngIf="!coveragePolicyAllUnit[policyType]">
+                            <div class="radio">
+                                <label>
+                                    <input checked="checked" type="radio" formControlName='CoverageType' value="1"
+                                        [checked]="CoverageType==1" (click)="changeCoverage(1)">
+                                    <i class="helper"></i>
+
+                                    <i class="fa fa-exclamation-circle fa-2x" style="color: #ED1923"></i>
+
+                                    Response Needed
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" formControlName='CoverageType' value="2"
+                                        [checked]="CoverageType==2" (click)="changeCoverage(2)">
+                                    <i class="helper"></i>
+                                    <i class="fa fa-minus-circle fa-2x" style="color: #D3D3D3"></i>
+                                    Coverage Declined <span *ngIf="this.policyType==1">(no liens/banks requiring
+                                        coverage)</span>
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label data-toggle="collapse" data-target="#demo">
+                                    <input type="radio" formControlName='CoverageType' value="3"
+                                        [checked]="CoverageType==3" (click)="changeCoverage(3)">
+                                    <i class="helper"></i>
+                                    <i class="fa fa-check-circle fa-2x" style="color:#76afd3 "></i>
+                                    Confirmed for NON- Sponsored Coverage
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <br>
+            <div class="row" *ngIf="CoverageType == '3' && !coveragePolicyAllUnit[policyType]">
+                <div class="col-md-6">
+                    <div class="form-group form-default">
+                        <label class="float-label">Effective Date</label>
+                        <input type="text" value="" class="form-control" formControlName='EffectiveDate' bsDatepicker
+                            [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY' }">
+
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group form-default">
+                        <label class="float-label">Expiration Date</label>
+                        <input type="text" value="" class="form-control" formControlName='ExpirationDate' bsDatepicker
+                            [bsConfig]="{ dateInputFormat: 'MM-DD-YYYY' }">
+
+
+                    </div>
+                </div>
+            </div>
+            <!--./row-->
+            <div class="row" *ngIf="CoverageType == '3'">
+                <div class="col-md-12">
+                    <div class="form-group form-default">
+                        <label class="float-label">Insurance Company</label>
+                        <select name="type" class="form-control" formControlName='LienholderId'>
+                            <option>Select</option>
+                            <option *ngFor="let leinholder of LeinholderList" [value]="leinholder[0]">{{leinholder[1]}}
+                            </option>
+
+                        </select>
+
+
+                    </div>
+                </div>
+            </div>
+            <!--./row-->
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" class="form-control" id="VehicleId" formControlName='VehicleId'>
+            <input type="hidden" class="form-control" id="PolicyType" formControlName='PolicyType'>
+            <button type="button" class="btn btn-default waves-effect " (click)="modalRef.hide()">Close</button>
+            <button type='submit' class='btn btn-default btn-success'>Update Coverage <img *ngIf="loading"
+                    src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /></button>
+
+
+        </div>
+    </form>
+</ng-template>
+
+<ng-template #bulkupload>
+
+    <div class="modal-header">
+        <h4 class="modal-title">Vehicles Bulk Import</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group form-default">
+                    <label class="">Choose file (.xlsx format)</label>
+                    <form class="" [formGroup]='bulupload' novalidate>
+                        <input type="file" class="form-control" (change)="onSelectFile($event.target.files,$event)"
+                            formControlName='fileupload'>
+                        <br>
+                        <button type="button" class="btn btn-sm btn-success waves-effect waves-light f-right"
+                            (click)="vehicleImport()">
+                            <i class="fa fa-plus" style="margin: 0;"></i> upload
+                        </button>
+                    </form>
+                    <a href="assets/excel/SampleEquipmentFleetVIMS.xlsx" target="_blank">Download Template</a>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="row" *ngIf="bulkupladResult">
+            <div class="col-md-12">
+                <br>
+                <tabset>
+                    <tab heading="Success ({{ExportSuccessTotalRecord}})" id="tab1">
+                        <table class="table table-borderless table-xs fleetvims-table" id="insurers_table">
+                            <thead>
+                                <tr style="background: #eee;">
+                                    <th>Unit #</th>
+                                    <th>VIN</th>
+                                    <th>Year</th>
+                                    <th>Make</th>
+                                    <th>Driver</th>
+                                    <th>Owner</th>
+                                    <th>Unit Type</th>
+                                </tr>
+
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let record of ExportSuccessRecords">
+                                    <td>{{record.Unit_}}</td>
+                                    <td>{{record.VIN}}</td>
+                                    <td>{{record.Year}}</td>
+                                    <td>{{record.Make}}</td>
+                                    <td>{{record.Driver}}</td>
+                                    <td>{{record.Owner}}</td>
+                                    <td>{{record.Unit_Type}}</td>
+
+
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </tab>
+                    <tab heading="Error ({{ExportErrorTotalRecord}})">
+                        <button data-toggle="modal" data-target="#large-Modal" type="button"
+                            class="btn btn-sm btn-success waves-effect waves-light f-right"
+                            (click)="exportErrorVehicles(exportMessage._Error)"
+                            *ngIf="RolesService.roleMatch('Bulk Import',['AddEditAccess'])"
+                            [hidden]="! exportMessage._Error.length" style="margin-top:10px;margin-bottom: 10px">
+                            <i class="fa fa-plus" style="margin: 0;"></i> Export
+                        </button>
+                        <div class="table-responsive">
+                            <table class="table table-borderless table-xs fleetvims-table" id="insurers_table">
+                                <thead>
+                                    <tr style="background: #eee;">
+
+                                        <th>Action</th>
+                                        <th>Unit #</th>
+                                        <th>VIN</th>
+                                        <th>Year</th>
+                                        <th>Make</th>
+                                        <th>Value</th>
+
+                                        <th>Unit Type</th>
+                                        <th>Driver</th>
+                                        <th>Owner</th>
+                                        <th>Error Message</th>
+
+
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+
+                                    <tr *ngFor="let record of exportErrorRecord; index as i"
+                                        [hidden]="record.editRowMode">
+
+                                        <td>
+
+
+                                            <a (click)="editErrrorExportVehicle(record)" [hidden]="record.editMode"
+                                                class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon"
+                                                tooltip="Edit" placement="top">
+                                                <i style="margin-right:0" class="fa fa-edit"></i>
+                                            </a>
+
+                                            <a [hidden]="!record.editMode"
+                                                class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon"
+                                                tooltip="Update" placement="top"
+                                                (click)="saveErrrorExportVehicle(record,i)">
+                                                <i style="margin-right:0" class="fa fa-save"></i>
+                                            </a>
+
+                                            <a [hidden]="!record.editMode"
+                                                class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon"
+                                                tooltip="Cancel" placement="top"
+                                                (click)="cancelErrrorExportVehicle(record,i)">
+                                                <i style="margin-right:0" class="fa fa-close"></i>
+                                            </a>
+
+
+                                        </td>
+
+                                        <td style="width:200px">
+                                            <span [hidden]="record.editMode">{{record.Unit_}}</span>
+                                            <span [hidden]="!record.editMode"><input type="text" name="Unit"
+                                                    class="form-control" [(ngModel)]="record.Unit_" placeholder="Unit"
+                                                    required="" style="width: 70px" /></span>
+                                        </td>
+                                        <td style="width:200px">
+                                            <span [hidden]="record.editMode">{{record.VIN}}</span>
+                                            <span [hidden]="!record.editMode"><input type="text" name="VIN"
+                                                    class="form-control" [(ngModel)]="record.VIN" placeholder="VIN"
+                                                    style="width: 140px" maxlength="17" /></span>
+
+                                        </td>
+                                        <td width="60px">
+                                            <span [hidden]="record.editMode">{{record.Year}}</span>
+                                            <span [hidden]="!record.editMode">
+
+                                                <select class="form-control" name="Year" [(ngModel)]="record.Year"
+                                                    style="height: 30px;width:60px" required="">
+                                                    <option>Select</option>
+                                                    <option *ngFor="let year of years" [value]="year">{{year}}</option>
+                                                </select>
+
+                                            </span>
+
+                                        </td>
+
+                                        <td width="200px">
+                                            <span [hidden]="record.editMode">{{record.Make}}</span>
+                                            <span [hidden]="!record.editMode">
+
+                                                <select class="form-control" name="Make" [(ngModel)]="record.Make"
+                                                    style="height: 30px;width:100px" required="">
+                                                    <option>Select</option>
+                                                    <option *ngFor="let make of MakeList" value="{{make.CompanyName}}">
+                                                        {{make.CompanyName}}</option>
+                                                </select>
+
+                                            </span>
+
+                                        </td>
+                                        <td width="200px">
+                                            <span [hidden]="record.editMode">{{record.Value}}</span>
+                                            <span [hidden]="!record.editMode"><input type="text" name="Value"
+                                                    class="form-control" [(ngModel)]="record.Value" placeholder="Value"
+                                                    required="" style="width: 60px" /></span>
+
+                                        </td>
+
+
+
+                                        <td width="200px">
+                                            <span [hidden]="record.editMode">{{record.Unit_Type}}</span>
+                                            <span [hidden]="!record.editMode">
+                                                <select class="form-control" name="Unit_Type"
+                                                    [(ngModel)]="record.Unit_Type" style="height: 30px;width:80px">
+                                                    <option>Select</option>
+                                                    <optgroup label="Power Units">
+                                                        <option *ngFor="let unittype of PowerUnitTypeList"
+                                                            value="{{unittype.Type}}">{{unittype.Type}}</option>
+                                                    </optgroup>
+                                                    <optgroup label="Non-Power Units">
+                                                        <option *ngFor="let unittype of NonPowerUnitTypeList"
+                                                            value="{{unittype.Type}}">{{unittype.Type}}</option>
+                                                    </optgroup>
+                                                </select>
+
+                                            </span>
+
+                                        </td>
+                                        <td width="200px">
+                                            <span [hidden]="record.editMode">{{record.Driver}}</span>
+                                            <span [hidden]="!record.editMode"><input type="text" name="Driver"
+                                                    class="form-control" [(ngModel)]="record.Driver"
+                                                    placeholder="Driver" required="" style="width: 100px" /></span>
+
+                                        </td>
+
+                                        <td width="200px">
+                                            <span [hidden]="record.editMode">{{record.Owner}}</span>
+                                            <span [hidden]="!record.editMode"><input type="text" name="Owner"
+                                                    class="form-control" [(ngModel)]="record.Owner"
+                                                    placeholder="Owner" /></span>
+
+                                        </td>
+                                        <td width="100px">{{record.Error}}</td>
+
+
+
+
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </tab>
+
+                </tabset>
+            </div>
+        </div>
+    </div>
+
+</ng-template>
+
+
+
+
+
+<ng-template #batchedit>
+
+    <div class="modal-header">
+        <h4 class="modal-title">Vehicles Batch Edit</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+
+    <form class="" [formGroup]='batcheditform' (ngSubmit)='onVehiclesBatchSave()' novalidate>
+
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="checkbox-color checkbox-primary">
+                        <input id="Year" type="checkbox" formControlName='IsYear' (click)="showEditField('Year')">
+                        <label for="Year">
+                            Year
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6" [hidden]="!BatchEdit.Year">
+                    <div class="form-group form-default">
+                        <select class="form-control" formControlName='Year'>
+                            <option value="0">Select</option>
+                            <option *ngFor="let year of years" [value]="year">{{year}}</option>
+                        </select>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="checkbox-color checkbox-primary">
+                        <input id="Owner" type="checkbox" formControlName='IsOwner' (click)="showEditField('Owner')">
+                        <label for="Owner">
+                            Owner
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6" [hidden]="!BatchEdit.Owner">
+                    <div class="form-group form-default">
+
+                        <input type="text" value="" class="form-control" formControlName='Owner'>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="checkbox-color checkbox-primary">
+                        <input id="CoverageType" type="checkbox" formControlName='IsCoverageType'
+                            (click)="showEditField('CoverageType')">
+                        <label for="CoverageType">
+                            Coverage Type
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-md-6" [hidden]="!BatchEdit.CoverageType">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group form-default">
+                                <label>PD Policy</label>
+                                <select class="form-control" formControlName='pDPolicy'>
+                                    <option value="0">Select</option>
+                                    <option *ngFor="let Policy of this.coveragePolicy[1]" [value]="Policy.Id">
+                                        {{Policy.Name}}</option>
+
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-default">
+                                <label>NT Policy</label>
+                                <select class="form-control" formControlName='nTPolicy'>
+                                    <option value="0">Select</option>
+                                    <option *ngFor="let Policy of this.coveragePolicy[2]" [value]="Policy.Id">
+                                        {{Policy.Name}}</option>
+
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group form-default">
+                                <label>OA Policy</label>
+                                <select class="form-control" formControlName='oAPolicy'>
+                                    <option value="0">Select</option>
+                                    <option *ngFor="let Policy of this.coveragePolicy[3]" [value]="Policy.Id">
+                                        {{Policy.Name}}</option>
+
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-default">
+                                <label>PA Policy</label>
+                                <select class="form-control" formControlName='pAPolicy'>
+                                    <option value="0">Select</option>
+                                    <option *ngFor="let Policy of this.coveragePolicy[4]" [value]="Policy.Id">
+                                        {{Policy.Name}}</option>
+
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group form-default">
+                                <label>AL Policy</label>
+                                <select class="form-control" formControlName='aLPolicy'>
+                                    <option value="0">Select</option>
+                                    <option *ngFor="let Policy of this.coveragePolicy[6]" [value]="Policy.Id">
+                                        {{Policy.Name}}</option>
+
+                                </select>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="checkbox-color checkbox-primary">
+                        <input id="UnitType" type="checkbox" value="" (click)="showEditField('UnitType')"
+                            formControlName='IsUnitType'>
+                        <label for="UnitType">
+                            Unit Type
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6" [hidden]="!BatchEdit.UnitType">
+                    <div class="form-group form-default">
+                        <select class="form-control" formControlName='UnitType'>
+                            <option>Select</option>
+                            <optgroup label="Power Units">
+                                <option *ngFor="let unittype of PowerUnitTypeList" value="{{unittype.Id}}">
+                                    {{unittype.Type}}</option>
+                            </optgroup>
+                            <optgroup label="Non-Power Units">
+                                <option *ngFor="let unittype of NonPowerUnitTypeList" value="{{unittype.Id}}">
+                                    {{unittype.Type}}</option>
+                            </optgroup>
+                        </select>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="checkbox-color checkbox-primary">
+                        <input id="Make" type="checkbox" value="" (click)="showEditField('Make')"
+                            formControlName='FieldName' formControlName='IsMakes'>
+                        <label for="Make">
+                            Make
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6" [hidden]="!BatchEdit.Make">
+                    <div class="form-group form-default">
+
+                        <select class="form-control" formControlName='Makes'>
+                            <option>Select</option>
+                            <option *ngFor="let make of MakeList" value="{{make.Id}}">{{make.CompanyName}}</option>
+                        </select>
+
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="checkbox-color checkbox-primary">
+                        <input id="Value" type="checkbox" value="" (click)="showEditField('Value')"
+                            formControlName='IsValue'>
+                        <label for="Value">
+                            Value
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6" [hidden]="!BatchEdit.Value">
+                    <div class="form-group form-default">
+                        <input type="text" value="" class="form-control" formControlName='Value'>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="checkbox-color checkbox-primary">
+                        <input id="DriverType" type="checkbox" value="" (click)="showEditField('DriverType')"
+                            formControlName='IsDriverType'>
+                        <label for="DriverType">
+                            Driver Type
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6" [hidden]="!BatchEdit.DriverType">
+                    <div class="form-group form-default">
+
+
+                        <select class="form-control" formControlName='DriverType'>
+                            <option>Select</option>
+                            <option *ngFor="let drivertype of DriverTypeList" value="{{drivertype.Id}}">
+                                {{drivertype.Type}}</option>
+                        </select>
+
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="checkbox-color checkbox-primary">
+                        <input id="Lienholder" type="checkbox" value="" (click)="showEditField('Lienholder')"
+                            formControlName='IsLienholderId1'>
+                        <label for="Lienholder">
+                            Lienholder
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6" [hidden]="!BatchEdit.Lienholder">
+                    <div class="form-group form-default">
+
+
+                        <!-- <select name="type" class="form-control" formControlName='LienholderId1'>
+                                                         <option>Select</option>
+                                                         <option *ngFor="let leinholder of LeinholderList" [value]="leinholder[0]">{{leinholder[1]}}</option> ---->
+                        <!-- <option *ngFor="let leinholder of LeinholderList" value="{{leinholder.LeinholderId}}">{{leinholder.LeinholderName}}</option> 
+                                                  
+                                                    </select> -->
+
+                        <ng-select [items]="LeinholderList" bindValue="LeinholderId" formControlName='LienholderId1'
+                            [searchable]="true" bindLabel="LeinholderName">
+                            <ng-template ng-option-tmp let-item="item">
+                                {{item.LeinholderName}} <br />
+                                <small>{{item.Address1}} {{item.City}} {{item.StateCode}}</small>
+                            </ng-template>
+                        </ng-select>
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="checkbox-color checkbox-primary">
+                        <input id="Lienholder2" type="checkbox" value="" (click)="showEditField('Lienholder2')"
+                            formControlName='IsLienholderId2'>
+                        <label for="Lienholder2">
+                            Lienholder2
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6" [hidden]="!BatchEdit.Lienholder2">
+                    <div class="form-group form-default">
+                        <!-- <select name="type" class="form-control" formControlName='LienholderId2'>
+                                                         <option>Select</option>
+                                                          <option *ngFor="let leinholder of LeinholderList" [value]="leinholder[0]">{{leinholder[1]}}</option>  --->
+                        <!--- <option *ngFor="let leinholder of LeinholderList" value="{{leinholder.LeinholderId}}">{{leinholder.LeinholderName}}</option>
+                                                      
+                                                    </select> -->
+
+                        <ng-select [items]="LeinholderList" bindValue="LeinholderId" bindLabel="LeinholderName"
+                            formControlName='LienholderId2' [searchable]="true">
+                            <ng-template ng-option-tmp let-item="item">
+                                {{item.LeinholderName}} <br />
+                                <small>{{item.Address1}} {{item.City}} {{item.StateCode}}</small>
+                            </ng-template>
+
+                        </ng-select>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row" style="display: none">
+                <div class="col-md-3">
+                    <div class="checkbox-color checkbox-primary">
+                        <input id="Policies" type="checkbox" value="" (click)="showEditField('Policies')"
+                            formControlName='IsPolicies'>
+                        <label for="Policies">
+                            Policies
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6" [hidden]="!BatchEdit.Policies">
+                    <div class="form-group form-default">
+                        <input type="text" value="" class="form-control" formControlName='Policies'>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="checkbox-color checkbox-primary">
+                        <input id="IsRemove" type="checkbox" formControlName='IsRemove'
+                            (click)="showEditField('IsRemove')">
+                        <label for="IsRemove">
+                            Delete/Remove
+                        </label>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+
+            <div class="row" style="display: none">
+                <div class="col-md-3">
+                    <div class="checkbox-color checkbox-primary">
+                        <input id="EffectiveDate" type="checkbox" value="" (click)="showEditField('EffectiveDate')"
+                            formControlName='IsEffectiveDate'>
+                        <label for="EffectiveDate">
+                            Effective Date
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6" [hidden]="!BatchEdit.EffectiveDate">
+                    <div class="form-group form-default">
+                        <input type="text" value="" class="form-control" formControlName='EffectiveDate' bsDatepicker
+                            [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row" style="display: none">
+                <div class="col-md-3">
+                    <div class="checkbox-color checkbox-primary">
+                        <input id="ExpirationDate" type="checkbox" value="" (click)="showEditField('ExpirationDate')"
+                            formControlName='IsExpirationDate'>
+                        <label for="ExpirationDate">
+                            Expiration Date
+
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6" [hidden]="!BatchEdit.ExpirationDate">
+                    <div class="form-group form-default">
+                        <input type="text" value="" class="form-control" formControlName='ExpirationDate' bsDatepicker
+                            [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
+
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" class="form-control" id="VehicleId" formControlName='VehicleIds'>
+            <button type="button" class="btn btn-default waves-effect " (click)="modalRef.hide()">Close</button>
+            <button type='submit' class='btn btn-primary waves-effect waves-light'>Save <img *ngIf="loading"
+                    src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /></button>
+
+
+        </div>
+    </form>
+</ng-template>
+
+
+<ng-template #FAQcontent>
+
+    <div class="modal-header">
+        <h4 class="modal-title">Vehicles Page Summary Info </h4>
+
+
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+    <div class="modal-body">
+
+
+        <div class="row form-group">
+            <div class="col-md-2" style="font-size: 12px">
+                <b>Columns:</b>
+            </div>
+            <div class="col-md-10" style="font-size: 12px"><b>PD</b>= Physical Damage
+                <b>NT</b> = Non-Trucking <b>OA</b> = Occupational Accident <b>PA</b>
+                = Passenger Accident
+                <br><br>
+                <b>DT</b> = Driver Type: <b>E</b> = Employee <b>IC</b> = Independent
+                Contractor <b>LC</b> = Leased Contractor
+            </div>
+
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-12" style="font-size: 12px">
+                <b>Options Menu Icons:</b>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-2">
+
+            </div>
+            <div class="col-md-10" style="font-size: 12px">
+                <img src="assets/images/faq/Instructions_-_Icons_and_Abbreviations_html_4586fa07.png" name="Picture 25"
+                    align="LEFT" hspace="12" width="28" height="27" border="0"> Click for individual unit’s Insurance
+                Certificate
+                <br><br>
+                <img src="assets/images/faq/Instructions_-_Icons_and_Abbreviations_html_5d95c984.png" name="Picture 25"
+                    align="LEFT" hspace="12" width="28" height="27" border="0"> Click to email individual unit’s
+                Insurance Certificate
+                <br><br>
+                <img src="assets/images/faq/Instructions_-_Icons_and_Abbreviations_html_6578ffc1.png" name="Picture 25"
+                    align="LEFT" hspace="12" width="28" height="27" border="0"> Click to edit individual unit’s info
+                <br><br>
+                <img src="assets/images/faq/Instructions_-_Icons_and_Abbreviations_html_26b5be8d.png" name="Picture 25"
+                    align="LEFT" hspace="12" width="28" height="27" border="0"> Click to view transactions on individual
+                unit
+                <br><br>
+                <img src="assets/images/faq/Instructions_-_Icons_and_Abbreviations_html_12258f86.png" name="Picture 25"
+                    align="LEFT" hspace="12" width="28" height="27" border="0"> Click to delete individual unit
+
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-12" style="font-size: 12px">
+                <b>Coverage Feature Icons: Click for Quick Edit</b>
+            </div>
+        </div>
+
+        <div class="row form-group">
+
+            <div class="col-md-12" style="font-size: 12px">
+                <img src="assets/images/faq/Instructions_-_Icons_and_Abbreviations_html_756bc18e.png" name="Picture 36"
+                    align="LEFT" hspace="12" width="28" height="27" border="0"> Response Needed – Default Icon Alert for
+                a unit that has no coverage info meaning someone needs to enter one of the following options.
+                <br><br>
+                <img src="assets/images/faq/Instructions_-_Icons_and_Abbreviations_html_37cc7b30.png" name="Picture 34"
+                    align="LEFT" hspace="12" width="29" height="29" border="0"> Green Check = Confirmed for Sponsored
+                Coverage - Coverage is entered/verified through the Client sponsored program and would be included on
+                VIMS certificates of insurance.
+<br><br>
+
+
+
+
+                   <div class="row">
+                       <div class="col-sm-2">
+                            <span class="btn waves-effect waves-dark  btn-icon"style="border: 0px; font-size: 26px;margin-left:6px"><i
+                                class="fa fa-check-circle fa"
+                                style="color: #76afd3;margin-right:0"></i></span>
+                           </div><!--col end-->
+                           <div class="col-sm-10" style="margin-left: -79px;"> 
+                            Blue Check = Confirmed for
+                                        Non-Sponsored Coverage - Coverage is entered/verified, but via a non-Client sponsored program and would
+                                        NOT be included on our certificates of insurance, but VIMS will track the expiration date to remind
+                                        users.
+                            </div><!--col end-->
+                       </div>
+
+                <br>
+                <!-- <img src="assets/images/faq/Instructions_-_Icons_and_Abbreviations_html_f0ab64e9.png" name="Picture 37"
+                    align="LEFT" hspace="12" width="30" height="28" border="0"> Orange Check = Confirmed for
+                Non-Sponsored Coverage - Coverage is entered/verified, but via a non-Client sponsored program and would
+                NOT be included on our certificates of insurance, but VIMS will track the expiration date to remind
+                users. -->
+
+            
+                <!-- <img src="assets/images/faq/Instructions_-_Icons_and_Abbreviations_html_53fe2345.png" name="Picture 35"
+                    align="LEFT" hspace="12" width="30" height="28" border="0">Coverage was offered, declined, and not
+                going to be tracked by VIMS for some reason
+
+                -->
+
+
+                    <div class="row">
+                            <div class="col-sm-2">
+                                 <span class="btn waves-effect waves-dark  btn-icon"style="border: 0px; font-size: 26px; margin-top: -10px;margin-left:6px"><i
+                                    class="fa  fa-minus-circle"
+                                     style="color: #D3D3D3;margin-right:0"></i></span>
+                                </div><!--col end-->
+                                <div class="col-sm-10" style="margin-left: -79px;"> 
+                                        Coverage was offered, declined, and not
+                                        going to be tracked by VIMS for some reason.
+                                 </div><!--col end-->
+                            </div>
+
+
+
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-12" style="font-size: 12px">
+                <b>Batch Feature Icons:</b>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-4" style="font-size: 12px">
+                <b>Batch Edit:</b> - After selecting desired units, click to “batch edit” selected units’ values or
+                other unit info (i.e. Value, Make, Owner, Coverages).
+            </div>
+            <div class="col-md-4" style="font-size: 12px">
+                <b>Batch Print Certificates:</b> After selecting desired units, click for “Batch Print” of selected
+                units’ Insurance Certificates.
+            </div>
+            <div class="col-md-4" style="font-size: 12px">
+                <b>Batch Email Certificates:</b> After selecting desired units, click for “Batch Email” of selected
+                units’ Insurance Certificates.
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-12" style="font-size: 12px">
+                <img src="assets/images/faq/Instructions_-_Icons_and_Abbreviations_html_5d629f22.png" name="Picture 39"
+                    align="LEFT" hspace="12" width="188" height="24" border="0"> Print Report for Each Coverage showing
+                all current active units.
+            </div>
+        </div>
+
+    </div>
+
+</ng-template>
+<div id="download" style="display: none">
+    <img #canvas>
+    <a #downloadLink></a>
+</div>

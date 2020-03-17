@@ -1,0 +1,652 @@
+ <div class="pcoded-content" [@routerTransition]>
+                        <!-- [ breadcrumb ] start -->
+                        <div class="page-header">
+                            <div class="page-block">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8">
+                                        <div class="page-header-title">
+                                            <h4 class="m-b-10">Masters</h4>
+                                        </div>
+                                        <ul class="breadcrumb">
+                                            <li class="breadcrumb-item">
+                                                <a [routerLink]="['/dashboard']">
+                                                    <i class="feather icon-home"></i>
+                                                </a>
+                                            </li>
+                                            <li class="breadcrumb-item">
+                                                <a href="javascript:void(0)">Masters</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- [ breadcrumb ] end -->
+                        <div class="pcoded-inner-content">
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <div class="page-body">
+                                        <!-- [ page content ] start -->
+                                        <div class="row">
+
+                                            <!-- site Analytics card start -->
+                                            
+                                            <div class="alertbox">     
+                                                <div *ngFor="let alert of alerts">
+                                                        <alert [type]="alert.type" [dismissOnTimeout]="5000"><span [innerHtml]="alert.msg"></span></alert>
+                                                </div>
+                                            </div>
+
+                                            
+                                            <div class="col-lg-6 col-md-12">
+                                                    <div class="card table-card latest-activity-card" style="max-height: 343px;overflow-y:auto;">
+                                                        <div class="card-header borderless">
+                                                            <h5>Policy Type List</h5>
+                                                         
+                                                            <button data-toggle="modal" data-target="#large-Modal" type="button" class="btn btn-sm btn-success waves-effect waves-light f-right" (click)="openModalPolicy(Policycontent,0,'')">
+                                                                <i class="fa fa-plus" style="margin: 0;"></i> Add
+                                                            </button> 
+
+
+                                                        </div>
+                                                        <div class="card-block">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-borderless table-xs fleetvims-table">
+                                                                    <thead>
+                                                                         <tr> 
+                                                                        <!--    <th>Id</th> -->
+                                                                            <th>Name</th>
+                                                                            <th>Options</th>
+                                                                            
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                            <tr *ngFor="let policytype of returnedPolicyTypeList">
+                                                                                <!-- <td>{{policytype.Id}}</td> -->
+                                                                                <td>{{policytype.Type}}</td> 
+                                                                           
+                                                                                <td ><a  class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon icon-style-a" tooltip="Edit" placement="top">
+                                                                                    <i style="margin-right:0" class="fa fa-edit icon-style-i" (click)="openModalPolicy(Policycontent,policytype.Id,policytype)"></i>
+                                                                                        </a>
+                                                                                        <a  href="javascript:void(0)" (click)="onDeletePolicyType(policytype.Id)" class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon icon-style-a" tooltip="Delete" placement="top" ng-if="policytype.Deleted === false">
+                                                                                            <i style="margin-right:0" class="fa fa-remove icon-style-i"></i>
+                                                                                        </a>
+                                                                                    </td>   
+                                                                            </tr>
+                                                                           
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="text-right  m-r-20">
+                                                                <pagination [totalItems]="PolicyTypeList.length"
+                                                                [itemsPerPage]="10" (pageChanged)="pageChanged($event,'4')"  [maxSize]="10"></pagination>
+                                                            </div>
+                                                            <!-- <div class="text-right  m-r-20" style="display: none">
+                                                                <a href="#!" class="b-b-primary text-primary">View all Orders</a>
+                                                            </div> -->
+                                                            <!-- <div class="text-right  m-r-20">
+                                                                <pagination [totalItems]="PolicyTypeList.length"
+                                                                [itemsPerPage]="10" (pageChanged)="pageChanged($event,'4')"  [maxSize]="10"></pagination>
+                                                            </div> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            
+                                        
+
+                                            <div class="col-lg-6 col-md-12">
+                                                        <div class="card table-card latest-activity-card" style="max-height: 354px;overflow-y:auto;">
+                                                            <div class="card-header borderless">
+                                                                <h5>Driver Type</h5>
+                                                                <button data-toggle="modal" data-target="#large-Modal" type="button" class="btn btn-sm btn-success waves-effect waves-light f-right" (click)="openModalDriver(Drivercontent,0,'')">
+                                                                    <i class="fa fa-plus" style="margin: 0;"></i> Add
+                                                                </button> 
+
+                                                                <!-- <button class="btn btn-success btn-des"
+                                                                 [routerLink]="['/masters/MasterDetail/', 2]">
+                                                                 <span class="fa fa-edit" style="font-size:18px;"></span></button> -->
+
+                                                            </div>
+                                                            <div class="card-block">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-borderless table-xs fleetvims-table">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <!-- <th>Id</th> -->
+                                                                                <th>Name</th>
+                                                                                <th>Options</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr *ngFor="let drivertype of returnedDriverTypeList">
+                                                                                <!-- <td>{{drivertype.Id}}</td> -->
+                                                                                <td>{{drivertype.Type}}</td>
+                                                                                <td ><a  class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon icon-style-a" tooltip="Edit" placement="top">
+                                                                                    <i style="margin-right:0" class="fa fa-edit icon-style-i" (click)="openModalDriver(Drivercontent,drivertype.Id,drivertype)"></i>
+                                                                                        </a>
+                                                                                        <a  href="javascript:void(0)" (click)="onDeleteDriverType(drivertype.Id)" class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon icon-style-a" tooltip="Delete" placement="top" ng-if="drivertype.Deleted === false">
+                                                                                            <i style="margin-right:0" class="fa fa-remove icon-style-i"></i>
+                                                                                        </a>
+                                                                                    </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="text-right  m-r-20">
+                                                                    <pagination [totalItems]="DriverTypeList.length"
+                                                                    [itemsPerPage]="10" (pageChanged)="pageChanged($event,'3')"  [maxSize]="10"></pagination>
+                                                                </div>
+                                                                <!-- <div class="text-right  m-r-20" style="display: none">
+                                                                    <a href="#!" class="b-b-primary text-primary">View all Orders</a>
+                                                                </div> -->
+                                                                <!-- <div class="text-right  m-r-20">
+                                                                    <pagination [totalItems]="DriverTypeList.length"
+                                                                    [itemsPerPage]="10" (pageChanged)="pageChanged($event,'3')"  [maxSize]="10"></pagination>
+                                                                </div> -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+    
+                                                
+                                                <div class="col-lg-6 col-md-12">
+                                                    <div class="card table-card latest-activity-card"style="max-height: 354px;overflow-y:auto;">
+                                                        <div class="card-header borderless">
+                                                            <h5>Unit Type</h5>
+                                                            <button data-toggle="modal" data-target="#large-Modal" type="button" class="btn btn-sm btn-success waves-effect waves-light f-right" (click)="openModalUnitType(UnitTypecontent,0,'')">
+                                                                <i class="fa fa-plus" style="margin: 0;"></i> Add
+                                                            </button> 
+
+<!-- 
+                                                            <button class="btn btn-success btn-des" [routerLink]="['/masters/MasterDetail/', 3]">
+                                                                <span class="fa fa-edit" style="font-size:18px;"></span></button> -->
+
+
+                                                        </div>
+                                                        <div class="card-block">
+                                                            <div class="table-responsive ">
+                                                                <table class="table table-borderless table-xs fleetvims-table">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            
+                                                                            <!-- <th>Id</th> -->
+                                                                            <th>Category Type</th>
+                                                                            <th>Name</th>                                                                           
+                                                                            <th>Options</th>                                                                                                                                               
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                          <tr *ngFor="let unittype of returnedUnitTypeList">
+                                                                                <!-- <td>{{unittype.Id}}</td> -->
+                                                                                <td>{{unittype.CategoryType}}</td>
+                                                                                <td>{{unittype.Type}}</td>
+                                                                              
+                                                                               <td ><a  class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon icon-style-a" tooltip="Edit" placement="top">
+                                                                                <i style="margin-right:0" class="fa fa-edit icon-style-i" (click)="openModalUnitType(UnitTypecontent,unittype.Id,unittype)"></i>
+                                                                                    </a>
+                                                                                    <a  href="javascript:void(0)" (click)="onDeleteUnitType(drivertype.Id)" class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon icon-style-a" tooltip="Delete" placement="top" ng-if="drivertype.Deleted === false">
+                                                                                        <i style="margin-right:0" class="fa fa-remove icon-style-i"></i>
+                                                                                    </a>
+                                                                                </td>
+                                                                            </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="text-right  m-r-20">
+                                                                    <pagination [totalItems]="UnitTypeList.length" [itemsPerPage]="10" (pageChanged)="pageChanged($event,'2')"  [maxSize]="10"></pagination>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <!-- site Analytics card end -->
+
+                                            <!-- site Analytics card start -->
+                                            
+                                            
+                                            
+                                        
+
+                                            <div class="col-lg-6 col-md-12">
+                                                        <div class="card table-card latest-activity-card"style="max-height: 354px;overflow-y:auto;">
+                                                            <div class="card-header borderless">
+                                                                <h5>Make's</h5>
+                                                               <button data-toggle="modal" data-target="#large-Modal" type="button" class="btn btn-sm btn-success waves-effect waves-light f-right" (click)="openModal(makescontent,0,'')">
+                                                                    <i class="fa fa-plus" style="margin: 0;"></i> Add
+                                                                </button> 
+                                                            </div>
+                                                            <div class="card-block">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-borderless table-xs fleetvims-table">
+                                                                         <thead>
+                                                                         <tr>
+                                                                           <!-- <th>Id</th> -->
+                                                                            <th>Name</th>
+                                                                            <th>Option</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                            <tr *ngFor="let make of returnedMakeList" >
+                                                                            <!-- <td>{{make.Id}}</td> -->
+                                                                            <td>{{make.CompanyName}}</td>
+                                                                            <td ><a  class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon icon-style-a" tooltip="Edit" placement="top">
+                                                                            <i style="margin-right:0" class="fa fa-edit icon-style-i" (click)="openModal(makescontent,make.Id,make)"></i>
+                                                                                </a>
+                                                                                <a  href="javascript:void(0)" (click)="onDelete(make.Id)" class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon icon-style-a" tooltip="Delete" placement="top" ng-if="onDelete.Deleted === false">
+                                                                                    <i style="margin-right:0" class="fa fa-remove icon-style-i"></i>
+                                                                                </a>
+                                                                            </td>   
+                                                                        
+                                                                        </tr>
+                                                                           
+                                                                    </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="text-right  m-r-20">
+                                                                    <pagination [totalItems]="MakeList.length"
+                                                                    [itemsPerPage]="10" (pageChanged)="pageChanged($event,'1')"  [maxSize]="10"></pagination>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+    
+                                                
+                                              <!-------------Cargo Master--------------------->
+                                              <div class="col-lg-6 col-md-12">
+                                                <div class="card table-card latest-activity-card"style="max-height: 354px;overflow-y:auto;">
+                                                    <div class="card-header borderless">
+                                                        <h5>Cargo Type's</h5>
+                                                       <button data-toggle="modal" data-target="#large-Modal" type="button" class="btn btn-sm btn-success waves-effect waves-light f-right" (click)="openModalCargo(cargoscontent,0,'')">
+                                                            <i class="fa fa-plus" style="margin: 0;"></i> Add
+                                                        </button> 
+                                                    </div>
+                                                    <div class="card-block">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-borderless table-xs fleetvims-table">
+                                                                 <thead>
+                                                                 <tr>
+                                                                   <!-- <th>Id</th> -->
+                                                                    <th>Cargo Name</th>
+                                                                    <th>Option</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                    <tr *ngFor="let cargo of returnedCargoTypeList" >
+                                                                    <!-- <td>{{cargo.Id}}</td> -->
+                                                                    <td>{{cargo.Type}}</td>
+
+
+                                                                    <td ><a  class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon icon-style-a" tooltip="Edit" placement="top">
+                                                                            <i style="margin-right:0" class="fa fa-edit icon-style-i" (click)="openModalCargo(cargoscontent,cargo.Id,cargo)"></i>
+                                                                                </a>
+                                                                                <a  href="javascript:void(0)" (click)="onDeleteCargoType(cargo.Id)" class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon icon-style-a" tooltip="Delete" placement="top" ng-if="onDelete.Deleted === false">
+                                                                                    <i style="margin-right:0" class="fa fa-remove icon-style-i"></i>
+                                                                                </a>
+                                                                            </td>   
+                                                                
+                                                                </tr>
+                                                                   
+                                                            </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="text-right  m-r-20">
+                                                            <pagination [totalItems]="CargoTypeMasterList.length"
+                                                            [itemsPerPage]="10" (pageChanged)="pageChanged($event,'5')"  [maxSize]="10"></pagination>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                               <!----------------------------------->      
+                                            <!-- site Analytics card end -->
+                                            <!---------state tax master(start)------------------->
+                                            <div class="col-lg-6 col-md-12">
+                                                    <div class="card table-card latest-activity-card"style="max-height: 354px;overflow-y:auto;">
+                                                        <div class="card-header borderless">
+                                                            <h5>State Tax </h5>
+                                                           <button data-toggle="modal" data-target="#large-Modal" type="button" class="btn btn-sm btn-success waves-effect waves-light f-right" (click)="openModalStateTax(stateTaxcontent,0,'')">
+                                                                <i class="fa fa-plus" style="margin: 0;"></i> Add
+                                                            </button> 
+                                                        </div>
+                                                        <div class="card-block">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-borderless table-xs fleetvims-table">
+                                                                     <thead>
+                                                                     <tr>
+                                                                       <!-- <th>Id</th> -->
+                                                                        <th>State Name</th>
+                                                                        <th>State Code</th>
+                                                                        <th>State Tax</th>
+                                                                        <th>Option</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                        <tr *ngFor="let state of returnedStateList" >
+                                                                        <!-- <td>{{cargo.Id}}</td> -->
+                                                                        <td>{{state.State}}</td>
+                                                                        <td>{{state.StateCode}}</td>
+                                                                        <td>{{state.Tax}}</td>
+    
+                                                                        <td ><a  class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon icon-style-a" tooltip="Edit" placement="top">
+                                                                                <i style="margin-right:0" class="fa fa-edit icon-style-i" (click)="openModalStateTax(stateTaxcontent,state.Id,state)"></i>
+                                                                                    </a>
+                                                                                    <a  href="javascript:void(0)" (click)="onDeleteCargoType(state.Id)" class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon icon-style-a" tooltip="Delete" placement="top" ng-if="onDelete.Deleted === false">
+                                                                                        <i style="margin-right:0" class="fa fa-remove icon-style-i"></i>
+                                                                                    </a>
+                                                                                </td>   
+                                                                    
+                                                                    </tr>
+                                                                       
+                                                                </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="text-right  m-r-20">
+                                                                <pagination [totalItems]="StateList.length"
+                                                                [itemsPerPage]="10" (pageChanged)="pageChanged($event,'6')"  [maxSize]="10"></pagination>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <!---------state tax master(end)------------------->
+                                        </div>
+                                        <!-- [ page content ] end -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+<ng-template #Policycontent >
+
+    <div class="modal-header">
+        <h4 class="modal-title">Policy - {{title}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+     <form class="" [formGroup]='policyregister'  (ngSubmit) = 'onPolicyTypeSave()' novalidate>
+                            
+    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">    
+                                <div class="form-group">
+                                    <label class="form-control-label"> Name <span class="text-danger">*</span></label>
+                                    <input type="text"  class="form-control input-md "  formControlName='Type' required="">
+
+                                    <div *ngIf="Type.invalid && (Type.dirty || isSubmitted)" id="Type" class="text-danger">
+                                                Name is required.
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+
+                       
+
+                        
+    </div>
+    <div class="modal-footer">
+           
+        <button type="button" class="btn btn-default waves-effect " (click)="modalRef.hide()">Close</button>
+        <button type='submit' class='btn btn-primary waves-effect waves-light'>Save <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /></button>
+        
+
+    </div>
+    </form>
+</ng-template>
+
+
+<ng-template #Drivercontent > 
+
+    <div class="modal-header">
+        <h4 class="modal-title">Driver - {{title}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+     <form class="" [formGroup]='driverregister'  (ngSubmit) = 'onDriverTypeSave()' novalidate>
+                            
+    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">    
+                                <div class="form-group">
+                                    <label class="form-control-label"> Name <span class="text-danger">*</span></label>
+                                    <input type="text"  class="form-control input-md "  formControlName='Driver_Type' required="">
+
+                                    <div *ngIf="Driver_Type.invalid && (Driver_Type.dirty || isSubmitted)" id="Driver_Type" class="text-danger">
+                                                Name is required.
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+
+                       
+
+                        
+    </div>
+    <div class="modal-footer">
+           
+        <button type="button" class="btn btn-default waves-effect " (click)="modalRef.hide()">Close</button>
+        <button type='submit' class='btn btn-primary waves-effect waves-light'>Save <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /></button>
+        
+
+    </div>
+    </form>
+</ng-template>
+
+<ng-template #makescontent >
+
+    <div class="modal-header">
+        <h4 class="modal-title">Make - {{title}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+     <form class="" [formGroup]='makeregister'  (ngSubmit) = 'onMakeSave()' novalidate>
+                            
+    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">    
+                                <div class="form-group">
+                                    <label class="form-control-label"> Name <span class="text-danger">*</span></label>
+                                    <input type="text"  class="form-control input-md "  formControlName='company_name' required="">
+
+                                    <div *ngIf="company_name.invalid && (company_name.dirty || isSubmitted)" id="company_name" class="text-danger">
+                                                Name is required.
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+
+                       
+
+                        
+    </div>
+    <div class="modal-footer">
+           
+        <button type="button" class="btn btn-default waves-effect " (click)="modalRef.hide()">Close</button>
+        <button type='submit' class='btn btn-primary waves-effect waves-light'>Save <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /></button>
+        
+
+    </div>
+    </form>
+</ng-template>
+
+<ng-template #UnitTypecontent >
+
+    <div class="modal-header">
+        <h4 class="modal-title">Unit Type - {{title}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+     <form class="" [formGroup]='unittyperegister'  (ngSubmit) = 'onUnitTypeSave()' novalidate>
+        <!-- <td>{{unittype.Type}}</td>
+        <td>{{unittype.CategoryType}}</td>    -->
+    <div class="modal-body">
+
+
+            <div class="row">
+                    <div class="col-md-12">    
+                        <div class="form-group form-default">
+                            <label class="float-label">Category Type <span class="text-danger">*</span></label>
+                          
+                           <!-- <select id="Id" class="form-control" formControlName='Id'>
+                                   <option>Category Type</option>
+                                    <option *ngFor="let key of UnitTypeCategoryKeys" [value]="key" [label]="UnitTypeCategoryKeys[key]"></option>
+                
+                                   
+                           </select> -->
+                           <select id="UnitTypeId" class="form-control" formControlName='UnitTypeId'>
+                            <option>Category Type</option>
+                            <option *ngFor="let unittype of UnitTypeCategoryMasterList" value="{{unittype.UnitTypeId}}">{{unittype.Type}}</option>
+                    </select> 
+                   
+                    <!-- <input type="text"  class="form-control input-md "  formControlName='UnitTypeCategoryId' required=""> -->
+
+
+                    <!-- <select class="form-control"  id="UnitTypeCategoryId" formControlName='UnitTypeCategoryId'>
+                        <option  [selected]="itemsPerPage==0" value="0">Category Type</option>
+                        <option [selected]="itemsPerPage==1"  value="1" >Power Units</option>                                       
+                        <option [selected]="itemsPerPage==2" value="2">Non-Power Units</option>                    
+                        <option [selected]="itemsPerPage==3"  value="3" >Unassigned Units</option>                   
+                    </select> -->
+             </div>   
+                    </div>                        
+                </div>
+
+
+                        <div class="row">
+                            <div class="col-md-12">    
+                                <div class="form-group">
+                                    <label class="form-control-label"> Name <span class="text-danger">*</span></label>
+                                    <input type="text"  class="form-control input-md "  formControlName='Unit_Type' required="">
+
+                                    <!-- <div *ngIf="Unit_Type.invalid && (Unit_Type.dirty || isSubmitted)" id="Unit_Type" class="text-danger">
+                                                Name is required.
+                                    </div>  -->
+                                </div>
+                            </div>                           
+                        </div>
+                
+                        
+                       
+
+                        
+    </div>
+    <div class="modal-footer">
+           
+        <button type="button" class="btn btn-default waves-effect " (click)="modalRef.hide()">Close</button>
+        <button type='submit' class='btn btn-primary waves-effect waves-light'>Save <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /></button>
+        
+
+    </div>
+    </form>
+</ng-template>
+
+<ng-template #cargoscontent >
+
+        <div class="modal-header">
+            <h4 class="modal-title">Cargo Type - {{title}}</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+    
+        </div>
+         <form class="" [formGroup]='cargotyperegister'  (ngSubmit) = 'onCargoTypeSave()' novalidate>
+                                
+        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">    
+                                    <div class="form-group">
+                                        <label class="form-control-label"> Name <span class="text-danger">*</span></label>
+                                        <input type="text"  class="form-control input-md "  formControlName='Cargo_Type' required="">
+    
+                                        <div *ngIf="Cargo_Type.invalid && (Cargo_Type.dirty || isSubmitted)" id="Cargo_Type" class="text-danger">
+                                                    Name is required.
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+    
+                           
+    
+                            
+        </div>
+        <div class="modal-footer">
+               
+            <button type="button" class="btn btn-default waves-effect " (click)="modalRef.hide()">Close</button>
+            <button type='submit' class='btn btn-primary waves-effect waves-light'>Save <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /></button>
+            
+    
+        </div>
+        </form>
+    </ng-template>
+
+
+    
+
+    <ng-template #stateTaxcontent >
+
+            <div class="modal-header">
+                <h4 class="modal-title">State Tax - {{title}}</h4>
+                <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+        
+            </div>
+             <form class="" [formGroup]='statetaxregister'  (ngSubmit) = 'onStateTaxSave()' novalidate>
+                                    
+            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-12">    
+                                        <div class="form-group">
+                                            <label class="form-control-label"> Name <span class="text-danger">*</span></label>
+                                            <input type="text"  class="form-control input-md "  formControlName='State' required="">
+        
+                                            <div *ngIf="State.invalid && (State.dirty || isSubmitted)" id="State" class="text-danger">
+                                                        Name is required.
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                        <div class="col-md-12">    
+                                            <div class="form-group">
+                                                <label class="form-control-label"> State Code <span class="text-danger">*</span></label>
+                                                <input type="text"  class="form-control input-md "  formControlName='StateCode' required="">
+            
+                                                <div *ngIf="StateCode.invalid && (StateCode.dirty || isSubmitted)" id="StateCode" class="text-danger">
+                                                        State Code is required.
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                            <div class="col-md-12">    
+                                                <div class="form-group">
+                                                    <label class="form-control-label"> State Tax <span class="text-danger">*</span></label>
+                                                    <input type="text"  class="form-control input-md "  formControlName='Tax' required="">
+                
+                                                    <div *ngIf="Tax.invalid && (Tax.dirty || isSubmitted)" id="Tax" class="text-danger">
+                                                            State Tax is required.
+                                                    </div> 
+                                                </div>
+                                            </div>
+                                        </div>
+        
+                               
+        
+                                
+            </div>
+            <div class="modal-footer">
+                   
+                <button type="button" class="btn btn-default waves-effect " (click)="modalRef.hide()">Close</button>
+                <button type='submit' class='btn btn-primary waves-effect waves-light'>Save <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /></button>
+                
+        
+            </div>
+            </form>
+        </ng-template>
+

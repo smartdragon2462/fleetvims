@@ -1,0 +1,13 @@
+.dataTables_filter{
+  float:right 
+}
+
+.disabled{pointer-events: none;}
+
+
+.form-material .form-default .form-control:focus ~ label{
+	color:#4680ff !important;
+}
+.form-material .form-default .form-control:focus ~ .form-bar:after, .form-material .form-default .form-control:focus ~ .form-bar:before{
+	background: #4680ff !important;
+}

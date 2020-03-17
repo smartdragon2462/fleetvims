@@ -1,0 +1,822 @@
+ <div class="pcoded-content" [@routerTransition]>
+                        <!-- [ breadcrumb ] start -->
+                        <div class="page-header">
+                            <div class="page-block">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8">
+                                        <div class="page-header-title">
+                                            <h4 class="m-b-10">Home</h4>
+                                        </div>
+                                        <ul class="breadcrumb">
+                                            <li class="breadcrumb-item">
+                                                <a [routerLink]="['/dashboard']">
+                                                    <i class="feather icon-home"></i>
+                                                </a>
+                                            </li>
+                                            <li class="breadcrumb-item">
+                                                <a href="javascript:void(0)" *ngIf="!type">Dashboard</a>
+                                                <a href="javascript:void(0)" *ngIf="type=='expirepolicies'">Expiring Policies</a>
+                                                <a href="javascript:void(0)" *ngIf="type=='recenttransactions'">Recent Transactions</a>
+                                                <a href="javascript:void(0)" *ngIf="type=='recentaddedvehicel'">Recently Added Vehicles</a>
+                                                <a href="javascript:void(0)" *ngIf="type=='recentadeleteddvehicel'">Recently Deleted Vehicles</a>
+                                                <a href="javascript:void(0)" *ngIf="type=='topclientbyvalue'">Top Clients by Values</a>
+                                                <a href="javascript:void(0)" *ngIf="type=='topclientbyunit'">Top Clients by Unit</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- [ breadcrumb ] end -->
+                        <div class="pcoded-inner-content">
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <div class="page-body">
+
+                                        <div class="row" *ngIf="type=='expirepolicies'">
+                                                <div class="col-lg-12 col-md-12">
+                                                    <div class="card table-card latest-activity-card">
+                                                        <div class="card-header with-border">
+                                                            <h5 class="card-header-text">Expire Policies</h5>
+
+                                                            
+                                                        </div>
+                                                        <div class="card-block">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-borderless table-xs fleetvims-table" id="lienholders_table">
+                                                                    <thead>       
+                                                                        <tr style="background: #eee;">
+                                                                            <th>Expiration Date</th>
+                                                                            <th>Client</th>
+                                                                            <th>Policy #</th>
+                                                                            <th>Coverage</th>
+                                                                            
+                                                                         </tr>   
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr *ngFor="let policy of ExpiringPoliciesALL">
+                                                                                <td>{{policy.ExpirationDate | date:'MM-dd-yyyy'}}</td>
+                                                                                <td>{{policy.ClientName}}</td>
+                                                                                <td>{{policy.Policy}}</td>
+                                                                                <td>{{policy.CoverageTypeText}}</td>
+                                                                                
+                                                                            </tr>
+
+                                                                    <tr *ngIf="! ExpiringPoliciesALL?.length">
+                                                                           <td colspan="9">  No data found...</td>
+                                                                    </tr>
+
+                                                                        </tbody>
+                                                                </table>
+                                                            </div>
+<!-- 
+                                                            <div >
+                                                                <pagination [totalItems]="ExpiringPoliciesALL.length" [itemsPerPage]="10" (pageChanged)="pageChanged($event,'1')"  [maxSize]="10"></pagination>
+                                                            </div>
+                                                              -->
+
+                                                              <div class="row">
+                                                                <div class="col-md-11"> 
+                                                                   
+                                                          <pagination [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" (pageChanged)="pageChanged($event)"  [maxSize]="10"></pagination>
+    
+                                                                   </div> 
+                                                                   <div class="col-md-1" style="float:right;">
+                                                                          <select (change)="itemsPerPageChange($event.target.value)">
+                                                                                   <option value="10" [selected]="itemsPerPage==10">10</option>
+                                                                                   <option value="25" [selected]="itemsPerPage==25">25</option>
+                                                                                   <option value="100" [selected]="itemsPerPage==100">100</option>
+                                                                                   <option [value]="totalItems">ALL</option>
+                                                                           </select>
+                                                                   </div>
+                                                               </div>
+                                                          
+
+                                                        </div>
+                                                           
+                                                    </div>
+                                                </div>
+
+
+                                        </div>  
+
+                                        <div class="row" *ngIf="type=='recenttransactions'">
+                                                <div class="col-lg-12 col-md-12">
+                                                    <div class="card table-card latest-activity-card">
+                                                        <div class="card-header with-border">
+                                                            <h5 class="card-header-text">Recent Transactions</h5>
+
+                                                            
+                                                        </div>
+
+                                                        <div class="card table-card latest-activity-card">
+                                                        <div class="card-block">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-borderless table-xs fleetvims-table" id="lienholders_table">
+                                                                    <thead>       
+                                                                        <tr style="background: #eee;">
+                                                                            <th>Date</th>
+                                                                            <th>Client</th>
+                                                                            <th>Unit</th>
+                                                                            <th>Username/th>
+                                                                            <th>Change</th>
+                                                                            <th>Transaction Type</th>
+                                                                            
+                                                                         </tr>   
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr *ngFor="let transaction of RecentTransactionsALL" >
+                                                                                <td>{{transaction.CreatedDate*1000 | date:'MM-dd-yyyy'}}</td>
+
+                                                                                <td>{{transaction.ClientName}}</td>
+
+                                                                                <td>{{transaction.Unit}}</td>
+                                                                                <td>
+                                                                                {{transaction.CreatedByName}}</td>
+
+                                                                                <td>{{transaction.Unit}}</td>
+                                                                                
+                                                                                <td>{{transaction.TransactionType}}</td>                                                                           
+                                                                                                                                                                
+                                                                            </tr>
+
+                                                                    <tr  *ngIf="!RecentTransactionALL?.length">
+                                                                           <td colspan="9">  No data found...</td>
+                                                                    </tr>
+
+                                                                        </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-11"> 
+                                                                   
+                                                          <pagination [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" (pageChanged)="pageChanged($event)"  [maxSize]="10"></pagination>
+    
+                                                                   </div> 
+                                                                   <div class="col-md-1" style="float:right;">
+                                                                          <select (change)="itemsPerPageChange($event.target.value)">
+                                                                                   <option value="10" [selected]="itemsPerPage==10">10</option>
+                                                                                   <option value="25" [selected]="itemsPerPage==25">25</option>
+                                                                                   <option value="100" [selected]="itemsPerPage==100">100</option>
+                                                                                   <option [value]="totalItems">ALL</option>
+                                                                           </select>
+                                                                   </div>
+                                                               </div>
+                                                            
+                                                             
+                                                        </div>
+                                                         </div>  
+                                                    </div>
+                                                </div>
+
+
+                                        </div> 
+
+
+
+                                        <div class="row" *ngIf="type=='recentaddedvehicel'">
+                                                <div class="col-lg-12 col-md-12">
+                                                    <div class="card table-card latest-activity-card">
+                                                        <div class="card-header with-border">
+                                                            <h5 class="card-header-text">Recently Added Vehicles</h5>
+
+                                                            
+                                                        </div>
+                                                        <div class="card-block">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-borderless table-xs fleetvims-table" id="lienholders_table">
+                                                                    <thead>       
+                                                                        <tr style="background: #eee;">
+                                                                            <th>Date</th>
+                                                                            <th>Client</th>
+                                                                            <th>Unit</th>
+                                                                            <th>Owner Name</th>
+                                                                            <th>Make</th>
+                                                                            <th>Value</th>
+                                                                            
+                                                                         </tr>   
+                                                                        </thead>
+                                                                        <tbody>
+                                                                                <tr *ngFor="let vehicle of RecentlyAddedVehiclesALL"  style="cursor: pointer;">
+                                                                                    <td >{{vehicle.CreatedDate*1000 | date:'MM-dd-yyyy'}}</td>
+                                                                                    <td>{{vehicle.ClientName}}</td>
+                                                                                    <td>{{vehicle.Unit}}</td>
+                                                                                    
+                                                                                    <td>{{vehicle.Owner}}</td>
+                                                                                     <td>{{vehicle.MakeCompanyName}}</td>
+                                                                                    
+                                                                                    <td style="text-align: right;">{{vehicle.Value | currency}}</td>
+                                                                                    
+                                                                                </tr>
+                                                                      <tr *ngIf="!RecentlyAddedVehiclesALL?.length">
+                                                                           <td colspan="9">  No data found... Recently Added Vehicles</td>
+                                                                     </tr>
+                                                                        </tbody>
+                                                                   
+
+                                                                  
+                                                                </table>
+                                                            </div>
+
+                                                            <!-- <div class="card-footer no-border">
+                                                               
+                                                                <div class="row">
+                                                                  <div class="col-md-11"> 
+                                                                     
+                                                            <pagination [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" (pageChanged)="pageChanged($event)"  [maxSize]="5"></pagination>
+
+                                                                     </div> 
+                                                                     <div class="col-md-1" style="float:right;">
+                                                                            <select (change)="itemsPerPageChange($event.target.value)">
+                                                                                     <option value="10" [selected]="itemsPerPage==10">10</option>
+                                                                                     <option value="25" [selected]="itemsPerPage==25">25</option>
+                                                                                     <option value="100" [selected]="itemsPerPage==100">100</option>
+                                                                                     <option [value]="totalItems">ALL</option>
+                                                                             </select>
+                                                                     </div>
+                                                                 </div>
+                                                         </div> -->
+                                                             
+
+
+                                                         <div class="row">
+                                                            <div class="col-md-11"> 
+                                                               
+                                                      <pagination [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" (pageChanged)="pageChanged($event)"  [maxSize]="10"></pagination>
+
+                                                               </div> 
+                                                               <div class="col-md-1" style="float:right;">
+                                                                      <select (change)="itemsPerPageChange($event.target.value)">
+                                                                               <option value="10" [selected]="itemsPerPage==10">10</option>
+                                                                               <option value="25" [selected]="itemsPerPage==25">25</option>
+                                                                               <option value="100" [selected]="itemsPerPage==100">100</option>
+                                                                               <option [value]="totalItems">ALL</option>
+                                                                       </select>
+                                                               </div>
+                                                           </div>
+                                                        </div>
+                                                           
+                                                    </div>
+                                                </div>
+
+
+                                        </div> 
+
+
+                                        <div class="row" *ngIf="type=='recentadeleteddvehicel'">
+                                                <div class="col-lg-12 col-md-12">
+                                                    <div class="card table-card latest-activity-card">
+                                                        <div class="card-header with-border">
+                                                            <h5 class="card-header-text">Recently Deleted Vehicles</h5>
+
+                                                            
+                                                        </div>
+                                                        <div class="card-block">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-borderless table-xs fleetvims-table" id="lienholders_table">
+                                                                    <thead>       
+                                                                        <tr style="background: #eee;">
+                                                                            <th>Unit</th>
+                                                                            <th>Client</th>
+                                                                            <th>Owner Name</th>
+                                                                            <th>Make</th>
+                                                                            <th style="text-align: center;">Value</th>
+                                                                            <th>Tran Date</th>
+                                                                            
+                                                                         </tr>   
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr *ngFor="let vehicle of RecentlyDeletedVehiclesALL">
+                                                                                <td>{{vehicle.Unit}}</td>
+                                                                                <td>{{vehicle.ClientName}}</td>
+                                                                                <td>{{vehicle.Owner}}</td>
+                                                                                 <td>{{vehicle.MakeCompanyName}}</td>                                                                                <td style="text-align: right;">{{vehicle.Value | currency}}</td>
+                                                                                <td>{{vehicle.ModifiedDate*1000 | date:'MM-dd-yyyy'}}</td>
+                                                                            </tr>
+
+                                                                    <tr *ngIf="! RecentlyDeletedVehiclesALL?.length">
+                                                                           <td colspan="9">  No data found...</td>
+                                                                    </tr>
+
+                                                                        </tbody>
+                                                                </table>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-11"> 
+                                                                   
+                                                          <pagination [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" (pageChanged)="pageChanged($event)"  [maxSize]="10"></pagination>
+    
+                                                                   </div> 
+                                                                   <div class="col-md-1" style="float:right;">
+                                                                          <select (change)="itemsPerPageChange($event.target.value)">
+                                                                                   <option value="10" [selected]="itemsPerPage==10">10</option>
+                                                                                   <option value="25" [selected]="itemsPerPage==25">25</option>
+                                                                                   <option value="100" [selected]="itemsPerPage==100">100</option>
+                                                                                   <option [value]="totalItems">ALL</option>
+                                                                           </select>
+                                                                   </div>
+                                                               </div>
+                                                             
+                                                        </div>
+                                                           
+                                                    </div>
+                                                </div>
+
+
+                                        </div> 
+
+
+
+                                        <div class="row" *ngIf="type=='topclientbyvalue'">
+                                                <div class="col-lg-12 col-md-12">
+                                                    <div class="card table-card latest-activity-card">
+                                                        <div class="card-header with-border">
+                                                            <h5 class="card-header-text">Top Clients by Values</h5>
+
+                                                            
+                                                        </div>
+                                                        <div class="card-block">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-borderless table-xs fleetvims-table" id="lienholders_table">
+                                                                    <thead>       
+                                                                        <tr style="background: #eee;">
+                                                                            <th>Client</th>
+                                                                            <th>Total Value</th>
+                                                                            
+                                                                         </tr>   
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr *ngFor="let client of ClientByValuesALL">
+                                                                                <td>{{client.ClientName}}</td>
+                                                                                <!-- <td style="text-align: right;">{{client.TotalValue | currency}}</td>      -->                                                                           
+                                                                                <td>{{client.TotalValue | currency}}</td>                               
+                                                                         
+                                                                            </tr>
+
+                                                                    <tr *ngIf="! ClientByValuesALL?.length" >
+                                                                           <td colspan="9">  No data found...</td>
+                                                                    </tr>
+
+                                                                        </tbody>
+                                                                </table>
+                                                            </div>
+
+                                                            
+                                                            <div class="row">
+                                                                <div class="col-md-11"> 
+                                                                   
+                                                          <pagination [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" (pageChanged)="pageChanged($event)"  [maxSize]="10"></pagination>
+    
+                                                                   </div> 
+                                                                   <div class="col-md-1" style="float:right;">
+                                                                          <select (change)="itemsPerPageChange($event.target.value)">
+                                                                                   <option value="10" [selected]="itemsPerPage==10">10</option>
+                                                                                   <option value="25" [selected]="itemsPerPage==25">25</option>
+                                                                                   <option value="100" [selected]="itemsPerPage==100">100</option>
+                                                                                   <option [value]="totalItems">ALL</option>
+                                                                           </select>
+                                                                   </div>
+                                                               </div>
+                                                        </div>
+                                                           
+                                                    </div>
+                                                </div>
+
+
+                                        </div> 
+
+
+                                        <div class="row" *ngIf="type=='topclientbyunit'">
+                                                <div class="col-lg-12 col-md-12">
+                                                    <div class="card table-card latest-activity-card">
+                                                        <div class="card-header with-border">
+                                                            <h5 class="card-header-text">Top Clients by Unit</h5>
+
+                                                            
+                                                        </div>
+                                                        <div class="card-block">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-borderless table-xs fleetvims-table" id="lienholders_table">
+                                                                    <thead>       
+                                                                        <tr style="background: #eee;">
+                                                                            <th>Client</th>
+                                                                            <th>Total Unit</th>
+                                                                            
+                                                                         </tr>   
+                                                                        </thead>
+                                                                        <tbody>
+                                                                    
+                                                                            <tr *ngFor="let client of ClientByUnitCountALL">
+                                                                                <td>{{client.ClientName}}</td>
+                                                                                <td>{{client.TotalActiveUnit}}</td>
+                                                                                
+                                                                            </tr>
+
+
+                                                                    <tr *ngIf="! ClientByUnitCountALL?.length">
+                                                                           <td colspan="9">  No data found...</td>
+                                                                    </tr>
+
+                                                                        </tbody>
+                                                                </table>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-11"> 
+                                                                   
+                                                          <pagination [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" (pageChanged)="pageChanged($event)"  [maxSize]="10"></pagination>
+    
+                                                                   </div> 
+                                                                   <div class="col-md-1" style="float:right;">
+                                                                          <select (change)="itemsPerPageChange($event.target.value)">
+                                                                                   <option value="10" [selected]="itemsPerPage==10">10</option>
+                                                                                   <option value="25" [selected]="itemsPerPage==25">25</option>
+                                                                                   <option value="100" [selected]="itemsPerPage==100">100</option>
+                                                                                   <option [value]="totalItems">ALL</option>
+                                                                           </select>
+                                                                   </div>
+                                                               </div>
+                                                             
+                                                        </div>
+                                                           
+                                                    </div>
+                                                </div>
+
+
+                                        </div>   
+
+
+
+
+
+
+                                        <div class="row" *ngIf="type=='NonSponsor'">
+                                            <div class="col-lg-12 col-md-12">
+                                                <div class="card table-card latest-activity-card">
+                                                    <div class="card-header with-border">
+                                                        <h5 class="card-header-text">Non-Sponsor</h5>
+
+                                                        
+                                                    </div>
+
+                                                    <div class="card table-card latest-activity-card">
+                                                    <div class="card-block">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-borderless table-xs fleetvims-table">
+                                                                <thead>
+                                                                <tr>
+                                                                   
+                                                                   <th>Expiration Date</th>
+                                                                   <th>Client Name</th>
+                                                                   <th>Unit </th>
+                                                                   <th>Driver </th>
+                                                                   <th>Owner </th>
+                                                               </tr>
+                                                           </thead>
+                                                           <tbody>
+                                                                    <tr *ngFor="let ns of NonSponsorAll" style="cursor: pointer;">
+                                                                       <td>{{ns.expiration_date | date:'MM-dd-yyyy'}}</td>
+                                                                       <td>{{ns.ClientName}}</td>
+                                                                       <td>{{ns.unit}}</td>
+                                                                       <td>{{ns.driver}}</td>
+                                                                       <td>{{ns.owner}}</td>
+                                                                   </tr>
+                                                                   <tr *ngIf="!NonSponsorAll?.length">
+                                                                    <td colspan="9">  No data found...</td>
+                                                             </tr>
+                                                                  
+                                                           </tbody>
+                                                           </table>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-11"> 
+                                                               
+                                                      <pagination [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" (pageChanged)="pageChanged($event)"  [maxSize]="10"></pagination>
+
+                                                               </div> 
+                                                               <div class="col-md-1" style="float:right;">
+                                                                      <select (change)="itemsPerPageChange($event.target.value)">
+                                                                               <option value="10" [selected]="itemsPerPage==10">10</option>
+                                                                               <option value="25" [selected]="itemsPerPage==25">25</option>
+                                                                               <option value="100" [selected]="itemsPerPage==100">100</option>
+                                                                               <option [value]="totalItems">ALL</option>
+                                                                       </select>
+                                                               </div>
+                                                           </div>
+                                                        
+                                                         
+                                                    </div>
+                                                     </div>  
+                                                </div>
+                                            </div>
+
+
+                                    </div> 
+
+
+
+
+
+
+                                        <!-- [ page content ] start -->
+                                        <div class="row" *ngIf="!type">
+
+                                            <!-- site Analytics card start -->
+                                            <div class="col-lg-6 col-md-12">
+                                                    <div class="card table-card latest-activity-card">
+                                                        <div class="card-header borderless">
+                                                            <h5>Expiring Policies</h5>
+                                                            
+                                                        </div>
+                                                        <div class="card-block">
+                                                            <div class="table-responsive ">
+                                                                <table class="table table-borderless table-xs fleetvims-table">
+                                                                    <thead>
+                                                                        <tr>
+                                                                             <th>Expiration Date</th>
+                                                                            <th>Client</th>
+                                                                            <th>Policy #</th>
+                                                                            <th>Coverage</th>
+                                                                           
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                          <tr *ngFor="let policy of ExpiringPolicies" [routerLink]="['/policy/client/', policy.ClientId,policy.PolicyId]" style="cursor: pointer;">
+                                                                                <td>{{policy.ExpirationDate | date:'MM-dd-yyyy'}}</td>
+                                                                                <td>{{policy.ClientName}}</td>
+                                                                                <td>{{policy.Policy}}</td>
+                                                                                <td>{{policy.CoverageTypeText}}</td>
+                                                                                
+                                                                            </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="text-right  m-r-20">
+                                                                <a [routerLink]="['/dashboard/type/expirepolicies']" class="b-b-primary text-primary">View all</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            
+                                            
+                                        
+
+                                            <div class="col-lg-6 col-md-12">
+                                                        <div class="card table-card latest-activity-card">
+                                                            <div class="card-header borderless">
+                                                                <h5>Recent Transactions</h5>
+                                                              
+                                                            </div>
+                                                            <div class="card-block">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-borderless table-xs fleetvims-table">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Date</th>
+                                                                                <th>Client</th>
+                                                                                 <th>Unit</th>
+                                                                                <th>Username</th>
+                                                                                <th>Change</th>
+                                                                                <th>Transaction Type</th>
+                                                                               
+                                                                               
+                                                                               
+                                                                                
+                                                                                
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr *ngFor="let transaction of RecentTransactions" [routerLink]="['/vehicle/transactionlog/', transaction.VehicleId, transaction.Client_Id]" style="cursor: pointer;">
+                                                                                <td>{{transaction.CreatedDate*1000 | date:'MM-dd-yyyy'}}</td>
+
+                                                                                <td>{{transaction.ClientName}}</td>
+
+                                                                                <td>{{transaction.Unit}}</td>
+                                                                                <td>
+                                                                                {{transaction.CreatedByName}}</td>
+
+                                                                                <td>{{transaction.Unit}}</td>
+                                                                                
+                                                                                <td>{{transaction.TransactionType}}</td>                                                                           
+                                                                                                                                                                
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                               <div class="text-right  m-r-20">
+                                                                <a [routerLink]="['/dashboard/type/recenttransactions']" class="b-b-primary text-primary">View all</a>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+    
+                                                
+                                                
+                                            <!-- site Analytics card end -->
+
+                                            <!-- site Analytics card start -->
+                                            <div class="col-lg-6 col-md-12">
+                                                    <div class="card table-card latest-activity-card">
+                                                        <div class="card-header borderless">
+                                                            <h5>Recently Added Vehicles</h5>
+                                                           
+                                                        </div>
+                                                        <div class="card-block">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-borderless table-xs fleetvims-table">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Date</th>
+                                                                            <th>Client</th>
+                                                                            <th>Unit</th>
+                                                                            <th>Owner Name</th>
+                                                                            <th>Make</th>
+                                                                            <th style="text-align: center;">Value</th>
+                                                                            
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                            <tr *ngFor="let vehicle of RecentlyAddedVehicles" [routerLink]="['/vehicle/edit/', vehicle.VehicleId]" style="cursor: pointer;">
+                                                                                <td >{{vehicle.CreatedDate*1000 | date:'MM-dd-yyyy'}}</td>
+                                                                                <td>{{vehicle.ClientName}}</td>
+                                                                                <td>{{vehicle.Unit}}</td>
+                                                                                
+                                                                                <td>{{vehicle.Owner}}</td>
+                                                                                 <td>{{vehicle.MakeCompanyName}}</td>
+                                                                                
+                                                                                <td style="text-align: right;">{{vehicle.Value | currency}}</td>
+                                                                                
+                                                                            </tr>
+                                                                           
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="text-right  m-r-20">
+                                                                <a [routerLink]="['/dashboard/type/recentaddedvehicel']" class="b-b-primary text-primary" (click)="recentaddedvehicelDetail()">View all</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            
+                                            
+                                        
+
+                                            <div class="col-lg-6 col-md-12">
+                                                        <div class="card table-card latest-activity-card">
+                                                            <div class="card-header borderless">
+                                                                <h5>Recently Deleted Vehicles</h5>
+                                                                
+                                                            </div>
+                                                            <div class="card-block">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-borderless table-xs fleetvims-table">
+                                                                         <thead>
+                                                                         <tr>
+                                                                            <th>Unit</th>
+                                                                            <th>Client</th>
+                                                                            <th>Owner Name</th>
+                                                                            <th>Make</th>
+                                                                            <th style="text-align: center;">Value</th>
+                                                                            <th>Tran Date</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                            <tr *ngFor="let vehicle of RecentlyDeletedVehicles" [routerLink]="['/vehicle/edit/', vehicle.VehicleId]" style="cursor: pointer;">
+                                                                                <td>{{vehicle.Unit}}</td>
+                                                                                <td>{{vehicle.ClientName}}</td>
+                                                                                <td>{{vehicle.Owner}}</td>
+                                                                                 <td>{{vehicle.MakeCompanyName}}</td>                                                                                <td style="text-align: right;">{{vehicle.Value | currency}}</td>
+                                                                                <td>{{vehicle.ModifiedDate*1000 | date:'MM-dd-yyyy'}}</td>
+                                                                            </tr>
+                                                                           
+                                                                    </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="text-right  m-r-20">
+                                                                <a [routerLink]="['/dashboard/type/recentadeleteddvehicel']" class="b-b-primary text-primary">View all</a>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+    
+                                                
+                                              <div class="col-lg-6 col-md-12" *ngIf="UserInfo.Module!='3'">
+                                                        <div class="card table-card latest-activity-card">
+                                                            <div class="card-header borderless">
+                                                                <h5>Top 5 Clients by Values</h5>
+                                                                
+                                                            </div>
+                                                            <div class="card-block">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-borderless table-xs fleetvims-table">
+                                                                         <thead>
+                                                                         <tr>
+                                                                           
+                                                                            <th>Client</th>
+                                                                            <th style="text-align: center;">Total Value</th>
+                                                                            
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                            <tr *ngFor="let client of ClientByValues" [routerLink]="['/vehicles/client/', client.ClientId]" style="cursor: pointer;">
+                                                                                <td>{{client.ClientName}}</td>
+                                                                                <td style="text-align: right;">{{client.TotalValue | currency}}</td>
+                                                                                
+                                                                            </tr>
+                                                                           
+                                                                    </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="text-right  m-r-20">
+                                                                <a [routerLink]="['/dashboard/type/topclientbyvalue']" class="b-b-primary text-primary">View all</a>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6 col-md-12"  *ngIf="UserInfo.Module!='3'">
+                                                        <div class="card table-card latest-activity-card">
+                                                            <div class="card-header borderless">
+                                                                <h5>Top 5 Clients by Unit</h5>
+                                                                
+                                                            </div>
+                                                            <div class="card-block">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-borderless table-xs fleetvims-table">
+                                                                         <thead>
+                                                                         <tr>
+                                                                            
+                                                                            <th>Clients</th>
+                                                                            <th>Total Unit</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                             <tr *ngFor="let client of ClientByUnitCount" [routerLink]="['/vehicles/client/', client.ClientId]" style="cursor: pointer;">
+                                                                                <td>{{client.ClientName}}</td>
+                                                                                <td>{{client.TotalActiveUnit}}</td>
+                                                                                
+                                                                            </tr>
+                                                                           
+                                                                    </tbody>
+                                                                    </table>
+                                                                </div>
+                                                               <div class="text-right  m-r-20">
+                                                                <a [routerLink]="['/dashboard/type/topclientbyunit']" class="b-b-primary text-primary">View all</a>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>  
+
+
+
+                                                    <div class="col-lg-6 col-md-12"  *ngIf="UserInfo.Module!='3'">
+                                                        <div class="card table-card latest-activity-card">
+                                                            <div class="card-header borderless">
+                                                                <h5>Non-Sponsored policies</h5>
+                                                                
+                                                            </div>
+                                                            <div class="card-block">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-borderless table-xs fleetvims-table">
+                                                                         <thead>
+                                                                         <tr>
+                                                                            
+                                                                            <th>Expiration Date</th>
+                                                                            <th>Client Name</th>
+                                                                            <th>Unit </th>
+                                                                            <th>Driver </th>
+                                                                            <th>Owner </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                             <tr *ngFor="let ns of NonSponsor" [routerLink]="['/vehicles/client/', ns.ClientId]" style="cursor: pointer;">
+                                                                                <td>{{ns.expiration_date | date:'MM-dd-yyyy'}}</td>
+                                                                                <td>{{ns.ClientName}}</td>
+                                                                                <td>{{ns.unit}}</td>
+                                                                                <td>{{ns.driver}}</td>
+                                                                                <td>{{ns.owner}}</td>
+                                                                            </tr>
+                                                                           
+                                                                    </tbody>
+                                                                    </table>
+                                                                </div>
+                                                               <div class="text-right  m-r-20">
+                                                                <a [routerLink]="['/dashboard/type/NonSponsor']" class="b-b-primary text-primary">View all</a>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>  
+                                            <!-- site Analytics card end -->
+                                            
+                                
+
+                                        </div>
+                                        <!-- [ page content ] end -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>

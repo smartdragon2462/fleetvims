@@ -1,0 +1,463 @@
+ <div class="pcoded-content" [@routerTransition]>
+                        <!-- [ breadcrumb ] start -->
+                        <div class="page-header">
+                            <div class="page-block">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8">
+                                        <div class="page-header-title">
+                                            <h4 class="m-b-10">Agencies</h4>
+                                        </div>
+                                        <ul class="breadcrumb">
+                                            <li class="breadcrumb-item">
+                                                <a [routerLink]="['/dashboard']">
+                                                    <i class="feather icon-home"></i>
+                                                </a>
+                                            </li>
+                                            <li class="breadcrumb-item">
+                                                <a [routerLink]="['/agencies']">Agencies</a>
+                                                
+                                            </li>
+                                            <li class="breadcrumb-item">
+                                                <a href="#!">Edit Agency</a>
+                                                
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="pcoded-inner-content">
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <div class="page-body">
+                                        <div class="row">
+                                           <div class="alertbox">     
+                                                <div *ngFor="let alert of alerts">
+                                                        <alert [type]="alert.type" [dismissOnTimeout]="5000"><span [innerHtml]="alert.msg"></span></alert>
+                                                </div>
+                                            </div>       
+                                            <div class="col-lg-6 col-md-6">
+                                                    <div class="card">
+                                                        <form class="" [formGroup]='register'  (ngSubmit) = 'onAgenciesSave()' novalidate>
+
+                                                        <div class="card-header with-border">
+                                                            <h5 class="card-header-text">Agency Details</h5>  
+                                                        </div>
+                                                        <div class="card-block">
+                                                            
+                                                                  
+                                                            <div class="form-group form-default">
+                                                                 <label class="float-label">Name <span class="text-danger">*</span></label>
+                                                                <input type="text"  class="form-control"  formControlName='AgencyName' required="">
+                                                                
+                                                               
+                                                                <div *ngIf="AgencyName.invalid && (AgencyName.dirty || isSubmitted)" id="AgencyName" class="text-danger">
+                                                                            Name is required.
+                                                                </div> 
+                                                            </div>
+
+                                                             <div class="form-group form-default">
+                                                                 <label class="float-label">AgencyType <span class="text-danger">*</span></label>
+                                                                <select  class="form-control" formControlName='AgencyType'>
+                                                                         
+                                                                    <option *ngFor="let agenyType of AgencyTypeList" value="{{agenyType.AgencyTypeId}}">{{agenyType.AgencyType}}</option>
+
+                                                                       
+
+                                                                 </select>       
+                                                                
+                                                               
+                                                                <div *ngIf="AgencyType.invalid && (AgencyType.dirty || isSubmitted)" id="AgencyType" class="text-danger">
+                                                                            Agency Type is required.
+                                                                </div> 
+                                                            </div>
+
+
+                                                            
+                                                            
+                                                            <div class="form-group form-default">
+                                                                 <label class="float-label">Phone <span class="text-danger"></span></label>
+                                                                <input type="text" class="form-control" formControlName='Phone'>
+                                                                
+                                                               
+                                                                <!-- <div *ngIf="Phone.invalid && (Phone.dirty || isSubmitted)" class="text-danger">
+                                                                <div *ngIf="Phone.errors.required">Phone is required.</div>
+                                                                <div *ngIf="Phone.errors.pattern && !Phone.errors.required">Invalid Phone.</div>
+                                                                </div> -->
+                                                            </div>
+                                                            
+                         
+                                                            <div class="form-group form-default">
+                                                                <label class="float-label">Address1 <span class="text-danger">*</span></label>
+                                                                <input type="text"  class="form-control" formControlName='Address1' required="">
+                                                                
+                                                                
+                                                                <div *ngIf="Address1.invalid && (Address1.dirty || isSubmitted)" id="Address1" class="text-danger">
+                                                                        Address1 is required.
+                                                                </div>
+                                                            </div>
+                                                       
+
+                                                            <div class="form-group form-default">
+                                                                <label class="float-label">Address2</label>
+                                                                <input type="text" id="Address2" class="form-control" formControlName='Address2'>
+                                                                
+                                                                
+                                                            </div>
+                                                            <div class="form-group form-default">
+                                                                <label class="float-label">State <span class="text-danger">*</span></label>
+                                                                <select  class="form-control" formControlName='StateId' (change)="getCities($event.target.value)">
+                                                                        <option>Select</option>
+                                                                       <option *ngFor="let state of Statelist" value="{{state.StateId}}">{{state.State}}</option>
+                                                                        
+                                                                </select>
+                                                                
+                                                                
+                                                                <div *ngIf="StateId.invalid && (StateId.dirty || isSubmitted)" id="StateId" class="text-danger">
+                                                                        State is required.
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="form-group form-default">
+                                                                 <label class="float-label">City <span class="text-danger">*</span></label>
+                                                                <select class="form-control" formControlName='CityId'>
+                                                                        <option>Select</option>
+                                                                        <option *ngFor="let city of Citylist" value="{{city.CityId}}">{{city.City}}</option>
+                                                                </select>
+                                                                
+                                                               
+                                                                <div *ngIf="CityId.invalid && (CityId.dirty || isSubmitted)" id="CityId" class="text-danger">
+                                                                            City is required.
+                                                                </div>
+
+                                                            </div>
+                            
+
+                                                            <div class="form-group form-default">
+                                                                <label class="float-label">Zip <span class="text-danger">*</span></label>
+                                                                <input type="text" id="Zip" class="form-control  input-md" formControlName='Zip' required="">
+                                                                
+                                                                
+                                                                <div *ngIf="Zip.invalid && (Zip.dirty || isSubmitted)" id="Zip" class="text-danger">
+                                                                        Zip is required.
+                                                                </div>
+                                                            </div>
+
+
+
+                                                            <div class="form-group form-default">
+                                                                <label class="float-label">Email <span class="text-danger"></span></label>
+                                                                <input type="text" id="Email" class="form-control  input-md" formControlName='Email' >
+                                                        
+                                                            </div>
+
+
+
+
+
+                                                            <div class="form-group form-default">
+                                                                            <label class="">Logo</label>
+                                                                            <input type="file"  class="form-control" (change)="onSelectlogoFile($event)" > 
+                                                                            <b>Dimension :</b> (W x H : 112px x 35px)<br><b> Type:</b> jpg,jpeg,png <br>   
+                                                                        <img [src]="agencylogo"  width="112" *ngIf="agencylogo">
+                                                            </div>
+                                                       
+                                                   
+                                                           
+                                                        
+                                                            
+                                                        </div><!--./card-block-->
+                                                        <div class="card-footer text-right">
+                                                                 <input type="hidden" class="form-control" id="AgencyId"  formControlName='AgencyId'> 
+                                                                <a [routerLink]="['/agencies']" class="btn btn-default waves-effect"> Close </a>
+                                                                <button type='submit' class='btn btn-primary waves-effect waves-light'>Save<img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /></button>
+                                                        </div><!--./footer-->
+                                                        </form>
+                                                    </div>
+                                            </div>
+
+                                            <!-- site Analytics card end -->
+
+                                            <!-- site Analytics card start -->
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="card table-card latest-activity-card">
+                                                    <div class="card-header with-border">
+                                                        <h5 class="card-header-text">Agency Contacts</h5>
+                                                        <button data-toggle="modal" data-target="#add-contact" type="button" class="btn btn-sm btn-success waves-effect waves-light f-right" style="" (click)="openModal(content,0)">
+                                                                <i class="fa fa-plus" style="margin: 0;"></i> Add
+                                                        </button>  
+                                                    </div>
+                                                    <div class="card-block">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-borderless table-xs fleetvims-table">
+                                                                    <thead>
+                                                                        <tr style="background: #eee;">
+                                                                            <th>Type</th>
+                                                                            <th>Name</th>
+                                                                            <th>Email</th>
+                                                                            <th>OPTIONS</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                                 <tbody>
+                                                                    <tr *ngFor="let contact of ContactList">
+                                                                        <td>{{contact.RoleList[0].Role}}</td>
+                                                                        <td>{{contact.FirstName}} {{contact.LastName}}</td>
+                                                                        <td>{{contact.Email}}</td>
+                                                                       <td>
+                                                                            <a href="javascript:void(0)" (click)="openModal(content,contact)" class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon" tooltip="Edit" placement="top">
+                                                                        <i style="margin-right:0" class="fa fa-edit"></i>
+                                                                            </a>
+                                                                            <a href="javascript:void(0)" (click)="onDeleteContact(contact.UserId)" class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon" tooltip="Delete" placement="top">
+                                                                                <i style="margin-right:0" class="fa fa-remove"></i>
+                                                                            </a>
+
+                                                                           
+                                                                        </td>
+                                                                    </tr>
+
+                                                                         
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                </div>
+                                            </div>
+                                            <!-- site Analytics card end -->
+
+
+                                        </div>
+                                        <!-- [ page content ] end -->
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- [ breadcrumb ] end -->
+                        
+                    </div>
+
+<ng-template #content >
+    <div class="modal-header">
+        <h4 class="modal-title">Agency Contact - {{title}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+
+    <form class="" [formGroup]='contactregister'  (ngSubmit) = 'onAgencyContactSave()' novalidate>  
+
+    <div class="modal-body">
+                                <div class="row" *ngIf="contactError!=''" id="contactError">
+                                    <div class="col-md-12">
+                                            <div class="alert alert-danger ng-star-inserted">{{contactError}}</div>
+                                     </div>   
+                                </div>    
+                                <div class="row">
+                                    <div class="col-md-12">
+                                            <label class="">Type <span class="text-danger">*</span></label>
+                                            <select name="type" class="form-control" formControlName='RoleId' (change)="getProducerRole($event.target.value)">
+                                                
+                                                 <option *ngFor="let contactRoleList of ContactRoleList" value="{{contactRoleList.RoleId}}">{{contactRoleList.Role}}</option>
+
+                                               
+                                            </select>
+                                            <div *ngIf="RoleId.invalid && (RoleId.dirty || isSubmitted_contact)" id="RoleId" class="text-danger">
+                                                                Type is required.
+                                            </div>
+                                    </div>
+                                 </div>
+                                 <br>
+                                 <div class="row" [hidden]="!showSignature">
+                                    <div class="col-md-6">
+                                            <label class="">Signature</label>
+                                            <input type="file"  class="form-control" (change)="onSelectFile($event)" > 
+                                            <img [src]="url" height="35" width="112" *ngIf="url">
+                                    </div>
+                                    <div class="col-md-6"><b>Dimension :</b> (W x H : 112px x 35px)<br><b> Type:</b> jpg,jpeg,png <br></div>
+                                 </div>
+                                 <br><br>
+                                 <div class="row">   
+                                    <div class="col-md-6">
+                                            <label>Portal User ?</label><br>
+                                            <div class="checkbox-fade fade-in-primary d-">
+                                                <label>
+                                                    <input type="checkbox" value="1" formControlName='PortalAccess' (click)="showPasswordField()">
+                                                    <span class="cr"><i class="cr-icon fa fa-check txt-primary"></i></span>
+                                                    <span class="text-inverse">Yes</span>
+                                                </label>
+                                            </div>
+                                            
+                                    </div>
+
+                                     <div class="col-md-6" [hidden]="!showPassword">
+                                                <div class="form-group form-default">
+                                                        <label class="float-label">Password</label>
+                                                        <input type="password" class="form-control" formControlName='Password'>
+                                                        
+                                                        <div *ngIf="Password.invalid && (Password.dirty || isSubmitted_contact)" class="text-danger">
+                                                                <div *ngIf="Password.errors.required">New Password is required.</div>
+                                                                <div *ngIf="Password.errors.pattern && !Password.errors.required">Password should be Minimum eight characters, at least one letter, one number and one special character:</div>
+                                                        </div>
+
+                                                        
+                                                </div> 
+                                    </div>
+                                </div><!--./row-->
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                            <label>Reports</label>
+                                            <div class="form-radio">
+                                                    
+                                                        <div class="checkbox-fade fade-in-primary d-">
+                                                            <label>
+                                                                <input type="checkbox" value="1" formControlName='ReportMonthlySummary'>
+                                                                    <span class="cr"><i class="cr-icon fa fa-check txt-primary"></i></span>
+                                                                <span class="text-inverse">Monthly Summary</span>
+
+                                                                
+                                                            </label>
+                                                        </div>
+                                                        <div class="checkbox-fade fade-in-primary d-">
+                                                            <label>
+                                                                 <input type="checkbox" value="1" formControlName='ReportCertificates'>
+                                                                    <span class="cr"><i class="cr-icon fa fa-check txt-primary"></i></span>
+                                                                <span class="text-inverse">Certificates</span>
+
+                                                                
+                                                            </label>
+                                                        </div>
+                                                    
+                                            </div>
+                                    </div>
+                                    
+                            </div>
+                            <br>
+                            <div class="row">
+                                        <div class="col-md-12">
+                                                <div class="form-group form-default">
+                                                        <label class="float-label">Email <span class="text-danger">*</span></label>
+                                                        <input formControlName='ContactEmail' type="text" class="form-control" required="" email>
+                                                        
+                                                        
+                                                        <div *ngIf="ContactEmail.invalid && (ContactEmail.dirty || isSubmitted_contact)" class="text-danger">
+                                                                <div *ngIf="ContactEmail.errors.required">Email is required.</div>
+                                                                <div *ngIf="ContactEmail.errors.email && !ContactEmail.errors.required">Invalid email.</div>
+                                                        </div>
+                                                </div> 
+                                        </div>
+                                </div><!--./row-->
+                                <div class="row">
+                                        <div class="col-md-6">
+                                                <div class="form-group form-default">
+                                                         <label class="float-label">First Name <span class="text-danger">*</span></label>
+                                                        <input type="text"  class="form-control" required="" formControlName='ContactFirstName'>
+                                                        
+                                                       
+                                                        <div *ngIf="ContactFirstName.invalid && (ContactFirstName.dirty || isSubmitted_contact)" id="ContactFirstName" class="text-danger">
+                                                                First Name is required.
+                                                        </div>
+                                                    </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                                <div class="form-group form-default">
+
+                                                        <label class="float-label">Last Name <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" required="" formControlName='ContactLastName'>
+                                                        
+                                                        
+                                                         <div *ngIf="ContactLastName.invalid && (ContactLastName.dirty || isSubmitted_contact)" id="ContactLastName" class="text-danger">
+                                                                Last Name is required.
+                                                        </div>
+                                                    </div>
+                                        </div>
+                                </div><!--./row-->
+                                <div class="row">
+                                        <div class="col-md-6">
+                                                <div class="form-group form-default">
+                                                         <label class="float-label">Phone</label>
+                                                        <input type="text" class="form-control"  formControlName='ContactPhone'>
+                                                        
+                                                       
+                                                        <div *ngIf="ContactPhone.invalid && (ContactPhone.dirty || isSubmitted_contact)" class="text-danger">
+                                                                <div *ngIf="ContactPhone.errors.pattern && !ContactPhone.errors.required">Invalid Phone.</div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                    </div><!--./row-->
+                                    <div class="row">
+                                            <div class="col-md-6">
+                                                    <div class="form-group form-default">
+                                                            <label class="float-label">Address 1</label>
+                                                            <textarea class="form-control" formControlName='ContactAddress1'></textarea>
+                                                            
+                                                            
+                                                            
+                                                    </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                    <div class="form-group form-default">
+                                                             <label class="float-label">Address 2</label>
+                                                            <textarea class="form-control" formControlName='ContactAddress2'></textarea>
+                                                            
+                                                           
+                                                    </div>
+                                            </div>
+                                    </div><!--./row-->
+                                    <div class="row">
+                                            <div class="col-md-6">
+                                                    <div class="form-group form-default">
+                                                            <label class="float-label">State</label>
+                                                            <select  class="form-control" formControlName='ContactStateId' (change)="getContactCities($event.target.value)">
+                                                                        <option>Select</option>
+                                                                       <option *ngFor="let state of ContactStatelist" value="{{state.StateId}}">{{state.State}}</option>
+                                                                        
+                                                            </select>
+                                                            
+                                                            
+                                                            
+                                                    </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                    <div class="form-group form-default">
+                                                            <label class="float-label">City</label>
+                                                            <select class="form-control" formControlName='ContactCityId'>
+                                                                        <option>Select</option>
+                                                                        <option *ngFor="let city of ContactCitylist" value="{{city.CityId}}">{{city.City}}</option>
+                                                            </select>
+                                                            
+                                                            
+                                                            
+                                                    </div>
+                                            </div>
+                                            
+                                    </div><!--./row-->
+                                    <div class="row">
+                                            <div class="col-md-6">
+                                                    <div class="form-group form-default">
+                                                            <label class="float-label">Zip</label>
+                                                            <input type="text" class="form-control" formControlName='ContactZip'>
+                                                            
+                                                            
+                                                            
+                                                    </div>
+                                            </div>
+                                    </div><!--./row-->
+                       
+                    <!--./-->
+                </div>
+    <div class="modal-footer">
+        <input type="hidden" class="form-control" id="ContactId"  formControlName='ContactId'> 
+        <button type="button" class="btn btn-default waves-effect " (click)="modalRef.hide()">Close</button>
+        <button type='submit' class='btn btn-primary waves-effect waves-light'>Save changes <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /></button>
+        
+
+    </div>
+     </form>
+    
+</ng-template>
+
+             
+                

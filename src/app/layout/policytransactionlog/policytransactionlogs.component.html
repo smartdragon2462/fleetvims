@@ -1,0 +1,827 @@
+ <div class="pcoded-content" [@routerTransition]>
+                        <!-- [ breadcrumb ] start -->
+                        <div class="page-header">
+                            <div class="page-block">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6">
+                                        <div class="page-header-title">
+                                            <h4 class="m-b-10">Policies</h4>
+                                        </div>
+                                        <ul class="breadcrumb">
+                                            <li class="breadcrumb-item">
+                                                <a [routerLink]="['/dashboard']">
+                                                    <i class="feather icon-home"></i>
+                                                </a>
+                                            </li>
+                                            <li class="breadcrumb-item" *ngIf="clientid>0">
+                                                <a [routerLink]="['/policies','client',clientid]">Policies</a>
+                                                
+                                            </li>
+                                              <li class="breadcrumb-item" *ngIf="clientid==0">
+                                                <a [routerLink]="['/policies']">Policies</a>
+                                                
+                                            </li>
+                                            <li class="breadcrumb-item">
+                                                <a href="javascript:void(0)">Policy Transaction Log</a>
+                                            </li>
+                                        </ul>
+                                        
+                                        
+                                         <p style="margin-top: 50px;background: #fff;padding: 5px;border-radius: 4px;margin-bottom: 0;" *ngIf="clientid">Client: <b> <a [routerLink]="['/policies','client',clientid]">{{ClientName}}</a></b>
+                                    <br></p>
+                                         <p style="margin-top: 50px;background: #fff;padding: 5px;border-radius: 4px;margin-bottom: 0;display:none">Policy Type: <b><a href="javascript:void(0)"></a></b><br></p>
+
+                                         <p style="margin-top: 50px;background: #fff;padding: 5px;border-radius: 4px;margin-bottom: 0;display: none">Policy: <b> <a href="javascript:void(0)"></a></b><br></p>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                             <p style="margin-top: 105px;background: #fff;padding: 5px;border-radius: 4px;margin-bottom: 0;">Policy: <b> {{policyName}}</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="pcoded-inner-content">
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <div class="page-body">
+                                        <!-- [ page content ] start -->
+                                        <div class="row">
+
+                                            <div class="alertbox">     
+                                                <div *ngFor="let alert of alerts">
+                                                        <alert [type]="alert.type" [dismissOnTimeout]="5000"><span [innerHtml]="alert.msg"></span></alert>
+                                                </div>
+                                            </div> 
+                                             
+
+                                            <!-- site Analytics card start -->
+                                            <div class="col-lg-12 col-md-12">
+                                                    <div class="card table-card latest-activity-card">
+                                                        <div class="card-header with-border">
+                                                            <h5 class="card-header-text">Policy::Transaction Log</h5>
+                                                            <div class="input-group" style="width: 200px;float: right;margin: 0;">
+
+                                                                <input type="text" class="form-control" placeholder="Search" title="" [(ngModel)]="search_value">
+                                                                <span class="input-group-prepend" id="name" style="margin: 0;cursor:pointer" (click)="onFilter(search_value)" >
+                                                                    <label class="input-group-text" style="background: white;color: #b2b2b2;"><i class="fa fa-search" style="cursor:pointer"></i></label>
+                                                                </span> 
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        <div class="card-block">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-borderless table-xs fleetvims-table" id="clients_table">
+                                                                    <thead>       
+                                                                        <tr style="background: #eee;">
+                                                                            <th>Transaction Date</th>
+                                                                            <th>A/C/D</th>
+                                                                           
+                                                                            <th>Details</th>
+                                                                            <th>Username</th>
+                                                                            <th>View</th>
+                                                                           
+                                                                            
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                         <tr *ngFor="let transaction of transactions">
+
+                                                                            <td>{{transaction.DateEntered*1000 | date:'MM-dd-yyyy, h:mm a'}}</td>
+                                                                            <td>{{transaction.ACDType}}</td>
+                                                                          
+                                                                            <td>{{transaction.Description}}</td>
+                                                                            <td>{{transaction.CreatedByName}}</td>
+                                                                            <td><a placement="top" tooltip="Transaction View" href="JavaScript:void(0)" (click)="openModalPolicyTransaction(transmodel,transaction.LogId)">
+                                                                    <i style="margin-right:0" class="fa fa-certificate"></i></a></td>
+
+                                                                            
+
+                                                                           
+                                                                     </tr>  
+
+                                                                
+
+                                                                        </tbody>
+                                                                </table>
+                                                            </div>
+
+                                                             <div class="text-center">
+
+                                                                <pagination [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" (pageChanged)="pageChanged($event)"  [maxSize]="5"></pagination>
+
+                                                            </div>
+
+                                                        </div>
+                                                           
+                                                    </div>
+                                                </div>
+
+                                            
+                                            
+                                        
+
+                                            
+    
+                                                
+                                                
+                                            <!-- site Analytics card end -->
+
+
+                                        </div>
+                                        <!-- [ page content ] end -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- [ breadcrumb ] end -->
+                        
+                    </div>
+
+        <ng-template #transmodel >
+
+            <div class="modal-header">
+                <h4 class="modal-title">View Transaction Log</h4>
+                <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                            
+            <div class="modal-body">
+                  <!---->
+                <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                                <div class="card">
+                                        <div class="card-header with-border">
+                                            <h5 class="card-header-text">Old Policy Details</h5>  
+                                        </div>
+                                 
+                                 <div class="card-block">
+                                        <div class="form-group form-default" >
+                                                                    <label class="float-label">Client </label>
+                                                                    
+                                                                  <span>{{OldPolicyTransaction.ClientName}} </span> 
+                                                                    
+                                                                   
+                                        </div>
+
+                                        <fieldset class="scheduler-border">
+                            <legend class="scheduler-border">Insurance Information</legend>  
+
+                            
+
+                             <div class="row">    
+                                <div class="col-md-6">    
+                                    <div class="form-group"  [ngClass]="(OldPolicyTransaction.EffectiveDate!=ChnagePolicyTransaction.EffectiveDate)?'yellow':''">
+
+                                         <h4 class="sub-title">Effective Date</h4>
+                                         <span>{{OldPolicyTransaction.EffectiveDate | date:'MM-dd-yyyy'}}</span>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">  
+                                    <div class="form-group" [ngClass]="(OldPolicyTransaction.ExpirationDate!=ChnagePolicyTransaction.ExpirationDate)?'yellow':''">
+                                        
+                                         <h4 class="sub-title">Expiration Date</h4>
+                                         <span>{{OldPolicyTransaction.ExpirationDate | date:'MM-dd-yyyy'}}</span>
+
+
+                                    </div>
+                                </div>
+                            </div> 
+                                   
+                         <div class="row">
+
+                            <div class="col-md-6">  
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.CoverageTypeText!=ChnagePolicyTransaction.CoverageTypeText)?'yellow':''">
+                                     <h4 class="sub-title">Coverage</h4>
+                                     <span>{{OldPolicyTransaction.CoverageTypeText}}</span>
+
+                                    
+                                    
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">    
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.InsurerName!=ChnagePolicyTransaction.InsurerName)?'yellow':''">
+
+                                     <h4 class="sub-title">Insurance Company</h4>
+                                     <span>{{OldPolicyTransaction.InsurerName}}</span>
+
+                                    
+                                </div>
+                            </div>
+
+
+                          
+                             
+                        </div>   
+
+
+                        <div class="row">      
+                             <div class="col-md-6">    
+                                <div class="form-group">
+                                     <h4 class="sub-title">Unit Coverage Type</h4>
+                                     <span></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">  
+
+                                    <div class="form-group" [ngClass]="(OldPolicyTransaction.UnitLimit!=ChnagePolicyTransaction.UnitLimit)?'yellow':''">
+                                         <h4 class="sub-title">Unit Limit</h4>
+                                         <span>{{OldPolicyTransaction.UnitLimit}}</span>
+                                         </div>
+
+                                
+                            </div>
+
+                            
+                        </div>
+
+                        <div class="row">
+
+                             <div class="col-md-6">    
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.DeductibleType!=ChnagePolicyTransaction.DeductibleType)?'yellow':''">
+
+                                    <h4 class="sub-title"> Deductible Type</h4>
+                                    <span>{{OldPolicyTransaction.DeductibleType}}</span>
+
+                                    
+                                     
+                                </div>
+                            </div>
+                            <div class="col-md-6">    
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.DeductibleType!=ChnagePolicyTransaction.DeductibleType)?'yellow':''">
+
+                                    <h4 class="sub-title">Deductible</h4>
+                                    <span>{{OldPolicyTransaction.DeductibleAmount}}</span>
+                                </div>
+                            </div>
+
+                        </div> 
+
+                        <div class="row">
+                            <div class="col-md-6" *ngIf="coveragetypeId!='1'">  
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.PolicyLimit!=ChnagePolicyTransaction.PolicyLimit)?'yellow':''">
+
+                                     <h4 class="sub-title">Policy Limit</h4>
+                                    <span>{{OldPolicyTransaction.PolicyLimit}}</span>
+
+                                
+
+                                </div>
+                            </div>
+                            
+
+                            <div class="col-md-6">    
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.Policy!=ChnagePolicyTransaction.Policy)?'yellow':''">
+
+                                      <h4 class="sub-title">Policy #</h4>
+                                    <span>{{OldPolicyTransaction.Policy}}</span>
+
+
+                                     
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                                    <div class="col-md-12" *ngIf="this.UserInfo.Module=='9' || this.UserInfo.Module=='1'">    
+                                        <div class="form-group" >
+                                            
+                                            
+                                             <h4 class="sub-title">Contract #</h4>
+                                             <span></span>
+                                            
+                                           
+                                        </div>
+                                    </div>
+                        </div> 
+
+                     </fieldset> 
+                      <fieldset class="scheduler-border">
+                            <legend class="scheduler-border">Billing Information</legend>      
+
+                          
+                       
+
+                            <div class="row">    
+                                
+                                <div class="col-md-6">  
+                                    <div class="form-group" [ngClass]="(OldPolicyTransaction.MonthlyRate!=ChnagePolicyTransaction.MonthlyRate)?'yellow':''">
+
+                                        <h4 class="sub-title">Monthly Rate</h4>
+                                        <span>{{OldPolicyTransaction.MonthlyRate}}</span>
+
+
+                                        
+
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">    
+                                    <div class="form-group" [ngClass]="(OldPolicyTransaction.AnnualRate!=ChnagePolicyTransaction.AnnualRate)?'yellow':''">
+                                        <h4 class="sub-title">Annual Rate</h4>
+                                        <span>{{OldPolicyTransaction.AnnualRate}}</span>
+
+                                    </div>
+                                </div>
+                        </div> 
+
+                        <div class="row">
+                            <div class="col-md-6">  
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.EstimatedPremium!=ChnagePolicyTransaction.EstimatedPremium)?'yellow':''">
+
+                                    <h4 class="sub-title">Estimated Premium</h4>
+                                    <span>{{OldPolicyTransaction.EstimatedPremium}}</span>
+
+
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-6">    
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.BillingType!=ChnagePolicyTransaction.BillingType)?'yellow':''">
+
+                                    <h4 class="sub-title">Billing Type</h4>
+                                    <span>{{OldPolicyTransaction.BillingType}}</span>
+
+                                </div>
+                            </div>
+                            
+                        </div>
+
+
+
+                            
+                         <div class="row"> 
+
+
+                            <div class="col-md-6">    
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.BillingCode!=ChnagePolicyTransaction.BillingCode)?'yellow':''">
+
+                                    <h4 class="sub-title">Billing Structure</h4>
+                                    <span>{{OldPolicyTransaction.BillingCode}}</span>
+
+                                    
+                                     
+                                </div>
+                            </div>
+
+                             <div class="col-md-6">    
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.ReportDay!=ChnagePolicyTransaction.ReportDay)?'yellow':''">
+
+                                    <h4 class="sub-title">Report Day</h4>
+                                    <span>{{OldPolicyTransaction.ReportDay}}</span>
+
+
+                                    
+                                     
+                                </div>
+                            </div>        
+
+                             
+                        </div>
+                        <div class="row">  
+                             <div class="col-md-6" *ngIf="billingCodeId=='6'"  [ngClass]="(OldPolicyTransaction.DepositPercentage!=ChnagePolicyTransaction.DepositPercentage)?'yellow':''">    
+                                <div class="form-group">
+                                     <h4 class="sub-title">Percentage</h4>
+                                    <span>{{OldPolicyTransaction.DepositPercentage}}</span>
+
+                                   
+                                    
+                                    
+                                </div>
+                            </div>   
+                            
+
+                            <div class="col-md-6" *ngIf="billingCodeId=='6'">    
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.Installments!=ChnagePolicyTransaction.Installments)?'yellow':''">
+                                     <h4 class="sub-title">No. of Installments</h4>
+                                    <span>{{OldPolicyTransaction.Installments}}</span>
+
+                                   
+                                    
+                                    
+                                </div>
+                            </div>
+                             <div class="col-md-12" *ngIf="billingCodeId=='5'">    
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.OtherValue!=ChnagePolicyTransaction.OtherValue)?'yellow':''">
+
+                                     <h4 class="sub-title">Enter Value</h4>
+                                    <span>{{OldPolicyTransaction.OtherValue}}</span>
+
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">    
+                            
+                             <div class="col-md-6">    
+                                <div class="form-group">
+
+                                    <h4 class="sub-title">Tax State</h4>
+                                    <span></span>
+
+                                    
+                                     
+                                </div>
+                            </div>
+                            <div class="col-md-6">    
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.TaxRate!=ChnagePolicyTransaction.TaxRate)?'yellow':''">
+
+                                     <h4 class="sub-title" > Tax Rate</h4>
+                                    <span>{{OldPolicyTransaction.TaxRate}}</span>
+
+                                    
+                                    
+                                   
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                    </fieldset>
+                        
+                        
+                     <fieldset class="scheduler-border">
+                            <legend class="scheduler-border">Additional Information</legend>      
+                        
+                        <div class="row">
+    
+                           
+                            <div class="col-md-6">    
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.Description!=ChnagePolicyTransaction.Description)?'yellow':''">
+
+                                    <h4 class="sub-title">Comments</h4>
+                                    <span>{{OldPolicyTransaction.Description}}</span>
+
+                                    
+                                   
+
+                                </div>
+                            </div>    
+                            <div class="col-md-6">    
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.Status!=ChnagePolicyTransaction.Status)?'yellow':''">
+                                     <h4 class="sub-title">Status</h4>
+                                    <span>{{OldPolicyTransaction.Status}}</span>  
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                    </fieldset>
+
+                           
+                                 </div> 
+                                  
+                         </div>    
+                      </div> 
+                        <div class="col-lg-6 col-md-6">
+                            <div class="card">
+                                        <div class="card-header with-border">
+                                            <h5 class="card-header-text">Change Policy Details </h5>  
+                                        </div>
+                                 
+                                 <div class="card-block">
+                                        <div class="form-group form-default" class="form-group form-default" class="form-group form-default" [ngClass]="(ChnagePolicyTransaction.ClientName!=OldPolicyTransaction.ClientName)?'yellow':''">
+                                                                    <label class="float-label">Client </label>
+                                                                    
+                                                                  <span>{{ChnagePolicyTransaction.ClientName}} </span> 
+                                                                    
+                                                                   
+                                        </div>
+                                              <fieldset class="scheduler-border">
+                            <legend class="scheduler-border">Insurance Information</legend>  
+
+                            
+
+                             <div class="row">    
+                                <div class="col-md-6">    
+                                    <div class="form-group"  [ngClass]="(OldPolicyTransaction.EffectiveDate!=ChnagePolicyTransaction.EffectiveDate)?'yellow':''">
+
+                                         <h4 class="sub-title">Effective Date</h4>
+                                         <span>{{ChnagePolicyTransaction.EffectiveDate | date:'MM-dd-yyyy'}}</span>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">  
+                                    <div class="form-group" [ngClass]="(OldPolicyTransaction.ExpirationDate!=ChnagePolicyTransaction.ExpirationDate)?'yellow':''">
+                                        
+                                         <h4 class="sub-title">Expiration Date</h4>
+                                         <span>{{ChnagePolicyTransaction.ExpirationDate | date:'MM-dd-yyyy'}}</span>
+
+
+                                    </div>
+                                </div>
+                            </div> 
+                                   
+                         <div class="row">
+
+                            <div class="col-md-6">  
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.CoverageTypeText!=ChnagePolicyTransaction.CoverageTypeText)?'yellow':''">
+                                     <h4 class="sub-title">Coverage</h4>
+                                     <span>{{ChnagePolicyTransaction.CoverageTypeText}}</span>
+
+                                    
+                                    
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">    
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.InsurerName!=ChnagePolicyTransaction.InsurerName)?'yellow':''">
+
+                                     <h4 class="sub-title">Insurance Company</h4>
+                                     <span>{{ChnagePolicyTransaction.InsurerName}}</span>
+
+                                    
+                                </div>
+                            </div>
+
+
+                          
+                             
+                        </div>   
+
+
+                        <div class="row">      
+                             <div class="col-md-6">    
+                                <div class="form-group">
+                                     <h4 class="sub-title">Unit Coverage Type</h4>
+                                     <span></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">  
+
+                                    <div class="form-group" [ngClass]="(OldPolicyTransaction.UnitLimit!=ChnagePolicyTransaction.UnitLimit)?'yellow':''">
+                                         <h4 class="sub-title">Unit Limit</h4>
+                                         <span>{{ChnagePolicyTransaction.UnitLimit}}</span>
+                                         </div>
+
+                                
+                            </div>
+
+                            
+                        </div>
+
+                        <div class="row">
+
+                             <div class="col-md-6">    
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.DeductibleType!=ChnagePolicyTransaction.DeductibleType)?'yellow':''">
+
+                                    <h4 class="sub-title"> Deductible Type</h4>
+                                    <span>{{ChnagePolicyTransaction.DeductibleType}}</span>
+
+                                    
+                                     
+                                </div>
+                            </div>
+                            <div class="col-md-6">    
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.DeductibleType!=ChnagePolicyTransaction.DeductibleType)?'yellow':''">
+
+                                    <h4 class="sub-title">Deductible</h4>
+                                    <span>{{ChnagePolicyTransaction.DeductibleAmount}}</span>
+                                </div>
+                            </div>
+
+                        </div> 
+
+                        <div class="row">
+                            <div class="col-md-6" *ngIf="coveragetypeId!='1'">  
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.PolicyLimit!=ChnagePolicyTransaction.PolicyLimit)?'yellow':''">
+
+                                     <h4 class="sub-title">Policy Limit</h4>
+                                    <span>{{ChnagePolicyTransaction.PolicyLimit}}</span>
+
+                                
+
+                                </div>
+                            </div>
+                            
+
+                            <div class="col-md-6">    
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.Policy!=ChnagePolicyTransaction.Policy)?'yellow':''">
+
+                                      <h4 class="sub-title">Policy #</h4>
+                                    <span>{{ChnagePolicyTransaction.Policy}}</span>
+
+
+                                     
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                                    <div class="col-md-12" *ngIf="this.UserInfo.Module=='9' || this.UserInfo.Module=='1'">    
+                                        <div class="form-group" >
+                                            
+                                            
+                                             <h4 class="sub-title">Contract #</h4>
+                                             <span></span>
+                                            
+                                           
+                                        </div>
+                                    </div>
+                        </div> 
+
+                     </fieldset> 
+                      <fieldset class="scheduler-border">
+                            <legend class="scheduler-border">Billing Information</legend>      
+
+                          
+                       
+
+                            <div class="row">    
+                                
+                                <div class="col-md-6">  
+                                    <div class="form-group" [ngClass]="(OldPolicyTransaction.MonthlyRate!=ChnagePolicyTransaction.MonthlyRate)?'yellow':''">
+
+                                        <h4 class="sub-title">Monthly Rate</h4>
+                                        <span>{{ChnagePolicyTransaction.MonthlyRate}}</span>
+
+
+                                        
+
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">    
+                                    <div class="form-group" [ngClass]="(OldPolicyTransaction.AnnualRate!=ChnagePolicyTransaction.AnnualRate)?'yellow':''">
+                                        <h4 class="sub-title">Annual Rate</h4>
+                                        <span>{{ChnagePolicyTransaction.AnnualRate}}</span>
+
+                                    </div>
+                                </div>
+                        </div> 
+
+                        <div class="row">
+                            <div class="col-md-6">  
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.EstimatedPremium!=ChnagePolicyTransaction.EstimatedPremium)?'yellow':''">
+
+                                    <h4 class="sub-title">Estimated Premium</h4>
+                                    <span>{{ChnagePolicyTransaction.EstimatedPremium}}</span>
+
+
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-6">    
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.BillingType!=ChnagePolicyTransaction.BillingType)?'yellow':''">
+
+                                    <h4 class="sub-title">Billing Type</h4>
+                                    <span>{{ChnagePolicyTransaction.BillingType}}</span>
+
+                                </div>
+                            </div>
+                            
+                        </div>
+
+
+
+                            
+                         <div class="row"> 
+
+
+                            <div class="col-md-6">    
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.BillingCode!=ChnagePolicyTransaction.BillingCode)?'yellow':''">
+
+                                    <h4 class="sub-title">Billing Structure</h4>
+                                    <span>{{ChnagePolicyTransaction.BillingCode}}</span>
+
+                                    
+                                     
+                                </div>
+                            </div>
+
+                             <div class="col-md-6">    
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.ReportDay!=ChnagePolicyTransaction.ReportDay)?'yellow':''">
+
+                                    <h4 class="sub-title">Report Day</h4>
+                                    <span>{{ChnagePolicyTransaction.ReportDay}}</span>
+
+
+                                    
+                                     
+                                </div>
+                            </div>        
+
+                             
+                        </div>
+                        <div class="row">  
+                             <div class="col-md-6" *ngIf="billingCodeId=='6'"  [ngClass]="(OldPolicyTransaction.DepositPercentage!=ChnagePolicyTransaction.DepositPercentage)?'yellow':''">    
+                                <div class="form-group">
+                                     <h4 class="sub-title">Percentage</h4>
+                                    <span>{{ChnagePolicyTransaction.DepositPercentage}}</span>
+
+                                   
+                                    
+                                    
+                                </div>
+                            </div>   
+                            
+
+                            <div class="col-md-6" *ngIf="billingCodeId=='6'">    
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.Installments!=ChnagePolicyTransaction.Installments)?'yellow':''">
+                                     <h4 class="sub-title">No. of Installments</h4>
+                                    <span>{{ChnagePolicyTransaction.Installments}}</span>
+
+                                   
+                                    
+                                    
+                                </div>
+                            </div>
+                             <div class="col-md-12" *ngIf="billingCodeId=='5'">    
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.OtherValue!=ChnagePolicyTransaction.OtherValue)?'yellow':''">
+
+                                     <h4 class="sub-title">Enter Value</h4>
+                                    <span>{{ChnagePolicyTransaction.OtherValue}}</span>
+
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">    
+                            
+                             <div class="col-md-6">    
+                                <div class="form-group">
+
+                                    <h4 class="sub-title">Tax State</h4>
+                                    <span></span>
+
+                                    
+                                     
+                                </div>
+                            </div>
+                            <div class="col-md-6">    
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.TaxRate!=ChnagePolicyTransaction.TaxRate)?'yellow':''">
+
+                                     <h4 class="sub-title" > Tax Rate</h4>
+                                    <span>{{ChnagePolicyTransaction.TaxRate}}</span>
+
+                                    
+                                    
+                                   
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                    </fieldset>
+                        
+                        
+                     <fieldset class="scheduler-border">
+                            <legend class="scheduler-border">Additional Information</legend>      
+                        
+                        <div class="row">
+    
+                           
+                            <div class="col-md-6">    
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.Description!=ChnagePolicyTransaction.Description)?'yellow':''">
+
+                                    <h4 class="sub-title">Comments</h4>
+                                    <span>{{ChnagePolicyTransaction.Description}}</span>
+
+                                    
+                                   
+
+                                </div>
+                            </div>    
+                            <div class="col-md-6">    
+                                <div class="form-group" [ngClass]="(OldPolicyTransaction.Status!=ChnagePolicyTransaction.Status)?'yellow':''">
+                                     <h4 class="sub-title">Status</h4>
+                                    <span>{{ChnagePolicyTransaction.Status}}</span>  
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                    </fieldset>
+                                         
+                                 </div> 
+                                  
+                         </div>     
+                      </div>                       
+                </div>
+            </div> 
+            <div class="modal-footer">
+              
+                <button type="button" class="btn btn-default waves-effect " (click)="modalRef.hide()">Close</button>
+                
+
+            </div>
+         
+        </ng-template>            
+
+             
+                

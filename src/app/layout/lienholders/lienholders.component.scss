@@ -1,0 +1,75 @@
+.pcoded-inner-content {
+    margin-top: -50px;
+    background-color:#ecf0f5
+}
+.dataTables_filter{
+  float:right 
+}
+
+.pagination{
+    margin: auto;
+    width: 198px;
+}
+
+
+.latest-activity-card .card-block {
+    padding-top: 0;
+}
+
+.table-card .card-block {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+}
+.table-card .card-block .table tr td:first-child, .table-card .card-block .table tr th:first-child {
+    padding-left: 20px;
+}
+.table.table-xs td, .table.table-xs th {
+    padding: .3rem;
+    font-size: .8rem;
+
+}
+.fleetvims-table tr{
+    border-bottom: 1px solid #eee;
+}
+.fleetvims-table tr th{
+    vertical-align: baseline;
+}
+
+.input-group-text {
+   /* padding: 0 .75rem;*/
+}
+.form-control {
+    /*padding: 0 .75rem !important;*/
+    font-size: .7375rem !important;
+}
+select.form-control:not([size]):not([multiple]) {
+    border:1px solid #cccccc !important;
+}
+.card-header.with-border {
+    padding: 10px 20px;
+}
+button.btn-sm {
+    padding: 4px 14px;
+}
+table.table.table-borderless.table-xs.fleetvims-table .btn {
+    line-height: 1;
+    width: auto;
+    height: auto;
+    margin-right: 2px;
+}
+.alertbox {
+    position: fixed !important;
+    bottom: 0px;
+    right: 0px;
+    z-index: 1;
+}
+.table-responsive{
+    min-height: 350px;
+}
+
+.modal-body label{
+    font-size: .7375rem !important;
+}
+
+

@@ -1,0 +1,127 @@
+<nav class="pcoded-navbar" navbar-theme="themelight1" active-item-theme="theme1" sub-item-theme="theme2" active-item-style="style1" pcoded-navbar-position="absolute" [ngClass]="{sidebarPushRight: isActive}">
+        <div class="pcoded-inner-navbar " style="background: #EEE">
+            <ul class="pcoded-item pcoded-left-item" item-border="true" item-border-style="none" subitem-border="true">
+                    <li [routerLinkActive]="['active']">
+                                    <a [routerLink]="['/dashboard']" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon">
+                                        <i class="feather icon-home"></i>
+                                    </span>
+                                    <span class="pcoded-mtext">Home</span>
+                                    </a>
+                    </li>
+                               
+                    <li [routerLinkActive]="['active']" *ngIf="RolesService.roleMatch('Client',['DeleteAccess','ViewAccess','AddEditAccess'])">
+                        <a [routerLink]="['/clients']" class="waves-effect waves-dark">
+                        <span class="pcoded-micon">
+                            <i class="feather icon-users"></i>
+                        </span>
+                        <span class="pcoded-mtext">Clients</span>
+                        </a>
+                    </li>
+                    <li [routerLinkActive]="['active']" *ngIf="RolesService.roleMatch('Policy',['DeleteAccess','ViewAccess','AddEditAccess'])">
+                        <a [routerLink]="['/policies']" class="waves-effect waves-dark">
+                        <span class="pcoded-micon">
+                            <i class="feather icon-file-text"></i>
+                        </span>
+                        <span class="pcoded-mtext">Policies</span>
+                        </a>
+                    </li>        
+                    <li [routerLinkActive]="['active']" *ngIf="RolesService.roleMatch('Vehicle',['DeleteAccess','ViewAccess','AddEditAccess'])">
+                        <a [routerLink]="['/vehicles']" class="waves-effect waves-dark">
+                        <span class="pcoded-micon">
+                            <i class="fa fa-truck"></i>
+                        </span>
+                        <span class="pcoded-mtext">Vehicles</span>
+                        </a>
+                    </li>
+                    <li [routerLinkActive]="['active']" *ngIf="RolesService.roleMatch('Insurer',['DeleteAccess','ViewAccess','AddEditAccess'])">
+                        <a [routerLink]="['/insurers']" class="waves-effect waves-dark">
+                        <span class="pcoded-micon">
+                            <i class="feather icon-users"></i>
+                        </span>
+                        <span class="pcoded-mtext">Insurers</span>
+                        </a>
+                    </li>
+
+                    <li [routerLinkActive]="['active']" *ngIf="UserInfo.Module=='9' || UserInfo.Module=='1'">
+                        <a [routerLink]="['/contracts']" class="waves-effect waves-dark">
+                        <span class="pcoded-micon">
+                            <i class="fa fa-wpforms"></i>
+                        </span>
+                        <span class="pcoded-mtext">Contracts</span>
+                        </a>
+                    </li>
+
+                    <li [routerLinkActive]="['active']" *ngIf="RolesService.roleMatch('Lienholder',['DeleteAccess','ViewAccess','AddEditAccess'])">
+                        <a [routerLink]="['/lienholders']" class="waves-effect waves-dark">
+                        <span class="pcoded-micon">
+                            <i class="feather icon-users"></i>
+                        </span>
+                        <span class="pcoded-mtext">Lienholders</span>
+                        </a>
+                    </li>
+
+                    <li class="" *ngIf="RolesService.roleMatch('Claim',['DeleteAccess','ViewAccess','AddEditAccess'])">
+                        <a href="#" class="waves-effect waves-dark">
+                        <span class="pcoded-micon">
+                            <i class="feather icon-menu"></i>
+                        </span>
+                        <span class="pcoded-mtext">Claims</span>
+                        </a>
+                    </li>
+                    
+                    <li [routerLinkActive]="['active']" *ngIf="RolesService.roleMatch('User Management',['DeleteAccess','ViewAccess','AddEditAccess'])" style="display: none">
+                        <a [routerLink]="['/users']" class="waves-effect waves-dark">
+                        <span class="pcoded-micon">
+                            <i class="feather icon-users"></i>
+                        </span>
+                        <span class="pcoded-mtext">Users</span>
+                        </a>
+                    </li>
+                    <li [routerLinkActive]="['active']" *ngIf="RolesService.roleMatch('Agency',['DeleteAccess','ViewAccess','AddEditAccess'])">
+                        <a [routerLink]="['/agencies']" class="waves-effect waves-dark">
+                        <span class="pcoded-micon">
+                            <i class="feather icon-users"></i>
+                        </span>
+                        <span class="pcoded-mtext">Agencies</span>
+                        </a>
+                    </li>
+
+                     <li (mouseleave)="fireClickLeave($event)" *ngIf="RolesService.roleMatch('User Management',['DeleteAccess','ViewAccess','AddEditAccess'])" class="pcoded-hasmenu is-hover"  subitem-icon="style1" dropdown-icon="style1" [ngClass]="menushow" (mouseover)="showHideMenu($event)" (mouseout)="showHideMenu($event)">
+
+                   
+                        <a [routerLinkActive]="['active']" href="javascript:;" appAccordionToggle>
+                        <span class="pcoded-micon">
+                            <i class="feather icon-users"></i>
+                        </span>
+                        <span class="pcoded-mtext">Settings</span>
+                        <span class="pcoded-mcaret"></span>
+                        </a>
+
+                        <ul class="pcoded-submenu">
+
+                            <li>
+                                <a [routerLink]="['/roles']" class="waves-effect waves-dark">
+                        <span class="pcoded-micon">
+                            <i class="feather icon-menu"></i>
+                        </span>
+                        <span class="pcoded-mtext">Roles</span>
+                        </a>
+                              </li>
+
+                              <li>
+                                  <a [routerLink]="['/masters']" class="waves-effect waves-dark">
+                        <span class="pcoded-micon">
+                            <i class="feather icon-users"></i>
+                        </span>
+                        <span class="pcoded-mtext">Masters</span>
+                        </a>
+                              </li>  
+                         </ul>   
+                    </li>
+                                
+                         
+            </ul>
+        </div>    
+</nav>
+       

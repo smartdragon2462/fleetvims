@@ -1,0 +1,320 @@
+ <div class="pcoded-content" [@routerTransition]>
+                        <!-- [ breadcrumb ] start -->
+                        <div class="page-header">
+                            <div class="page-block">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8">
+                                        <div class="page-header-title">
+                                            <h4 class="m-b-10">Lienholders</h4>
+                                        </div>
+                                        <ul class="breadcrumb">
+                                            <li class="breadcrumb-item">
+                                                <a [routerLink]="['/dashboard']">
+                                                    <i class="feather icon-home"></i>
+                                                </a>
+                                            </li>
+                                            <li class="breadcrumb-item">
+                                                <a href="JavaScript:void(0)">Lienholders</a>
+                                                
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="pcoded-inner-content">
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <div class="page-body">
+                                        <!-- [ page content ] start -->
+                                        <div class="row">
+
+
+                                              
+                                            <div class="alertbox">     
+                                                <div *ngFor="let alert of alerts">
+                                                        <alert [type]="alert.type" [dismissOnTimeout]="5000"><span [innerHtml]="alert.msg"></span></alert>
+                                                </div>
+                                            </div> 
+                                            <!-- site Analytics card start -->
+                                            <div class="col-lg-12 col-md-12">
+                                                    <div class="card table-card latest-activity-card">
+                                                        <div class="card-header with-border">
+                                                            <h5 class="card-header-text">Lienholders</h5>
+
+                                                            <button data-toggle="modal" data-target="#large-Modal" type="button" class="btn btn-sm btn-success waves-effect waves-light f-right" (click)="openModal(content,0)" *ngIf="RolesService.roleMatch('Lienholder',['AddEditAccess'])">
+                                                                    <i class="fa fa-plus" style="margin: 0;"></i> Add
+                                                            </button> 
+                                                            <div class="input-group" style="width: 200px;float: right;margin: 0;">
+
+                                                                    <input type="text" class="form-control" placeholder="Search" title="" [(ngModel)]="search_value">
+                                                                    <span class="input-group-prepend" id="name" style="margin: 0;cursor:pointer" (click)="onFilter(search_value)" >
+                                                                        <label class="input-group-text" style="background: white;color: #b2b2b2;"><i class="fa fa-search" style="cursor:pointer"></i></label>
+                                                                    </span> 
+                                                            </div>
+                                                            <div class="input-group" style="width: 207px;float: right;margin: 0 15px 0 0;">
+                                                                    <span class="input-group-prepend" id="name" style="margin: 0;">
+                                                                    <label class="input-group-text" style="background: white;color: #b2b2b2;">show</label>
+                                                                    </span>
+                                                                    <select style="border: 1px solid #ccc;" aria-controls="basic-col-reorder" class="form-control" (change)="statusFilter($event.target.value)">
+                                                                        <option value="1">Active</option>
+                                                                        <option value="0">Not Active</option>
+                                                                    </select>  
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-block">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-borderless table-xs fleetvims-table" id="lienholders_table">
+                                                                    <thead>       
+                                                                        <tr style="background: #eee;">
+                                                                            <th><a href="javascript:void(0)" (click)="Sorting(0)">ID</a></th>
+                                                                            <th><a href="javascript:void(0)" (click)="Sorting(1)">Name</a></th>
+                                                                            <th><a href="javascript:void(0)" (click)="Sorting(2)">Phone</a></th>
+                                                                            <th><a href="javascript:void(0)" (click)="Sorting(3)">Address1</a></th>
+                                                                            <th><a href="javascript:void(0)" (click)="Sorting(4)">Address2</a></th>
+                                                                            <th><a href="javascript:void(0)" (click)="Sorting(5)">State</a></th>
+                                                                            <th><a href="javascript:void(0)" (click)="Sorting(6)">City</a></th>
+                                                                            <th><a href="javascript:void(0)" (click)="Sorting(7)">Zipcode</a></th>
+                                                                            <th>Option</th>
+                                                                         </tr>   
+                                                                        </thead>
+                                                                        <tbody>
+                                                                    <tr *ngFor="let lienholder of lienholders">
+                                                                        <td>{{lienholder.LeinholderId}}</td>
+                                                                        <td>{{lienholder.LeinholderName}}</td>
+                                                                        <td>{{lienholder.Phone}}</td>
+                                                                        <td>{{lienholder.Address1}}</td>
+                                                                        <td>{{lienholder.Address2}}</td>
+                                                                        <td>{{lienholder.State}}</td>
+                                                                        <td>{{lienholder.City}}</td>
+                                                                        <td> {{lienholder.Zip}}</td>
+<!--                                                                         
+                                                                        <td ><a *ngIf="!isDeleted && RolesService.roleMatch('Lienholder',['AddEditAccess']) ? UserInfo.Module != 1 ? 
+                                                                            UserInfo.ModuleId ==  lienholder.AgencyId ? true : false : true : false"  [routerLink]="['/lienholder/edit/', lienholder.LeinholderId]" class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon" tooltip="Edit" placement="top">
+                                                                        -->
+                                                                        <td ><a *ngIf="!isDeleted && RolesService.roleMatch('Lienholder',['AddEditAccess'])"  [routerLink]="['/lienholder/edit/', lienholder.LeinholderId]" class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon" tooltip="Edit" placement="top">
+                                                                       
+                                                                       
+                                                                            <!-- <td ><a *ngIf="!isDeleted && UserInfo.Module == 1 ?  true : lienholder.AgencyId ? true : false"  [routerLink]="['/lienholder/edit/', lienholder.LeinholderId]" class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon" tooltip="Edit" placement="top">
+                                                                            -->
+                                                                       
+                                                                            <i style="margin-right:0" class="fa fa-edit"></i>
+                                                                            </a>
+
+                                                                            <!-- <a *ngIf="!isDeleted &&  RolesService.roleMatch('Lienholder',['DeleteAccess']) ? UserInfo.ModuleId != 1 ? 
+                                                                            UserInfo.ModuleId ==  lienholder.AgencyId ? true : false : true : false"   href="javascript:void(0)" (click)="onDelete(lienholder.LeinholderId)" class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon" tooltip="Delete" placement="top" > -->
+
+                                                                             <a *ngIf="!isDeleted &&  UserInfo.Module == 1 ?  true : lienholder.AgencyId ? true : false"  href="javascript:void(0)" (click)="onDelete(lienholder.LeinholderId)" class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon" tooltip="Delete" placement="top" >
+                                                                                <!-- <a *ngIf="!isDeleted &&  UserInfo.Module == 1"  href="javascript:void(0)" (click)="onDelete(lienholder.LeinholderId)" class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon" tooltip="Delete" placement="top" >
+                                                                            -->
+                                                                            <i style="margin-right:0" class="fa fa-remove"></i>
+                                                                            </a>
+
+                                                                            <a *ngIf="RolesService.roleMatch('Lienholder',['DeleteAccess']) && isDeleted" href="javascript:void(0)" (click)="onRestore(lienholder.LeinholderId)" class="btn waves-effect waves-dark btn-warning btn-outline-warning btn-icon" tooltip="Restore" placement="top">
+                                                                                 <i style="margin-right:0" class="fa fa-undo"></i>
+                                                                            </a>
+
+
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr *ngIf="! lienholders?.length">
+                                                                           <td colspan="9">  No data found...</td>
+                                                                    </tr>
+
+                                                                        </tbody>
+                                                                </table>
+                                                            </div>
+
+                                                            <div class="card-footer no-border">
+                                                               
+                                                                   <div class="row">
+                                                                     <div class="col-md-11"> 
+                                                                        
+                                                                
+                                                                <pagination [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" (pageChanged)="pageChanged($event)"  [maxSize]="5"></pagination>
+
+                                                                        </div> 
+                                                                        <div class="col-md-1" style="float:right;">
+                                                                               <select (change)="itemsPerPageChange($event.target.value)">
+                                                                                        <option value="10" [selected]="itemsPerPage==10">10</option>
+                                                                                        <option value="25" [selected]="itemsPerPage==25">25</option>
+                                                                                        <option value="100" [selected]="itemsPerPage==100">100</option>
+                                                                                        <option [value]="totalItems">ALL</option>
+                                                                                </select>
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
+                                                             
+                                                        </div>
+                                                           
+                                                    </div>
+                                                </div>
+
+                                            
+                                            
+                                        
+
+                                            
+    
+                                                
+                                                
+                                            <!-- site Analytics card end -->
+
+
+                                        </div>
+                                        <!-- [ page content ] end -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- [ breadcrumb ] end -->
+                        
+                    </div>
+
+<ng-template #content >
+
+    <div class="modal-header">
+        <h4 class="modal-title">Lienholders - {{title}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+     <form class="" [formGroup]='register'  (ngSubmit) = 'onLienholdersSave()' novalidate>
+                            
+    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">    
+                                <div class="form-group">
+                                    <label class="form-control-label"> Name <span class="text-danger">*</span></label>
+                                    <input type="text"  class="form-control input-md "  formControlName='LeinholderName' required="">
+
+                                    <div *ngIf="LeinholderName.invalid && (LeinholderName.dirty || isSubmitted)" id="LeinholderName" class="text-danger">
+                                                Name is required.
+                                    </div> 
+                                </div>
+                            </div>
+                            <div class="col-md-6">  
+                                <div class="form-group">
+                                     <label class="form-control-label">Phone</label>
+                                    <input type="text" class="form-control input-md" formControlName='Phone'>
+                                   
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">   
+
+                                <div class="form-group">
+                                    <label class="form-control-label">Address1</label>
+                                    <input type="text"  class="form-control input-md" formControlName='Address1'>
+                                  
+                                </div>
+                            </div>
+                            <div class="col-md-6"> 
+
+                                <div class="form-group">
+                                    <label class="form-control-label">Address2</label>
+                                    <input type="text"  class="form-control input-md" formControlName='Address2'>
+                                   
+                                </div>
+                            </div>
+                        </div> 
+
+                        <div class="row">
+                            <div class="col-md-6"> 
+                                <div class="form-group">
+                                    <label class="form-control-label">State</label>
+                                    <select id="StateId" class="form-control" formControlName='StateId' (change)="getCities($event.target.value)">
+                                             <option value="">Select</option>
+                                            <option *ngFor="let state of Statelist" value="{{state.StateId}}">{{state.State}}</option>
+                                            
+                                    </select>
+                                    
+                                </div>
+                             </div>
+                             <div class="col-md-6">    <input id="AddedCity" type="checkbox" formControlName='IsAddedCity' (click)="checkNew()">
+                                <label for="AddedCity">
+                                    Add City Not Listed
+                                </label>
+                                <div class="form-group" *ngIf="AddedCityView==false">
+                                     <!-- <label class="form-control-label">City</label> -->
+                                    <select  class="form-control" formControlName='CityId' [(ngModel)]="CityName"> 
+                                            <option value="">Select</option>
+                                            <option *ngFor="let city of Citylist" value="{{city.CityId}}">{{city.City}}</option>
+                                            <option value="-1" *ngIf="Citylist?.length">Other</option>
+                                    </select>
+                                    <!-- <label class="form-control-label" *ngIf="CityName==-1">City Name</label>
+                                    <input type="text"  class="form-control input-md" formControlName='otherCity' *ngIf="CityName==-1"> -->
+
+
+
+                                </div>
+
+
+                                <div class="form-group" *ngIf="AddedCityView==true">                                    
+                                    <!-- <label class="form-control-label" >City Name</label>  -->
+                                    <input type="text"  class="form-control input-md" formControlName='otherCity'>
+                                </div>
+                            </div>                            
+                        </div>    
+                        
+                        <!----------check------------>
+
+
+<!-- 
+                        <div class="row">
+                            <div class="col-md-6"> 
+                                <div class="form-group">
+                                  <input id="AddedCity" type="checkbox" formControlName='IsAddedCity' (click)="checkNew()">
+                                                <label for="AddedCity">
+                                                    Add City Not Listed
+                                                </label>
+
+                                </div>
+                             </div>
+                             <div class="col-md-6" *ngIf="AddedCityView==true">  
+                                <div class="form-group">                                    
+                                    <label class="form-control-label" >City Name</label>
+                                    <input type="text"  class="form-control input-md" formControlName='otherCity'>
+                                </div>
+                            </div>                             
+                        </div>     -->
+                        
+
+<!--------------------------->
+
+                        <div class="row">
+                            
+                            <div class="col-md-6"> 
+
+                                <div class="form-group">
+                                     <label class="form-control-label">Zip </label>
+                                    <input type="text"  class="form-control input-md" formControlName='Zip'>
+                                   
+                                </div>
+                            </div>
+
+                           
+                                    
+
+                        </div>
+
+                            
+        
+    </div>
+    <div class="modal-footer">
+        <input type="hidden" class="form-control" id="LienholderId"  formControlName='LeinholderId'>    
+        <button type="button" class="btn btn-default waves-effect " (click)="modalRef.hide()">Close</button>
+        <button type='submit' class='btn btn-primary waves-effect waves-light'>Save changes <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /></button>
+        
+
+    </div>
+    </form>
+</ng-template>
+
+             
+                

@@ -1,0 +1,386 @@
+ <div class="pcoded-content" [@routerTransition]>
+                        <!-- [ breadcrumb ] start -->
+                        <div class="page-header">
+                            <div class="page-block">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6">
+                                        <div class="page-header-title">
+                                            <h4 class="m-b-10">Clients</h4>
+                                        </div>
+                                        <ul class="breadcrumb">
+                                            <li class="breadcrumb-item">
+                                                <a [routerLink]="['/dashboard']">
+                                                    <i class="feather icon-home"></i>
+                                                </a>
+                                            </li>
+                                                
+                                              <li class="breadcrumb-item" *ngIf="clientid==0">
+                                                <a [routerLink]="['/clients']">Clients</a>
+                                                
+                                            </li>
+                                            <li class="breadcrumb-item">
+                                                <a href="javascript:void(0)">Client Transaction Log</a>
+                                            </li>
+                                        </ul>
+                                        
+                                         
+                                         <p style="margin-top: 50px;background: #fff;padding: 5px;border-radius: 4px;margin-bottom: 0;" >Client: <b> {{ClientName}}</b>
+                                    <br></p>
+                                       
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="pcoded-inner-content">
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <div class="page-body">
+                                        <!-- [ page content ] start -->
+                                        <div class="row">
+
+                                            <div class="alertbox">     
+                                                <div *ngFor="let alert of alerts">
+                                                        <alert [type]="alert.type" [dismissOnTimeout]="5000"><span [innerHtml]="alert.msg"></span></alert>
+                                                </div>
+                                            </div> 
+                                             
+
+                                            <!-- site Analytics card start -->
+                                            <div class="col-lg-12 col-md-12">
+                                                    <div class="card table-card latest-activity-card">
+                                                        <div class="card-header with-border">
+                                                            <h5 class="card-header-text">Client::Transaction Log</h5>
+                                                            <div class="input-group" style="width: 200px;float: right;margin: 0;">
+
+                                                                <input type="text" class="form-control" placeholder="Search" title="" [(ngModel)]="search_value">
+                                                                <span class="input-group-prepend" id="name" style="margin: 0;cursor:pointer" (click)="onFilter(search_value)" >
+                                                                    <label class="input-group-text" style="background: white;color: #b2b2b2;"><i class="fa fa-search" style="cursor:pointer"></i></label>
+                                                                </span> 
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        <div class="card-block">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-borderless table-xs fleetvims-table" id="clients_table">
+                                                                    <thead>       
+                                                                        <tr style="background: #eee;">
+                                                                            <th>Transaction Date</th>
+                                                                            <th>A/C/D</th>
+                                                                           
+                                                                            <th>Details</th>
+                                                                            <th>Username</th>
+                                                                            <th>View</th>
+                                                                           
+                                                                            
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                         <tr *ngFor="let transaction of transactions">
+
+                                                                            <td>{{transaction.DateEntered*1000 | date:'MM-dd-yyyy, h:mm a'}}</td>
+                                                                            <td>{{transaction.ACDType}}</td>
+                                                                            
+                                                                            <td>{{transaction.Description}}</td>
+                                                                            <td>{{transaction.CreatedByName}}</td>
+                                                                            <td><a placement="top" tooltip="Transaction View" href="JavaScript:void(0)" (click)="openModalClientTransaction(transmodel,transaction.LogId)">
+                                                                    <i style="margin-right:0" class="fa fa-certificate"></i></a></td>
+
+                                                                           
+
+                                                                           
+                                                                     </tr>  
+
+                                                                
+
+                                                                        </tbody>
+                                                                </table>
+                                                            </div>
+
+                                                             <div class="text-center">
+
+                                                                <pagination [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" (pageChanged)="pageChanged($event)"  [maxSize]="5"></pagination>
+
+                                                            </div>
+
+                                                        </div>
+                                                           
+                                                    </div>
+                                                </div>
+
+                                            
+                                            
+                                        
+
+                                            
+    
+                                                
+                                                
+                                            <!-- site Analytics card end -->
+
+
+                                        </div>
+                                        <!-- [ page content ] end -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- [ breadcrumb ] end -->
+                        
+                    </div>
+
+        <ng-template #transmodel >
+
+            <div class="modal-header">
+                <h4 class="modal-title">View Transaction Log</h4>
+                <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                            
+            <div class="modal-body">
+                  <!---->
+                <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                                <div class="card">
+                                        <div class="card-header with-border">
+                                            <h5 class="card-header-text">Old Client Details</h5>  
+                                        </div>
+                                 
+                                 <div class="card-block">
+                                        <div class="form-group form-default" >
+                                                                    <label class="float-label">Producer</label>
+                                                                    
+                                                                  <span >{{OldClientTransaction.ProducerName}} </span> 
+                                                                    
+                                                                   
+                                        </div>
+                                        <fieldset class="scheduler-border">
+                                            <legend class="scheduler-border">Client Information</legend>  
+                                           
+                                                     <div class="form-group form-default" [ngClass]="(ChnageClientTransaction.ClientName!=OldClientTransaction.ClientName)?'red':''">
+                                                                <label class="float-label">Client Name</label>
+                                                                <span [ngClass]="(ChnageClientTransaction.ClientName!=OldClientTransaction.ClientName)?'linechange':''">{{OldClientTransaction.ClientName}}</span>
+                                                                
+                                                    </div>
+
+                                                     <div class="form-group form-default" [ngClass]="(ChnageClientTransaction.DOT!=OldClientTransaction.DOT)?'red':''">
+                                                                <label class="float-label">DOT #</label>
+                                                                <span [ngClass]="(ChnageClientTransaction.DOT!=OldClientTransaction.DOT)?'linechange':''">{{OldClientTransaction.DOT}}</span>
+                                                                
+                                                    </div>
+                                                        
+                                        </fieldset>
+
+                                         <fieldset class="scheduler-border">
+                                            <legend class="scheduler-border">Address Informaiton</legend>  
+                                           
+                                                     <div class="form-group form-default" [ngClass]="(ChnageClientTransaction.Address1!=OldClientTransaction.Address1)?'red':''">
+                                                                <label class="float-label">Physical Address</label>
+                                                                <span  [ngClass]="(ChnageClientTransaction.Address1!=OldClientTransaction.Address1)?'linechange':''" >{{OldClientTransaction.Address1}}</span>
+                                                                
+                                                    </div>
+
+                                                     <div class="form-group form-default" [ngClass]="(ChnageClientTransaction.State!=OldClientTransaction.State)?'red':''">
+                                                                <label class="float-label">State</label>
+                                                                <span [ngClass]="(ChnageClientTransaction.State!=OldClientTransaction.State)?'linechange':''">{{OldClientTransaction.State}}</span>
+                                                                
+                                                    </div>
+                                                    <div class="form-group form-default" [ngClass]="(ChnageClientTransaction.City!=OldClientTransaction.City)?'red':''">
+                                                                <label class="float-label">City</label>
+                                                                <span [ngClass]="(ChnageClientTransaction.City!=OldClientTransaction.City)?'linechange':''">{{OldClientTransaction.City}}</span>
+                                                                
+                                                    </div>
+                                                    <div class="form-group form-default" [ngClass]="(ChnageClientTransaction.Zip!=OldClientTransaction.Zip)?'red':''">
+                                                                <label class="float-label">Zip</label>
+                                                                <span [ngClass]="(ChnageClientTransaction.Zip!=OldClientTransaction.Zip)?'linechange':''">{{OldClientTransaction.Zip}}</span>
+                                                                
+                                                    </div>
+                                                        
+                                        </fieldset>
+                                        <fieldset class="scheduler-border">
+                                            <legend class="scheduler-border">Mailling Address</legend>  
+                                           
+                                                     <div class="form-group form-default" [ngClass]="(ChnageClientTransaction.MailingAddress1!=OldClientTransaction.MailingAddress1)?'red':''">
+                                                                <label class="float-label">Physical Address</label>
+                                                                <span [ngClass]="(ChnageClientTransaction.MailingAddress1!=OldClientTransaction.MailingAddress1)?'linechange':''">{{OldClientTransaction.MailingAddress1}}</span>
+                                                                
+                                                    </div>
+
+                                                     <div class="form-group form-default" [ngClass]="(ChnageClientTransaction.MailingState!=OldClientTransaction.MailingState)?'red':''">
+                                                                <label class="float-label">State</label>
+                                                                <span [ngClass]="(ChnageClientTransaction.MailingState!=OldClientTransaction.MailingState)?'linechange':''">{{OldClientTransaction.MailingState}}</span>
+                                                                
+                                                    </div>
+                                                    <div class="form-group form-default" [ngClass]="(ChnageClientTransaction.MailingCity!=OldClientTransaction.MailingCity)?'red':''">
+                                                                <label class="float-label">City</label>
+                                                                <span [ngClass]="(ChnageClientTransaction.MailingCity!=OldClientTransaction.MailingCity)?'linechange':''">{{OldClientTransaction.MailingCity}}</span>
+                                                                
+                                                    </div>
+                                                    <div class="form-group form-default" [ngClass]="(ChnageClientTransaction.MailingZip!=OldClientTransaction.MailingZip)?'red':''">
+                                                                <label class="float-label">Zip</label>
+                                                                <span [ngClass]="(ChnageClientTransaction.MailingZip!=OldClientTransaction.MailingZip)?'linechange':''">{{OldClientTransaction.MailingZip}}</span>
+                                                                
+                                                    </div>
+                                                        
+                                        </fieldset>
+
+                                        <fieldset class="scheduler-border">
+                                            <legend class="scheduler-border">Additional Information</legend>  
+                                           
+                                                     <div class="form-group form-default" [ngClass]="(ChnageClientTransaction.PolicyPD!=OldClientTransaction.PolicyPD || ChnageClientTransaction.PolicyNT!=OldClientTransaction.PolicyNT || ChnageClientTransaction.PolicyOA!=OldClientTransaction.PolicyOA || ChnageClientTransaction.PolicyPA!=OldClientTransaction.PolicyPA || ChnageClientTransaction.PolicyAL!=OldClientTransaction.PolicyAL)?'red':''">
+                                                                <label class="float-label">Policies do not display</label>
+                                                                <span *ngIf="OldClientTransaction.PolicyPD" [ngClass]="(ChnageClientTransaction.PolicyPD!=OldClientTransaction.PolicyPD)?'linechange':''">
+                                                                        PD
+                                                                </span>
+                                                                <span *ngIf="OldClientTransaction.PolicyNT" [ngClass]="(ChnageClientTransaction.PolicyNT!=OldClientTransaction.PolicyNT)?'linechange':''">
+                                                                        NT
+                                                                </span>
+                                                                <span *ngIf="OldClientTransaction.PolicyOA" [ngClass]="(ChnageClientTransaction.PolicyOA!=OldClientTransaction.PolicyOA)?'linechange':''">
+                                                                        OA
+                                                                </span>
+                                                                <span *ngIf="OldClientTransaction.PolicyPA" [ngClass]="(ChnageClientTransaction.PolicyPA!=OldClientTransaction.PolicyPA)?'linechange':''">
+                                                                        PA
+                                                                </span>
+                                                                <span *ngIf="OldClientTransaction.PolicyAL" [ngClass]="(ChnageClientTransaction.PolicyAL!=OldClientTransaction.PolicyAL)?'linechange':''">
+                                                                        AL
+                                                                </span>
+                                                                
+                                                    </div> 
+                                        </fieldset>
+                                        
+                                       
+
+                                                     
+                                 </div> 
+                                  
+                         </div>    
+                      </div> 
+                        <div class="col-lg-6 col-md-6">
+                            <div class="card">
+                                        <div class="card-header with-border">
+                                            <h5 class="card-header-text">Change Client Details </h5>  
+                                        </div>
+                                 
+                                 <div class="card-block">
+                                         <div class="form-group form-default" >
+                                                                    <label class="float-label">Producer</label>
+                                                                    
+                                                                  <span>{{ChnageClientTransaction.ProducerName}} </span> 
+                                                                    
+                                                                   
+                                        </div>
+                                        <fieldset class="scheduler-border">
+                                            <legend class="scheduler-border">Client Information</legend>  
+                                           
+                                                     <div class="form-group form-default" [ngClass]="(ChnageClientTransaction.ClientName!=OldClientTransaction.ClientName)?'green':''">
+                                                                <label class="float-label">Client Name</label>
+                                                                <span>{{ChnageClientTransaction.ClientName}}</span>
+                                                                
+                                                    </div>
+
+                                                     <div class="form-group form-default" [ngClass]="(ChnageClientTransaction.DOT!=OldClientTransaction.DOT)?'green':''">
+                                                                <label class="float-label">DOT #</label>
+                                                                <span>{{ChnageClientTransaction.DOT}}</span>
+                                                                
+                                                    </div>
+                                                        
+                                        </fieldset>
+
+                                         <fieldset class="scheduler-border">
+                                            <legend class="scheduler-border">Address Informaiton</legend>  
+                                           
+                                                     <div class="form-group form-default" [ngClass]="(ChnageClientTransaction.Address1!=OldClientTransaction.Address1)?'green':''">
+                                                                <label class="float-label">Physical Address</label>
+                                                                <span>{{ChnageClientTransaction.Address1}}</span>
+                                                                
+                                                    </div>
+
+                                                     <div class="form-group form-default" [ngClass]="(ChnageClientTransaction.State!=OldClientTransaction.State)?'green':''">
+                                                                <label class="float-label">State</label>
+                                                                <span>{{ChnageClientTransaction.State}}</span>
+                                                                
+                                                    </div>
+                                                    <div class="form-group form-default" [ngClass]="(ChnageClientTransaction.City!=OldClientTransaction.City)?'green':''">
+                                                                <label class="float-label">City</label>
+                                                                <span>{{ChnageClientTransaction.City}}</span>
+                                                                
+                                                    </div>
+                                                    <div class="form-group form-default" [ngClass]="(ChnageClientTransaction.Zip!=OldClientTransaction.Zip)?'green':''">
+                                                                <label class="float-label">Zip</label>
+                                                                <span>{{ChnageClientTransaction.Zip}}</span>
+                                                                
+                                                    </div>
+                                                        
+                                        </fieldset>
+                                        <fieldset class="scheduler-border">
+                                            <legend class="scheduler-border">Mailling Address</legend>  
+                                           
+                                                     <div class="form-group form-default" [ngClass]="(ChnageClientTransaction.MailingAddress1!=OldClientTransaction.MailingAddress1)?'green':''">
+                                                                <label class="float-label">Physical Address</label>
+                                                                <span>{{ChnageClientTransaction.MailingAddress1}}</span>
+                                                                
+                                                    </div>
+
+                                                     <div class="form-group form-default" [ngClass]="(ChnageClientTransaction.MailingState!=OldClientTransaction.MailingState)?'green':''">
+                                                                <label class="float-label">State</label>
+                                                                <span>{{ChnageClientTransaction.MailingState}}</span>
+                                                                
+                                                    </div>
+                                                    <div class="form-group form-default" [ngClass]="(ChnageClientTransaction.MailingCity!=OldClientTransaction.MailingCity)?'green':''">
+                                                                <label class="float-label">City</label>
+                                                                <span>{{ChnageClientTransaction.MailingCity}}</span>
+                                                                
+                                                    </div>
+                                                    <div class="form-group form-default" [ngClass]="(ChnageClientTransaction.MailingZip!=OldClientTransaction.MailingZip)?'green':''">
+                                                                <label class="float-label">Zip</label>
+                                                                <span>{{ChnageClientTransaction.MailingZip}}</span>
+                                                                
+                                                    </div>
+                                                        
+                                        </fieldset>
+
+                                        <fieldset class="scheduler-border">
+                                            <legend class="scheduler-border">Additional Information</legend>  
+                                           
+                                                     <div class="form-group form-default" [ngClass]="(ChnageClientTransaction.PolicyPD!=OldClientTransaction.PolicyPD || ChnageClientTransaction.PolicyNT!=OldClientTransaction.PolicyNT || ChnageClientTransaction.PolicyOA!=OldClientTransaction.PolicyOA || ChnageClientTransaction.PolicyPA!=OldClientTransaction.PolicyPA || ChnageClientTransaction.PolicyAL!=OldClientTransaction.PolicyAL)?'green':''">
+                                                                <label class="float-label">Policies do not display</label>
+                                                                <span *ngIf="ChnageClientTransaction.PolicyPD">
+                                                                        PD
+                                                                </span>
+                                                                <span *ngIf="ChnageClientTransaction.PolicyNT">
+                                                                        NT
+                                                                </span>
+                                                                <span *ngIf="ChnageClientTransaction.PolicyOA">
+                                                                        OA
+                                                                </span>
+                                                                <span *ngIf="ChnageClientTransaction.PolicyPA">
+                                                                        PA
+                                                                </span>
+                                                                <span *ngIf="ChnageClientTransaction.PolicyAL">
+                                                                        AL
+                                                                </span>
+                                                                
+                                                    </div>  
+                                        </fieldset>
+                                        
+
+
+                                 </div> 
+                                  
+                         </div>     
+                      </div>                       
+                </div>
+            </div> 
+            <div class="modal-footer">
+              
+                <button type="button" class="btn btn-default waves-effect " (click)="modalRef.hide()">Close</button>
+                
+
+            </div>
+         
+        </ng-template>            
+
+             
+                
